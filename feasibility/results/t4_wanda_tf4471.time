@@ -1,0 +1,23 @@
+	Command being timed: "timeout 1800 python feasibility/wanda_synth_driver.py --model /home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M-tf4 --prune_method wanda --sparsity_ratio 0.5 --sparsity_type unstructured --nsamples 32 --seed 0 --save /home/user/GPTQModel/feasibility/results/t4_wanda_tf4471"
+	User time (seconds): 342.31
+	System time (seconds): 17.39
+	Percent of CPU this job got: 365%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:38.38
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1779704
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2539
+	Minor (reclaiming a frame) page faults: 2915463
+	Voluntary context switches: 4309
+	Involuntary context switches: 5116
+	Swaps: 0
+	File system inputs: 786200
+	File system outputs: 2256
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

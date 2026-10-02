@@ -1,0 +1,24 @@
+Command exited with non-zero status 1
+	Command being timed: "timeout 1200 python feasibility/wanda_synth_driver.py --model /home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M-tf4 --prune_method wanda --sparsity_ratio 0.5 --sparsity_type unstructured --nsamples 32 --seed 0 --save /home/user/GPTQModel/feasibility/results/t4_wanda_tf4576"
+	User time (seconds): 9.65
+	System time (seconds): 1.60
+	Percent of CPU this job got: 119%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.38
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1943204
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 346355
+	Voluntary context switches: 152
+	Involuntary context switches: 308
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

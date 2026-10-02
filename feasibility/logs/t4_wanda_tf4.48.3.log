@@ -1,0 +1,38 @@
+torch 2.14.1
+transformers 4.48.3
+accelerate 1.15.0
+# of gpus:  0
+loading llm model /home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M-tf4
+use device  cpu
+pruning starts
+loading calibdation data
+[driver] synthetic loader for 'c4': 32x512 calib, 20480 eval tokens
+dataset loading complete
+[driver] wall_s=1.3 peak_rss_gb=1.65
+Traceback (most recent call last):
+  File "/home/user/GPTQModel/feasibility/wanda_synth_driver.py", line 38, in <module>
+    wanda_main.main()
+  File "/home/user/GPTQModel/third_party/wanda/main.py", line 69, in main
+    prune_wanda(args, model, tokenizer, device, prune_n=prune_n, prune_m=prune_m)
+  File "/home/user/GPTQModel/third_party/wanda/lib/prune.py", line 160, in prune_wanda
+    outs[j] = layer(inps[j].unsqueeze(0), attention_mask=attention_mask, position_ids=position_ids)[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv-w447/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv-w447/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv-w447/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 335, in forward
+    hidden_states, self_attn_weights = self.self_attn(
+                                       ^^^^^^^^^^^^^^^
+  File "/home/user/venv-w447/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv-w447/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv-w447/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 273, in forward
+    cos, sin = position_embeddings
+    ^^^^^^^^
+TypeError: cannot unpack non-iterable NoneType object
