@@ -27,4 +27,5 @@ for step in "$@"; do case $step in
   c_ml)  run c_maxlen512 --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32,max_length=512 --tasks synth_arc_easy,synth_hellaswag --num_fewshot 5 --limit 100 --batch_size 8 $COMMON $INC ;;
   d_real) run d_wikitext_hub --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32 --tasks wikitext --batch_size 8 $COMMON ;;
   d)     run d_wikitext --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32 --tasks synth_wikitext --batch_size 8 $COMMON $INC ;;
+  d2)    run d_wikitext_ml2048 --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32,max_length=2048 --tasks synth_wikitext --batch_size 8 $COMMON $INC ;;
 esac; done

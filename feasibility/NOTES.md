@@ -27,3 +27,18 @@
   peak RSS 2.45 GB.
 - Reload with BACKEND.AUTO picked TorchAtenLinear -> RuntimeError `_weight_int4pack_mm_cpu: expect K to be divisible by
   qGroupSize, got K:576, qGroupSize:128` (SmolLM2-135M hidden=576 is not a multiple of 128). Applies to the REAL model.
+
+## Test 2 (lm-eval 0.4.13)
+- Real tasks fail: HF Hub blocked (OSError config / ProxyError). Synthetic stand-in tasks via --include_path.
+- gptqmodel=True path: AUTO kernel -> K=576 int4pack error; `backend=torch` in model_args collides with HFLM's own
+  `backend` (causal/seq2seq) arg -> AssertionError. Fallback = in-memory model (lmeval_inmemory.py).
+- wikitext-style loglikelihood_rolling at default max_length (= model max 8192) & bs 8 -> OOM-killed (rc 137, 13.9 GB).
+## Test 3 (optimum-benchmark 0.6.0)
+- Fails on transformers 5.x: `cannot import name 'SpecialTokensMixin'`. Works in separate venv with transformers 4.57.6.
+- Default process launcher busy-waits in the parent (`while alive and not poll(): pass`, launcher.py:56) ->
+  on 4 vCPU with OMP_NUM_THREADS=4 latencies inflate ~6x (per-token 0.34 s vs 0.053 s inline / 0.062 s OMP=3).
+## Test 4 (wanda 8e8fc87)
+- tf 5.18: AttributeError hf_device_map (device_map="auto" on CPU-only). tf 4.57.6: position_embeddings None.
+  tf 4.48.3: same. tf 4.47.1: WORKS (3-line patch), 92 s, 1.7 GB.
+## Test 5 (MetaScreener 2.0.0a5 @532ee3c)
+- Server starts on CPU; 77 API paths; extraction v2/v3 session API: template (.xlsx) + PDFs -> run -> results/evidence.
