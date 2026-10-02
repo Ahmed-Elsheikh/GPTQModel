@@ -1,0 +1,39 @@
+# optimum-benchmark config for Test 3 (offline: model paths point at synthetic stand-ins)
+defaults:
+  - benchmark
+  - scenario: inference
+  - launcher: process
+  - backend: pytorch
+  - _self_
+
+name: smollm_cpu
+
+launcher:
+  device_isolation: false
+
+backend:
+  device: cpu
+  model: ${oc.env:OB_MODEL_ROOT}/synth-SmolLM2-135M
+  task: text-generation
+  torch_dtype: float32
+  seed: 0
+
+scenario:
+  latency: true
+  memory: true
+  warmup_runs: 10
+  input_shapes:
+    batch_size: 1
+    sequence_length: 128
+
+hydra:
+  run:
+    dir: ${oc.env:OB_OUT}/run/${name}
+  sweep:
+    dir: ${oc.env:OB_OUT}/sweep
+    subdir: ${hydra.job.override_dirname}
+  job:
+    chdir: true
+    env_set:
+      OMP_NUM_THREADS: 4
+      OVERRIDE_BENCHMARKS: 1
