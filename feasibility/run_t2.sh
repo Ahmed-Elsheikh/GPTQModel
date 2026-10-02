@@ -19,6 +19,7 @@ for step in "$@"; do case $step in
   real)  run a_real_hub --model hf --model_args pretrained=HuggingFaceTB/SmolLM2-135M --tasks arc_easy,hellaswag --num_fewshot 0 --limit 200 --batch_size 8 $COMMON ;;
   a)     run a_dense135 --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32 --tasks synth_arc_easy,synth_hellaswag --num_fewshot 0 --limit 200 --batch_size 8 $COMMON $INC ;;
   b)     run b_gptq135 --model hf --model_args pretrained=$M/q-gptq-135m-s0,gptqmodel=True --tasks synth_arc_easy,synth_hellaswag --num_fewshot 0 --limit 200 --batch_size 8 $COMMON $INC ;;
+  b_torch) run b_gptq135_torch --model hf --model_args pretrained=$M/q-gptq-135m-s0,gptqmodel=True,backend=torch --tasks synth_arc_easy,synth_hellaswag --num_fewshot 0 --limit 200 --batch_size 8 $COMMON $INC ;;
   c0)    run c_base --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32,max_length=2048 --tasks synth_arc_easy,synth_hellaswag --num_fewshot 0 --limit 100 --batch_size 8 $COMMON $INC ;;
   c_fs)  run c_fewshot5 --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32,max_length=2048 --tasks synth_arc_easy,synth_hellaswag --num_fewshot 5 --limit 100 --batch_size 8 $COMMON $INC ;;
   c_bs)  run c_bs1 --model hf --model_args pretrained=$M/synth-SmolLM2-135M,dtype=float32,max_length=2048 --tasks synth_arc_easy,synth_hellaswag --num_fewshot 0 --limit 100 --batch_size 1 $COMMON $INC ;;

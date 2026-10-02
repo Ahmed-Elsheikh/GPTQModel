@@ -1,0 +1,49 @@
+{
+  "args": {
+    "model": "feasibility/models/synth-SmolLM2-135M",
+    "method": "gptq",
+    "bits": 4,
+    "group_size": 128,
+    "n": 128,
+    "L": 512,
+    "seed": 0,
+    "source": "synthetic",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": false,
+    "threads": 4,
+    "out": "feasibility/results/t1/eval_gptq_135m_s0_torch.json",
+    "save_dir": null,
+    "backend": "torch",
+    "eval_only": "feasibility/models/q-gptq-135m-s0",
+    "dtype": "auto"
+  },
+  "phases": {
+    "data": {
+      "wall_s": 0.72,
+      "rss_gb": 1.118,
+      "peak_rss_gb": 1.119
+    },
+    "load_quantized": {
+      "wall_s": 5.5,
+      "rss_gb": 1.385,
+      "peak_rss_gb": 1.503
+    },
+    "eval_quant": {
+      "wall_s": 429.78,
+      "rss_gb": 1.654,
+      "peak_rss_gb": 2.591
+    }
+  },
+  "calib_fingerprint": "520fede96e805933",
+  "eval_fingerprint": "45545b6c82ede1e4",
+  "quant_backend": "None",
+  "quant_qlinear_classes": [
+    "Linear",
+    "TorchLinear"
+  ],
+  "quant_dtype": "torch.bfloat16",
+  "ppl_quant": 58944.63202017038,
+  "total_wall_s": 443.25,
+  "peak_rss_gb": 2.591
+}
