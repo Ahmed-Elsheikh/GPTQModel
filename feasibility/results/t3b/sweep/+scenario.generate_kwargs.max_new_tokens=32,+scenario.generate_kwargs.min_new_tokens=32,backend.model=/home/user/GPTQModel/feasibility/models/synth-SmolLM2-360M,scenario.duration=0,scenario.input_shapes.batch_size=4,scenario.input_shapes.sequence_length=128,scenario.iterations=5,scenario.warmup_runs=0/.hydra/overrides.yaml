@@ -1,0 +1,8 @@
+- backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M
+- scenario.warmup_runs=0
+- scenario.input_shapes.batch_size=4
+- scenario.input_shapes.sequence_length=128
+- scenario.iterations=5
+- scenario.duration=0
+- +scenario.generate_kwargs.max_new_tokens=32
+- +scenario.generate_kwargs.min_new_tokens=32

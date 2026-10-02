@@ -1,0 +1,125 @@
+# load_model:
+
+## memory:
+
+| metric | value | unit |
+| ------ | ----: | ---: |
+| max_ram          |          1912.13 | MB |
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      1 |      - |
+| total  |    0.401442 | s |
+| mean   |     0.401442 | s |
+| p50    |      0.401442 | s |
+| p90    |      0.401442 | s |
+| p95    |      0.401442 | s |
+| p99    |      0.401442 | s |
+| stdev  |    0.000000 | s |
+| stdev_ | 0.00 |      % |
+# first_generate:
+
+## memory:
+
+| metric | value | unit |
+| ------ | ----: | ---: |
+| max_ram          |          1703.77 | MB |
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      1 |      - |
+| total  |    2.310027 | s |
+| mean   |     2.310027 | s |
+| p50    |      2.310027 | s |
+| p90    |      2.310027 | s |
+| p95    |      2.310027 | s |
+| p99    |      2.310027 | s |
+| stdev  |    0.000000 | s |
+| stdev_ | 0.00 |      % |
+# generate:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      5 |      - |
+| total  |    11.467558 | s |
+| mean   |     2.293512 | s |
+| p50    |      2.284597 | s |
+| p90    |      2.432314 | s |
+| p95    |      2.462506 | s |
+| p99    |      2.486659 | s |
+| stdev  |    0.118772 | s |
+| stdev_ | 5.18 |      % |
+## throughput:
+
+| metric     |     value   |   unit |
+| :--------- | --------:   | -----: |
+| throughput | 13.52 | samples/s |
+# prefill:
+
+## memory:
+
+| metric | value | unit |
+| ------ | ----: | ---: |
+| max_ram          |          1703.90 | MB |
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      5 |      - |
+| total  |    1.374953 | s |
+| mean   |     0.274991 | s |
+| p50    |      0.264300 | s |
+| p90    |      0.304572 | s |
+| p95    |      0.313366 | s |
+| p99    |      0.320400 | s |
+| stdev  |    0.025067 | s |
+| stdev_ | 9.12 |      % |
+## throughput:
+
+| metric     |     value   |   unit |
+| :--------- | --------:   | -----: |
+| throughput | 3.64 | samples/s |
+# decode:
+
+## memory:
+
+| metric | value | unit |
+| ------ | ----: | ---: |
+| max_ram          |          1703.90 | MB |
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      5 |      - |
+| total  |    10.092605 | s |
+| mean   |     2.018521 | s |
+| p50    |      2.006404 | s |
+| p90    |      2.137602 | s |
+| p95    |      2.154070 | s |
+| p99    |      2.167245 | s |
+| stdev  |    0.100075 | s |
+| stdev_ | 4.96 |      % |
+## throughput:
+
+| metric     |     value   |   unit |
+| :--------- | --------:   | -----: |
+| throughput | 15.36 | tokens/s |
+# per_token:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      475 |      - |
+| total  |    32.586106 | s |
+| mean   |     0.068602 | s |
+| p50    |      0.061643 | s |
+| p90    |      0.078785 | s |
+| p95    |      0.084803 | s |
+| p99    |      0.257402 | s |
+| stdev  |    0.030216 | s |
+| stdev_ | 44.05 |      % |

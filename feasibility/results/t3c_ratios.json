@@ -1,0 +1,166 @@
+[
+  {
+    "warmup": 0,
+    "bs": 1,
+    "seq": 128,
+    "ratio_prefill_p50": 2.838,
+    "ratio_per_token_p50": 1.649,
+    "ratio_generate_mean": 1.662,
+    "135M": {
+      "prefill_p50": 0.288578255000175,
+      "per_token_p50": 0.06948254300004919,
+      "generate_mean": 2.808920112400301,
+      "first_generate": null
+    },
+    "360M": {
+      "prefill_p50": 0.8188839999993434,
+      "per_token_p50": 0.11458001200026047,
+      "generate_mean": 4.6677230296001655,
+      "first_generate": null
+    }
+  },
+  {
+    "warmup": 0,
+    "bs": 1,
+    "seq": 512,
+    "ratio_prefill_p50": 2.674,
+    "ratio_per_token_p50": 1.894,
+    "ratio_generate_mean": 1.737,
+    "135M": {
+      "prefill_p50": 0.9230548269997598,
+      "per_token_p50": 0.06630097600009321,
+      "generate_mean": 3.6809101861999807,
+      "first_generate": null
+    },
+    "360M": {
+      "prefill_p50": 2.4683795660002943,
+      "per_token_p50": 0.12558647300011216,
+      "generate_mean": 6.3942735612003165,
+      "first_generate": null
+    }
+  },
+  {
+    "warmup": 0,
+    "bs": 4,
+    "seq": 128,
+    "ratio_prefill_p50": 2.442,
+    "ratio_per_token_p50": 2.071,
+    "ratio_generate_mean": 2.082,
+    "135M": {
+      "prefill_p50": 0.9169606599998588,
+      "per_token_p50": 0.1110786580002241,
+      "generate_mean": 4.699747205999847,
+      "first_generate": null
+    },
+    "360M": {
+      "prefill_p50": 2.239347552000254,
+      "per_token_p50": 0.23008108300018648,
+      "generate_mean": 9.784102861800056,
+      "first_generate": null
+    }
+  },
+  {
+    "warmup": 0,
+    "bs": 4,
+    "seq": 512,
+    "ratio_prefill_p50": 2.316,
+    "ratio_per_token_p50": 2.071,
+    "ratio_generate_mean": 2.129,
+    "135M": {
+      "prefill_p50": 3.291587425999751,
+      "per_token_p50": 0.12954863800041494,
+      "generate_mean": 7.5222171294002695,
+      "first_generate": null
+    },
+    "360M": {
+      "prefill_p50": 7.624343428999964,
+      "per_token_p50": 0.2682340709998243,
+      "generate_mean": 16.016507551799986,
+      "first_generate": null
+    }
+  },
+  {
+    "warmup": 10,
+    "bs": 1,
+    "seq": 128,
+    "ratio_prefill_p50": 2.765,
+    "ratio_per_token_p50": 1.823,
+    "ratio_generate_mean": 1.862,
+    "ratio_first_generate": 1.942,
+    "135M": {
+      "prefill_p50": 0.2643000589996518,
+      "per_token_p50": 0.06164343399996142,
+      "generate_mean": 2.2935116221999126,
+      "first_generate": 2.3100272580004457
+    },
+    "360M": {
+      "prefill_p50": 0.730809304000104,
+      "per_token_p50": 0.11235023900007945,
+      "generate_mean": 4.269413811200138,
+      "first_generate": 4.486604897000689
+    }
+  },
+  {
+    "warmup": 10,
+    "bs": 1,
+    "seq": 512,
+    "ratio_prefill_p50": 2.089,
+    "ratio_per_token_p50": 1.757,
+    "ratio_generate_mean": 1.888,
+    "ratio_first_generate": 1.845,
+    "135M": {
+      "prefill_p50": 0.9835187439994115,
+      "per_token_p50": 0.0680283359997702,
+      "generate_mean": 3.119531258999996,
+      "first_generate": 3.109491453999908
+    },
+    "360M": {
+      "prefill_p50": 2.054542386000321,
+      "per_token_p50": 0.11951550699996005,
+      "generate_mean": 5.889254666000125,
+      "first_generate": 5.735623556999599
+    }
+  },
+  {
+    "warmup": 10,
+    "bs": 4,
+    "seq": 128,
+    "ratio_prefill_p50": 2.781,
+    "ratio_per_token_p50": 2.356,
+    "ratio_generate_mean": 2.428,
+    "ratio_first_generate": 1.92,
+    "135M": {
+      "prefill_p50": 0.7954796579997492,
+      "per_token_p50": 0.09918707799988624,
+      "generate_mean": 3.916064633199676,
+      "first_generate": 4.973038537999855
+    },
+    "360M": {
+      "prefill_p50": 2.211903653000263,
+      "per_token_p50": 0.23370383899964509,
+      "generate_mean": 9.509755150199817,
+      "first_generate": 9.546616640999673
+    }
+  },
+  {
+    "warmup": 10,
+    "bs": 4,
+    "seq": 512,
+    "ratio_prefill_p50": 2.515,
+    "ratio_per_token_p50": 2.104,
+    "ratio_generate_mean": 2.258,
+    "ratio_first_generate": 2.408,
+    "135M": {
+      "prefill_p50": 3.251304192999669,
+      "per_token_p50": 0.12144759700004215,
+      "generate_mean": 7.090185707599995,
+      "first_generate": 6.4246856259997
+    },
+    "360M": {
+      "prefill_p50": 8.178507469000579,
+      "per_token_p50": 0.2555785509994166,
+      "generate_mean": 16.010703782600284,
+      "first_generate": 15.467492198999935
+    }
+  }
+]

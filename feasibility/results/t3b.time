@@ -1,0 +1,23 @@
+	Command being timed: "optimum-benchmark --config-dir /home/user/GPTQModel/feasibility/ob_configs --config-name smollm_cpu -m backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M,/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=0,10 scenario.input_shapes.batch_size=1,4 scenario.input_shapes.sequence_length=128,512 hydra.job.env_set.OMP_NUM_THREADS=3 scenario.iterations=5 scenario.duration=0 +scenario.generate_kwargs.max_new_tokens=32 +scenario.generate_kwargs.min_new_tokens=32"
+	User time (seconds): 4394.37
+	System time (seconds): 375.29
+	Percent of CPU this job got: 323%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 24:35.62
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3217712
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1155
+	Minor (reclaiming a frame) page faults: 54676573
+	Voluntary context switches: 35150
+	Involuntary context switches: 142402
+	Swaps: 0
+	File system inputs: 1413448
+	File system outputs: 9952
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

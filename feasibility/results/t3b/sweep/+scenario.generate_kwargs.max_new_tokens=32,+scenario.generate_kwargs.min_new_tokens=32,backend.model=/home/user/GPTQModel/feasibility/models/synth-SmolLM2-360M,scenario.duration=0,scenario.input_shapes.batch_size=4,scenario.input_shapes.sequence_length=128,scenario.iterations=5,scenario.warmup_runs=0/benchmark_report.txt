@@ -1,0 +1,68 @@
++ load_model:
+	+ memory:
+		+ max_ram: 3294.79 (MB)
+	+ latency:
+		+ count: 1
+		+ total: 0.751883 (s)
+		+ mean: 0.751883 (s)
+		+ p50: 0.751883 (s)
+		+ p90: 0.751883 (s)
+		+ p95: 0.751883 (s)
+		+ p99: 0.751883 (s)
+		+ stdev: 0.000000 (s)
+		+ stdev_: 0.00 (%)
++ first_generate:
++ generate:
+	+ latency:
+		+ count: 5
+		+ total: 48.920514 (s)
+		+ mean: 9.784103 (s)
+		+ p50: 9.475996 (s)
+		+ p90: 10.451799 (s)
+		+ p95: 10.574378 (s)
+		+ p99: 10.672441 (s)
+		+ stdev: 0.541035 (s)
+		+ stdev_: 5.53 (%)
+	+ throughput:
+		+ throughput: 12.67 (samples/s)
++ prefill:
+	+ memory:
+		+ max_ram: 2696.12 (MB)
+	+ latency:
+		+ count: 5
+		+ total: 11.935291 (s)
+		+ mean: 2.387058 (s)
+		+ p50: 2.239348 (s)
+		+ p90: 2.831962 (s)
+		+ p95: 3.025459 (s)
+		+ p99: 3.180257 (s)
+		+ stdev: 0.424207 (s)
+		+ stdev_: 17.77 (%)
+	+ throughput:
+		+ throughput: 1.68 (samples/s)
++ decode:
+	+ memory:
+		+ max_ram: 2697.16 (MB)
+	+ latency:
+		+ count: 5
+		+ total: 36.985224 (s)
+		+ mean: 7.397045 (s)
+		+ p50: 7.270991 (s)
+		+ p90: 7.690755 (s)
+		+ p95: 7.761674 (s)
+		+ p99: 7.818408 (s)
+		+ stdev: 0.240674 (s)
+		+ stdev_: 3.25 (%)
+	+ throughput:
+		+ throughput: 16.76 (tokens/s)
++ per_token:
+	+ latency:
+		+ count: 475
+		+ total: 131.871578 (s)
+		+ mean: 0.277624 (s)
+		+ p50: 0.230081 (s)
+		+ p90: 0.280799 (s)
+		+ p95: 0.317286 (s)
+		+ p99: 2.210466 (s)
+		+ stdev: 0.279452 (s)
+		+ stdev_: 100.66 (%)

@@ -1,0 +1,89 @@
+name: smollm_cpu
+backend:
+  name: pytorch
+  version: 2.14.1
+  _target_: optimum_benchmark.backends.pytorch.backend.PyTorchBackend
+  model: /home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M
+  processor: null
+  task: text-generation
+  library: null
+  model_type: null
+  device: cpu
+  device_ids: null
+  seed: 0
+  inter_op_num_threads: null
+  intra_op_num_threads: null
+  model_kwargs: {}
+  processor_kwargs: {}
+  no_weights: false
+  tp_plan: null
+  device_map: null
+  torch_dtype: float32
+  eval_mode: true
+  to_bettertransformer: false
+  low_cpu_mem_usage: null
+  attn_implementation: null
+  cache_implementation: null
+  allow_tf32: false
+  autocast_enabled: false
+  autocast_dtype: null
+  torch_compile: false
+  torch_compile_target: forward
+  torch_compile_config: {}
+  quantization_scheme: null
+  quantization_config: {}
+  deepspeed_inference: false
+  deepspeed_inference_config: {}
+  peft_type: null
+  peft_config: {}
+scenario:
+  name: inference
+  _target_: optimum_benchmark.scenarios.inference.scenario.InferenceScenario
+  iterations: 5
+  duration: 0
+  warmup_runs: 10
+  input_shapes:
+    batch_size: 1
+    sequence_length: 128
+  new_tokens: null
+  memory: true
+  latency: true
+  energy: false
+  forward_kwargs: {}
+  generate_kwargs:
+    max_new_tokens: 32
+    min_new_tokens: 32
+  call_kwargs: {}
+launcher:
+  name: process
+  _target_: optimum_benchmark.launchers.process.launcher.ProcessLauncher
+  device_isolation: false
+  device_isolation_action: null
+  numactl: false
+  numactl_kwargs: {}
+  start_method: spawn
+environment:
+  cpu: ' Intel(R) Xeon(R) Processor @ 2.80GHz'
+  cpu_count: 4
+  cpu_ram_mb: 16876.515328
+  system: Linux
+  machine: x86_64
+  platform: Linux-6.18.44-fc-v51-x86_64-with-glibc2.39
+  processor: x86_64
+  python_version: 3.11.15
+  optimum_benchmark_version: 0.6.0
+  optimum_benchmark_commit: null
+  transformers_version: 4.57.6
+  transformers_commit: null
+  accelerate_version: 1.15.0
+  accelerate_commit: null
+  diffusers_version: null
+  diffusers_commit: null
+  optimum_version: null
+  optimum_commit: null
+  timm_version: null
+  timm_commit: null
+  peft_version: null
+  peft_commit: null
+print_report: false
+log_report: true
