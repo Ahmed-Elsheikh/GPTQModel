@@ -1779,3 +1779,952 @@
     "fwd_time": "3.379",
     "(v)ram": "n/a"
 }
+{
+    "process": "gptq",
+    "layer": 19,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000122137",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.909",
+    "fwd_time": "8.004",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 19,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000121178",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.924",
+    "fwd_time": "8.004",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 19,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001877",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.993",
+    "fwd_time": "9.334",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015215",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.665",
+    "fwd_time": "1.910",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000045388",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.797",
+    "fwd_time": "1.910",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015413",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.294",
+    "fwd_time": "1.910",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007298",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.356",
+    "fwd_time": "3.380",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000122171",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.833",
+    "fwd_time": "6.680",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000123012",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.867",
+    "fwd_time": "6.680",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 20,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001891",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.120",
+    "fwd_time": "9.116",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015321",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.670",
+    "fwd_time": "1.800",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000046320",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.774",
+    "fwd_time": "1.800",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015541",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.285",
+    "fwd_time": "1.800",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007159",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.328",
+    "fwd_time": "3.569",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000123394",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.955",
+    "fwd_time": "6.972",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000123134",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.957",
+    "fwd_time": "6.972",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 21,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001933",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.113",
+    "fwd_time": "9.152",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015450",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.614",
+    "fwd_time": "1.806",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000046509",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.694",
+    "fwd_time": "1.806",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015717",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.253",
+    "fwd_time": "1.806",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007296",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.353",
+    "fwd_time": "3.242",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124256",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.885",
+    "fwd_time": "6.609",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000123618",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.907",
+    "fwd_time": "6.609",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 22,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001863",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.981",
+    "fwd_time": "8.836",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015655",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.667",
+    "fwd_time": "1.909",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000046800",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.765",
+    "fwd_time": "1.909",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015558",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.269",
+    "fwd_time": "1.909",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007253",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.350",
+    "fwd_time": "3.807",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124975",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.915",
+    "fwd_time": "7.029",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124735",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.930",
+    "fwd_time": "7.029",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001915",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.127",
+    "fwd_time": "8.930",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015828",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.602",
+    "fwd_time": "1.621",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000047082",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.714",
+    "fwd_time": "1.621",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015780",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.246",
+    "fwd_time": "1.621",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007376",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.351",
+    "fwd_time": "3.361",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124976",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.848",
+    "fwd_time": "6.307",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125108",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.857",
+    "fwd_time": "6.307",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 24,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001891",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.082",
+    "fwd_time": "9.143",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000016123",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.659",
+    "fwd_time": "1.989",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000047592",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.785",
+    "fwd_time": "1.989",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015586",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.262",
+    "fwd_time": "1.989",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007250",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.363",
+    "fwd_time": "3.241",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125361",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.851",
+    "fwd_time": "6.591",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125694",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.859",
+    "fwd_time": "6.591",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 25,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001977",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.963",
+    "fwd_time": "8.816",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015670",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.644",
+    "fwd_time": "1.812",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000047022",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.717",
+    "fwd_time": "1.812",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015586",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.292",
+    "fwd_time": "1.812",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007269",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.353",
+    "fwd_time": "3.352",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125590",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.954",
+    "fwd_time": "6.594",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125233",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.968",
+    "fwd_time": "6.594",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 26,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001878",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.066",
+    "fwd_time": "9.146",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015776",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.647",
+    "fwd_time": "1.839",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000047185",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.738",
+    "fwd_time": "1.839",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015567",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.282",
+    "fwd_time": "1.839",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007459",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.346",
+    "fwd_time": "3.268",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124105",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.827",
+    "fwd_time": "6.701",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125141",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.828",
+    "fwd_time": "6.701",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 27,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001999",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.036",
+    "fwd_time": "8.756",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015902",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.633",
+    "fwd_time": "1.894",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000047438",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.732",
+    "fwd_time": "1.894",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015761",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.268",
+    "fwd_time": "1.894",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007572",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.404",
+    "fwd_time": "3.477",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125603",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.889",
+    "fwd_time": "6.657",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000125002",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.920",
+    "fwd_time": "6.657",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 28,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001896",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.066",
+    "fwd_time": "8.990",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015633",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.595",
+    "fwd_time": "1.677",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000047349",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.696",
+    "fwd_time": "1.677",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "bf16: 0.2MB",
+    "loss": "0.0000015458",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.243",
+    "fwd_time": "1.677",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "self_attn.o_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "bf16: 0.7MB",
+    "loss": "0.0000007271",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.340",
+    "fwd_time": "3.309",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124421",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.922",
+    "fwd_time": "6.951",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000124983",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "0.938",
+    "fwd_time": "6.951",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 29,
+    "module": "mlp.down_proj",
+    "feat: in, out": "1536, 576",
+    "dtype: size": "bf16: 1.7MB",
+    "loss": "0.0000001868",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "1.225",
+    "fwd_time": "10.466",
+    "(v)ram": "n/a"
+}
