@@ -165,5 +165,11 @@
     "wall": "0:23.60",
     "peak_rss_gb": 2.0,
     "metrics": {}
+  },
+  "d_wikitext": {
+    "rc": 137,
+    "wall": "3:47.24",
+    "peak_rss_gb": 13.24,
+    "metrics": {}
   }
 }
