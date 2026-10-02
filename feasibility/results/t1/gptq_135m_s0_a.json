@@ -1,0 +1,27 @@
+{
+  "args": {
+    "model": "feasibility/models/synth-SmolLM2-135M",
+    "method": "gptq",
+    "bits": 4,
+    "group_size": 128,
+    "n": 128,
+    "L": 512,
+    "seed": 0,
+    "source": "synthetic",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": true,
+    "threads": 4,
+    "out": "feasibility/results/t1/gptq_135m_s0_a.json",
+    "save_dir": null
+  },
+  "phases": {
+    "data": {
+      "wall_s": 0.89,
+      "rss_gb": 0.943,
+      "peak_rss_gb": 0.956
+    }
+  },
+  "calib_fingerprint": "520fede96e805933",
+  "eval_fingerprint": "45545b6c82ede1e4"
+}

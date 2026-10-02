@@ -1,0 +1,4 @@
+[4.45s] data: {'wall_s': 0.89, 'rss_gb': 0.943, 'peak_rss_gb': 0.956}
+W1002 14:04:00.587000 1986 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 14:04:00.647000 1986 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  48%|████▊     | 130/272 [00:00<00:00, 1283.42it/s]Loading weights:  99%|█████████▉| 270/272 [00:00<00:00, 1351.10it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 1345.28it/s]
