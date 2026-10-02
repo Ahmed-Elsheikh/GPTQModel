@@ -197,7 +197,13 @@ accelerate datasets`, ~2 min from cache). Verified here only on the already-prov
 3. **GPTQModel auto-selects bf16 on CPU**, which is *slower* on CPUs without AVX512-BF16/AMX (quantize 1.9×, lm-eval
    2×). The dtype used during GPTQ is another unreported protocol variable.
 4. **AWQ on CPU is not automatic**: `quantize()` with `BACKEND.AUTO` picks CUDA-only `AWQ_GEMM` and raises
-   `AWQ: CUDA is not available`; `BACKEND.AWQ_TORCH` must be passed explicitly. TBD_AWQ_SURPRISE
+   `AWQ: CUDA is not available`; `BACKEND.AWQ_TORCH` must be passed explicitly. Then AWQ **cannot use group size 128
+   on SmolLM2 at all** (`awq_processor.py: Expected in_features (576) to be divisible by group_size (128)`), and its
+   CPU packing kernel `AwqTorchLinear` rejects float32 (`only supports [torch.float16, torch.bfloat16]`). The only AWQ
+   configuration that runs is **g64 + bf16 + AWQ_TORCH**, and it is ~7× slower than GPTQ in the same dtype
+   (AWQ's scale search runs ~20 grid points × 4 scaling groups of layer forwards per layer). So "GPTQ W4 g128 vs
+   AWQ W4 g128" as planned is not possible for SmolLM2 with GPTQModel; either use g64 for both methods or accept
+   mismatched group sizes. (Qwen2.5-0.5B, hidden 896 = 7×128, would allow g128.)
 5. **Determinism is good**: two GPTQ runs with the same seed gave bit-identical perplexity; seed 0 vs 1 differ.
    Timing is noisy though: the same run took 993 s alone vs 1172 s while a pip install ran (+18 %).
 6. **optimum-benchmark 0.6.0 is incompatible with transformers 5.x** (needs < 5) and its **process launcher
