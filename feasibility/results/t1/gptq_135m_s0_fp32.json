@@ -1,0 +1,36 @@
+{
+  "args": {
+    "model": "feasibility/models/synth-SmolLM2-135M",
+    "method": "gptq",
+    "bits": 4,
+    "group_size": 128,
+    "n": 128,
+    "L": 512,
+    "seed": 0,
+    "source": "synthetic",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": false,
+    "threads": 4,
+    "out": "feasibility/results/t1/gptq_135m_s0_fp32.json",
+    "save_dir": null,
+    "backend": "torch",
+    "eval_only": null,
+    "dtype": "float32"
+  },
+  "phases": {
+    "data": {
+      "wall_s": 0.52,
+      "rss_gb": 0.84,
+      "peak_rss_gb": 0.84
+    },
+    "load_for_quant": {
+      "wall_s": 0.31,
+      "rss_gb": 0.945,
+      "peak_rss_gb": 0.944
+    }
+  },
+  "calib_fingerprint": "520fede96e805933",
+  "eval_fingerprint": "45545b6c82ede1e4",
+  "quant_config": "GPTQConfig(bits=4, dynamic=None, group_size=128, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.GPTQ: 'gptq'>, format=<FORMAT.GPTQ: 'gptq'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_9bxuc_ql', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, damp_percent=0.05, damp_auto_increment=0.01, act_group_aware=True, static_groups=False, mse=0.0, gptaq=None, foem=None, mock_quantization=False, hessian=HessianConfig(chunk_size=None, chunk_bytes=None, staging_dtype=torch.float32, dedup_shared_inputs=True))"
+}

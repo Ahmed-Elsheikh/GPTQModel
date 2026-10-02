@@ -1,0 +1,25 @@
+{
+  "load_s": 4.3,
+  "wall_s": 534.8,
+  "peak_rss_gb": 1.71,
+  "results": {
+    "synth_arc_easy": {
+      "name": "synth_arc_easy",
+      "alias": "synth_arc_easy",
+      "sample_len": 200,
+      "acc,none": 0.25,
+      "acc_stderr,none": 0.030695456590127176,
+      "acc_norm,none": 0.265,
+      "acc_norm_stderr,none": 0.03128528159088722
+    },
+    "synth_hellaswag": {
+      "name": "synth_hellaswag",
+      "alias": "synth_hellaswag",
+      "sample_len": 200,
+      "acc,none": 0.22,
+      "acc_stderr,none": 0.02936514188266332,
+      "acc_norm,none": 0.255,
+      "acc_norm_stderr,none": 0.030897382432918598
+    }
+  }
+}
