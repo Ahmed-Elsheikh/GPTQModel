@@ -1,0 +1,140 @@
+Using pip 26.2.1 from /home/user/venv/lib/python3.11/site-packages/pip (python 3.11)
+Collecting gptqmodel==7.5.0
+  Using cached gptqmodel-7.5.0.tar.gz (1.3 MB)
+  Installing build dependencies: started
+  Running command installing build dependencies for gptqmodel
+  Using pip 26.2.1 from /home/user/venv/lib/python3.11/site-packages/pip (python 3.11)
+  Collecting setuptools<83,>=77.0.1
+    Obtaining dependency information for setuptools<83,>=77.0.1 from https://files.pythonhosted.org/packages/9d/76/f789f7a86709c6b087c5a2f52f911838cad707cc613162401badc665acfe/setuptools-82.0.1-py3-none-any.whl.metadata
+    Downloading setuptools-82.0.1-py3-none-any.whl.metadata (6.5 kB)
+  Downloading setuptools-82.0.1-py3-none-any.whl (1.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 31.1 MB/s  0:00:00
+  Installing collected packages: setuptools
+  Successfully installed setuptools-82.0.1
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Running command Getting requirements to build wheel
+  running egg_info
+  writing GPTQModel.egg-info/PKG-INFO
+  writing dependency_links to GPTQModel.egg-info/dependency_links.txt
+  writing requirements to GPTQModel.egg-info/requires.txt
+  writing top-level names to GPTQModel.egg-info/top_level.txt
+  reading manifest file 'GPTQModel.egg-info/SOURCES.txt'
+  reading manifest template 'MANIFEST.in'
+  warning: no files found matching '*.hpp' under directory 'gptqmodel_ext/exllamav3'
+  warning: no files found matching '*.c' under directory 'gptqmodel_ext/exllamav3'
+  warning: no files found matching '*.cpp' under directory 'gptqmodel_ext/machete'
+  warning: no files found matching '*.h' under directory 'gptqmodel_ext/cutlass_extensions'
+  warning: no files found matching '*.cu' under directory 'gptqmodel_ext/cutlass_extensions'
+  warning: no files found matching '*.h' under directory 'gptqmodel_ext/paroquant'
+  warning: no files found matching '*.cpp' under directory 'gptqmodel_ext/paroquant'
+  warning: no files found matching '*.cuh' under directory 'gptqmodel_ext/qqq'
+  warning: no files found matching '*.cuh' under directory 'gptqmodel_ext/hadamard'
+  warning: no files found matching '*.py' under directory 'gptqmodel_ext/swordfish'
+  warning: no previously-included files matching '__pycache__' found under directory 'gptqmodel_ext'
+  warning: no previously-included files matching '*.pyc' found under directory 'gptqmodel_ext'
+  no previously-included directories found matching 'gptqmodel_ext/machete/generated'
+  no previously-included directories found matching 'tests'
+  no previously-included directories found matching 'format'
+  adding license file 'LICENSE'
+  writing manifest file 'GPTQModel.egg-info/SOURCES.txt'
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Running command Preparing metadata (pyproject.toml)
+  running dist_info
+  creating /tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info
+  writing /tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/PKG-INFO
+  writing dependency_links to /tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/dependency_links.txt
+  writing requirements to /tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/requires.txt
+  writing top-level names to /tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/top_level.txt
+  writing manifest file '/tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/SOURCES.txt'
+  reading manifest file '/tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/SOURCES.txt'
+  reading manifest template 'MANIFEST.in'
+  warning: no files found matching '*.hpp' under directory 'gptqmodel_ext/exllamav3'
+  warning: no files found matching '*.c' under directory 'gptqmodel_ext/exllamav3'
+  warning: no files found matching '*.cpp' under directory 'gptqmodel_ext/machete'
+  warning: no files found matching '*.h' under directory 'gptqmodel_ext/cutlass_extensions'
+  warning: no files found matching '*.cu' under directory 'gptqmodel_ext/cutlass_extensions'
+  warning: no files found matching '*.h' under directory 'gptqmodel_ext/paroquant'
+  warning: no files found matching '*.cpp' under directory 'gptqmodel_ext/paroquant'
+  warning: no files found matching '*.cuh' under directory 'gptqmodel_ext/qqq'
+  warning: no files found matching '*.cuh' under directory 'gptqmodel_ext/hadamard'
+  warning: no files found matching '*.py' under directory 'gptqmodel_ext/swordfish'
+  warning: no previously-included files matching '__pycache__' found under directory 'gptqmodel_ext'
+  warning: no previously-included files matching '*.pyc' found under directory 'gptqmodel_ext'
+  no previously-included directories found matching 'gptqmodel_ext/machete/generated'
+  no previously-included directories found matching 'tests'
+  no previously-included directories found matching 'format'
+  adding license file 'LICENSE'
+  writing manifest file '/tmp/pip-modern-metadata-us0y5mni/GPTQModel.egg-info/SOURCES.txt'
+  creating '/tmp/pip-modern-metadata-us0y5mni/gptqmodel-7.5.0.dist-info'
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting accelerate>=1.13.0 (from gptqmodel==7.5.0)
+  Obtaining dependency information for accelerate>=1.13.0 from https://files.pythonhosted.org/packages/8a/4c/34f0450479d01195027260da68d8a3880683f1640c3ca5adf64acb3185f1/accelerate-1.15.0-py3-none-any.whl.metadata
+  Downloading accelerate-1.15.0-py3-none-any.whl.metadata (19 kB)
+  Link requires a different Python (3.11.15 not in: '>=3.7,<3.11'): https://files.pythonhosted.org/packages/3a/be/650f9c091ef71cb01d735775d554e068752d3ff63d7943b26316dc401749/numpy-1.21.2.zip (from https://pypi.org/simple/numpy/) (requires-python:>=3.7,<3.11)
+  Link requires a different Python (3.11.15 not in: '>=3.7,<3.11'): https://files.pythonhosted.org/packages/5f/d6/ad58ded26556eaeaa8c971e08b6466f17c4ac4d786cd3d800e26ce59cc01/numpy-1.21.3.zip (from https://pypi.org/simple/numpy/) (requires-python:>=3.7,<3.11)
+  Link requires a different Python (3.11.15 not in: '>=3.7,<3.11'): https://files.pythonhosted.org/packages/fb/48/b0708ebd7718a8933f0d3937513ef8ef2f4f04529f1f66ca86d873043921/numpy-1.21.4.zip (from https://pypi.org/simple/numpy/) (requires-python:>=3.7,<3.11)
+  Link requires a different Python (3.11.15 not in: '>=3.7,<3.11'): https://files.pythonhosted.org/packages/c2/a8/a924a09492bdfee8c2ec3094d0a13f2799800b4fdc9c890738aeeb12c72e/numpy-1.21.5.zip (from https://pypi.org/simple/numpy/) (requires-python:>=3.7,<3.11)
+  Link requires a different Python (3.11.15 not in: '>=3.7,<3.11'): https://files.pythonhosted.org/packages/45/b7/de7b8e67f2232c26af57c205aaad29fe17754f793404f59c8a730c7a191a/numpy-1.21.6.zip (from https://pypi.org/simple/numpy/) (requires-python:>=3.7,<3.11)
+  Link requires a different Python (3.11.15 not in: '>=3.12'): https://files.pythonhosted.org/packages/d3/e1/f2fe8f6113a657a1da83b358b16755e528a602c6976a43724a88f42b482a/numpy-2.5.0rc1.tar.gz (from https://pypi.org/simple/numpy/) (requires-python:>=3.12)
+  Link requires a different Python (3.11.15 not in: '>=3.12'): https://files.pythonhosted.org/packages/e7/05/3d27272d30698dc0ecb7fdfaa41ad70303b444f81722bb99bce1d818638a/numpy-2.5.0.tar.gz (from https://pypi.org/simple/numpy/) (requires-python:>=3.12)
+  Link requires a different Python (3.11.15 not in: '>=3.12'): https://files.pythonhosted.org/packages/22/fd/89965aa4ac08c74998539fcbf24fa3540f3e15237fbeb6bcf9c908f4aade/numpy-2.5.1.tar.gz (from https://pypi.org/simple/numpy/) (requires-python:>=3.12)
+  Link requires a different Python (3.11.15 not in: '>=3.12'): https://files.pythonhosted.org/packages/9a/80/db0b4559e57ec36362bedbb05530a87fafbcb6067708c946967a41d449e7/numpy-2.5.2.tar.gz (from https://pypi.org/simple/numpy/) (requires-python:>=3.12)
+  Link requires a different Python (3.11.15 not in: '>=3.12'): https://files.pythonhosted.org/packages/13/01/11703282db468b85f6f7b8c7f22d058de5970d5c7e60a3a8aaa313c3de36/numpy-2.5.3.tar.gz (from https://pypi.org/simple/numpy/) (requires-python:>=3.12)
+Collecting numpy==2.2.6 (from gptqmodel==7.5.0)
+  Obtaining dependency information for numpy==2.2.6 from https://files.pythonhosted.org/packages/b3/dd/2238b898e51bd6d389b7389ffb20d7f4c10066d80351187ec8e303a5a475/numpy-2.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+  Downloading numpy-2.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+Requirement already satisfied: torch>=2.8.0 in /home/user/venv/lib/python3.11/site-packages (from gptqmodel==7.5.0) (2.14.1)
+Collecting safetensors>=0.7.0 (from gptqmodel==7.5.0)
+  Obtaining dependency information for safetensors>=0.7.0 from https://files.pythonhosted.org/packages/28/50/f203ff3a3ddfe19308efc83c5a3a29ed02bf786732ec35e68bf9162f3365/safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+  Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+Requirement already satisfied: filelock in /home/user/venv/lib/python3.11/site-packages (from gptqmodel==7.5.0) (4.0.9)
+Collecting transformers>=5.14.0 (from gptqmodel==7.5.0)
+  Obtaining dependency information for transformers>=5.14.0 from https://files.pythonhosted.org/packages/2d/3b/f84d7d12886147c5267216ed6c57d1163e68d24a89b2ad29d835a7089463/transformers-5.18.0-py3-none-any.whl.metadata
+  Downloading transformers-5.18.0-py3-none-any.whl.metadata (32 kB)
+Collecting threadpoolctl>=3.6.0 (from gptqmodel==7.5.0)
+  Obtaining dependency information for threadpoolctl>=3.6.0 from https://files.pythonhosted.org/packages/43/3f/f88a53f60a472b46f4023f56d204dd7de33d34c5d2acbfa0d70a674e639e/threadpoolctl-3.7.0-py3-none-any.whl.metadata
+  Downloading threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+Collecting packaging>=24.2 (from gptqmodel==7.5.0)
+  Obtaining dependency information for packaging>=24.2 from https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl.metadata
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting device-smi>=0.5.7 (from gptqmodel==7.5.0)
+  Downloading device_smi-0.5.7.tar.gz (26 kB)
+  Installing build dependencies: started
+  Running command installing build dependencies for device-smi
+  Using pip 26.2.1 from /home/user/venv/lib/python3.11/site-packages/pip (python 3.11)
+  Collecting setuptools<85,>=79.0.0
+    Obtaining dependency information for setuptools<85,>=79.0.0 from https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl.metadata
+    Downloading setuptools-84.0.0-py3-none-any.whl.metadata (6.6 kB)
+  Downloading setuptools-84.0.0-py3-none-any.whl (818 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 818.2/818.2 kB 28.1 MB/s  0:00:00
+  Installing collected packages: setuptools
+  Successfully installed setuptools-84.0.0
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Running command Getting requirements to build wheel
+  running egg_info
+  writing Device_SMI.egg-info/PKG-INFO
+  writing dependency_links to Device_SMI.egg-info/dependency_links.txt
+  writing top-level names to Device_SMI.egg-info/top_level.txt
+  reading manifest file 'Device_SMI.egg-info/SOURCES.txt'
+  adding license file 'LICENSE'
+  writing manifest file 'Device_SMI.egg-info/SOURCES.txt'
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Running command Preparing metadata (pyproject.toml)
+  running dist_info
+  creating /tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info
+  writing /tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info/PKG-INFO
+  writing dependency_links to /tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info/dependency_links.txt
+  writing top-level names to /tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info/top_level.txt
+  writing manifest file '/tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info/SOURCES.txt'
+  reading manifest file '/tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info/SOURCES.txt'
+  adding license file 'LICENSE'
+  writing manifest file '/tmp/pip-modern-metadata-l95_9hyn/Device_SMI.egg-info/SOURCES.txt'
+  creating '/tmp/pip-modern-metadata-l95_9hyn/device_smi-0.5.7.dist-info'
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting protobuf>=7.34.0 (from gptqmodel==7.5.0)
+  Obtaining dependency information for protobuf>=7.34.0 from https://files.pythonhosted.org/packages/db/f3/3996583dd2906297a637af12114deddf7658af6e683fedb83be061983fb5/protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl.metadata
+  Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)

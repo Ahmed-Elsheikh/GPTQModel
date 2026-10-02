@@ -1,0 +1,18 @@
+2026-10-02T13:55:36+00:00
+200 https://pypi.org/simple/
+404 https://files.pythonhosted.org
+000 https://download.pytorch.org/whl/cpu/
+000 https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M
+000 https://cdn-lfs.huggingface.co
+000 https://cas-bridge.xethub.hf.co
+400 https://github.com
+403 https://codeload.github.com/locuslab/wanda/tar.gz/refs/heads/main
+301 https://raw.githubusercontent.com
+000 https://arxiv.org/abs/2306.11695v3
+000 https://export.arxiv.org
+404 https://api.anthropic.com/v1/messages
+000 https://api.openai.com
+000 https://openrouter.ai
+000 https://api.together.xyz
+307 https://s3.amazonaws.com
+000 https://data.together.xyz
