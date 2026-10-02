@@ -1,0 +1,7 @@
+- launcher=inline
+- scenario.memory=false
+- scenario.warmup_runs=2
+- scenario.iterations=3
+- scenario.duration=0
+- +scenario.generate_kwargs.max_new_tokens=20
+- +scenario.generate_kwargs.min_new_tokens=20

@@ -1,0 +1,117 @@
+2026-10-02:15:12:32 INFO     [_cli.run:392] Selected Tasks: ['wikitext']
+2026-10-02:15:12:35 INFO     [evaluator:214] Setting random seed to 0 | Setting numpy seed to 0 | Setting torch manual seed to 0 | Setting fewshot manual seed to 0
+2026-10-02:15:12:35 INFO     [evaluator:239] Initializing hf model, with arguments: {'pretrained': 'feasibility/models/synth-SmolLM2-135M', 'dtype': 'float32'}
+2026-10-02:15:12:39 INFO     [models.huggingface:289] Using device 'cpu'
+2026-10-02:15:12:39 INFO     [models.huggingface:582] Model parallel was set to False, max memory was not set, and device map was set to {'': 'cpu'}
+W1002 15:12:40.993000 7406 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:12:41.044000 7406 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  41%|████      | 112/272 [00:00<00:00, 1060.21it/s]Loading weights:  81%|████████  | 219/272 [00:00<00:00, 1056.88it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 1066.76it/s]
+2026-10-02:15:12:41 WARNING  [api.task:734] [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+2026-10-02:15:12:41 WARNING  [api.task:746] [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+2026-10-02:15:12:41 WARNING  [api.task:734] [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+2026-10-02:15:12:41 WARNING  [api.task:746] [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+2026-10-02:15:12:41 WARNING  [api.task:734] [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+2026-10-02:15:12:41 WARNING  [api.task:746] [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+Traceback (most recent call last):
+  File "/home/user/venv/bin/lm_eval", line 6, in <module>
+    sys.exit(cli_evaluate())
+             ^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/__main__.py", line 10, in cli_evaluate
+    parser.execute(args)
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/_cli/harness.py", line 60, in execute
+    args.func(args)
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/_cli/run.py", line 395, in _execute
+    results = simple_evaluate(
+              ^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/utils.py", line 580, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/evaluator.py", line 302, in simple_evaluate
+    loaded = task_manager.load(tasks)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/tasks/manager.py", line 208, in load
+    obj = self._load_spec(spec) if not isinstance(spec, (Task, Group)) else spec  # type:ignore[invalid-argument-type]
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/tasks/manager.py", line 154, in _load_spec
+    return self._factory.build(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/tasks/_factory.py", line 61, in build
+    return self._build_task(entry, overrides)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/tasks/_factory.py", line 81, in _build_task
+    obj = ConfigurableTask(config=cfg)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/api/task.py", line 753, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/api/task.py", line 869, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/datasets/load.py", line 1696, in load_dataset
+    builder_instance = load_dataset_builder(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/datasets/load.py", line 1323, in load_dataset_builder
+    dataset_module = dataset_module_factory(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/datasets/load.py", line 1215, in dataset_module_factory
+    raise e1 from None
+  File "/home/user/venv/lib/python3.11/site-packages/datasets/load.py", line 1122, in dataset_module_factory
+    dataset_readme_path = api.hf_hub_download(
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 6688, in hf_hub_download
+    return hf_hub_download(
+           ^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 266, in _inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1047, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1117, in _hf_hub_download_to_cache_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1762, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1669, in get_hf_file_metadata
+    response = _httpx_follow_hub_redirects_with_backoff(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 754, in _httpx_follow_hub_redirects_with_backoff
+    response = http_backoff(
+               ^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 627, in http_backoff
+    return next(
+           ^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 535, in _http_backoff_base
+    response = client.request(method=method, url=url, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/user/venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ProxyError: 403 Forbidden

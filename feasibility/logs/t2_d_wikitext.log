@@ -1,0 +1,23 @@
+2026-10-02:15:12:56 INFO     [_cli.run:391] Including path: feasibility/lm_eval_tasks
+2026-10-02:15:12:56 INFO     [_cli.run:392] Selected Tasks: ['synth_wikitext']
+2026-10-02:15:12:59 INFO     [evaluator:214] Setting random seed to 0 | Setting numpy seed to 0 | Setting torch manual seed to 0 | Setting fewshot manual seed to 0
+2026-10-02:15:12:59 INFO     [evaluator:239] Initializing hf model, with arguments: {'pretrained': 'feasibility/models/synth-SmolLM2-135M', 'dtype': 'float32'}
+2026-10-02:15:13:04 INFO     [models.huggingface:289] Using device 'cpu'
+2026-10-02:15:13:04 INFO     [models.huggingface:582] Model parallel was set to False, max memory was not set, and device map was set to {'': 'cpu'}
+W1002 15:13:06.175000 7462 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:13:06.255000 7462 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  40%|███▉      | 108/272 [00:00<00:00, 1069.17it/s]Loading weights:  79%|███████▉  | 215/272 [00:00<00:00, 851.21it/s] Loading weights: 100%|██████████| 272/272 [00:00<00:00, 926.11it/s]
+2026-10-02:15:13:06 WARNING  [api.task:734] [Task: synth_wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+2026-10-02:15:13:06 WARNING  [api.task:746] [Task: synth_wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+2026-10-02:15:13:06 WARNING  [api.task:734] [Task: synth_wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+2026-10-02:15:13:06 WARNING  [api.task:746] [Task: synth_wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+2026-10-02:15:13:06 WARNING  [api.task:734] [Task: synth_wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+2026-10-02:15:13:06 WARNING  [api.task:746] [Task: synth_wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+Generating test split: 0 examples [00:00, ? examples/s]Generating test split: 62 examples [00:00, 755.13 examples/s]
+2026-10-02:15:13:07 INFO     [evaluator_utils:472] Selected tasks:
+2026-10-02:15:13:07 INFO     [evaluator_utils:506] Task: synth_wikitext (feasibility/lm_eval_tasks/synth_wikitext.yaml)
+2026-10-02:15:13:07 INFO     [api.task:312] Building contexts for synth_wikitext on rank 0...
+  0%|          | 0/62 [00:00<?, ?it/s]100%|██████████| 62/62 [00:00<00:00, 837.46it/s]
+2026-10-02:15:13:08 INFO     [evaluator:589] Running loglikelihood_rolling requests
+  0%|          | 0/62 [00:00<?, ?it/s] 11%|█▏        | 7/62 [00:00<00:00, 66.25it/s] 23%|██▎       | 14/62 [00:00<00:00, 51.54it/s] 32%|███▏      | 20/62 [00:00<00:00, 47.24it/s] 44%|████▎     | 27/62 [00:00<00:00, 53.07it/s] 56%|█████▋    | 35/62 [00:00<00:00, 60.88it/s] 68%|██████▊   | 42/62 [00:00<00:00, 63.11it/s] 79%|███████▉  | 49/62 [00:00<00:00, 64.24it/s] 90%|█████████ | 56/62 [00:00<00:00, 61.02it/s]100%|██████████| 62/62 [00:01<00:00, 58.13it/s]
+Running loglikelihood requests:   0%|          | 0/8 [00:00<?, ?it/s]

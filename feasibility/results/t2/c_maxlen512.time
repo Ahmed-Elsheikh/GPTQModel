@@ -1,0 +1,23 @@
+	Command being timed: "lm_eval --model hf --model_args pretrained=feasibility/models/synth-SmolLM2-135M,dtype=float32,max_length=512 --tasks synth_arc_easy,synth_hellaswag --num_fewshot 5 --limit 100 --batch_size 8 --device cpu --seed 0 --log_samples --include_path feasibility/lm_eval_tasks --output_path feasibility/results/t2/c_maxlen512"
+	User time (seconds): 1449.12
+	System time (seconds): 400.24
+	Percent of CPU this job got: 352%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:44.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 4318728
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 87414088
+	Voluntary context switches: 18164
+	Involuntary context switches: 32289
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 5000
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

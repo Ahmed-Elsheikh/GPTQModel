@@ -1,0 +1,29 @@
+torch 2.14.1
+transformers 5.18.0
+accelerate 1.15.0
+# of gpus:  0
+loading llm model /home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+W1002 15:19:53.866000 8361 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:19:53.943000 8361 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  24%|██▎       | 64/272 [00:00<00:00, 630.34it/s]Loading weights:  49%|████▊     | 132/272 [00:00<00:00, 658.63it/s]Loading weights:  74%|███████▍  | 202/272 [00:00<00:00, 662.53it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 682.86it/s]
+use device  cpu
+pruning starts
+loading calibdation data
+[driver] synthetic loader for 'c4': 32x512 calib, 20480 eval tokens
+dataset loading complete
+[driver] wall_s=2.2 peak_rss_gb=1.60
+Traceback (most recent call last):
+  File "/home/user/GPTQModel/feasibility/wanda_synth_driver.py", line 38, in <module>
+    wanda_main.main()
+  File "/home/user/GPTQModel/third_party/wanda/main.py", line 69, in main
+    prune_wanda(args, model, tokenizer, device, prune_n=prune_n, prune_m=prune_m)
+  File "/home/user/GPTQModel/third_party/wanda/lib/prune.py", line 135, in prune_wanda
+    inps, outs, attention_mask, position_ids = prepare_calibration_input(model, dataloader, device)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/GPTQModel/third_party/wanda/lib/prune.py", line 64, in prepare_calibration_input
+    if "model.embed_tokens" in model.hf_device_map:
+                               ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1972, in __getattr__
+    raise AttributeError(
+AttributeError: 'LlamaForCausalLM' object has no attribute 'hf_device_map'

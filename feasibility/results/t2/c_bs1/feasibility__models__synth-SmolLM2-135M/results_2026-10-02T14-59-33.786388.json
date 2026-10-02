@@ -1,0 +1,219 @@
+{
+  "results": {
+    "synth_arc_easy": {
+      "name": "synth_arc_easy",
+      "alias": "synth_arc_easy",
+      "sample_len": 100,
+      "acc,none": 0.24,
+      "acc_stderr,none": 0.042923469599092816,
+      "acc_norm,none": 0.26,
+      "acc_norm_stderr,none": 0.04408440022768081
+    },
+    "synth_hellaswag": {
+      "name": "synth_hellaswag",
+      "alias": "synth_hellaswag",
+      "sample_len": 100,
+      "acc,none": 0.25,
+      "acc_stderr,none": 0.04351941398892446,
+      "acc_norm,none": 0.3,
+      "acc_norm_stderr,none": 0.046056618647183814
+    }
+  },
+  "group_subtasks": {},
+  "configs": {
+    "synth_arc_easy": {
+      "task": "synth_arc_easy",
+      "dataset_path": "json",
+      "dataset_kwargs": {
+        "data_files": {
+          "train": "feasibility/lm_eval_tasks/arc_train.jsonl",
+          "test": "feasibility/lm_eval_tasks/arc_test.jsonl"
+        }
+      },
+      "training_split": "train",
+      "test_split": "test",
+      "doc_to_text": "Question: {{question}}\nAnswer:",
+      "doc_to_target": "{{choices.label.index(answerKey)}}",
+      "unsafe_code": false,
+      "doc_to_choice": "{{choices.text}}",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "default",
+        "split": null,
+        "process_docs": null,
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "Question: {{question}}\nAnswer:",
+        "doc_to_choice": "{{choices.text}}",
+        "doc_to_target": "{{choices.label.index(answerKey)}}",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "acc",
+          "aggregation": "mean",
+          "higher_is_better": true
+        },
+        {
+          "metric": "acc_norm",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "multiple_choice",
+      "repeats": 1,
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "feasibility/models/synth-SmolLM2-135M",
+        "dtype": "float32",
+        "max_length": 2048,
+        "config_source": "feasibility/lm_eval_tasks/synth_arc_easy.yaml"
+      }
+    },
+    "synth_hellaswag": {
+      "task": "synth_hellaswag",
+      "dataset_path": "json",
+      "dataset_kwargs": {
+        "data_files": {
+          "train": "feasibility/lm_eval_tasks/hs_train.jsonl",
+          "validation": "feasibility/lm_eval_tasks/hs_val.jsonl"
+        }
+      },
+      "training_split": "train",
+      "validation_split": "validation",
+      "doc_to_text": "{{query}}",
+      "doc_to_target": "{{label}}",
+      "unsafe_code": false,
+      "doc_to_choice": "choices",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "default",
+        "split": null,
+        "process_docs": null,
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "{{query}}",
+        "doc_to_choice": "choices",
+        "doc_to_target": "{{label}}",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "acc",
+          "aggregation": "mean",
+          "higher_is_better": true
+        },
+        {
+          "metric": "acc_norm",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "multiple_choice",
+      "repeats": 1,
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "feasibility/models/synth-SmolLM2-135M",
+        "dtype": "float32",
+        "max_length": 2048,
+        "config_source": "feasibility/lm_eval_tasks/synth_hellaswag.yaml"
+      }
+    }
+  },
+  "versions": {
+    "synth_arc_easy": 1.0,
+    "synth_hellaswag": 1.0
+  },
+  "n-shot": {
+    "synth_arc_easy": 0,
+    "synth_hellaswag": 0
+  },
+  "higher_is_better": {
+    "synth_arc_easy": {
+      "acc": true,
+      "acc_norm": true
+    },
+    "synth_hellaswag": {
+      "acc": true,
+      "acc_norm": true
+    }
+  },
+  "n-samples": {
+    "synth_arc_easy": {
+      "original": 600,
+      "effective": 100
+    },
+    "synth_hellaswag": {
+      "original": 600,
+      "effective": 100
+    }
+  },
+  "config": {
+    "model": "hf",
+    "model_args": {
+      "pretrained": "feasibility/models/synth-SmolLM2-135M",
+      "dtype": "float32",
+      "max_length": 2048
+    },
+    "model_num_parameters": 134515008,
+    "model_dtype": "torch.float32",
+    "model_revision": "main",
+    "model_sha": "",
+    "batch_size": "1",
+    "batch_sizes": [],
+    "device": "cpu",
+    "use_cache": null,
+    "limit": 100.0,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {},
+    "random_seed": 0,
+    "numpy_seed": 0,
+    "torch_seed": 0,
+    "fewshot_seed": 0
+  },
+  "git_hash": "5259784",
+  "date": 1790952972.7042565,
+  "pretty_env_info": "PyTorch version: 2.14.1+cu130\nIs debug build: False\nCUDA used to build PyTorch: 13.0\nROCM used to build PyTorch: N/A\n\nOS: Ubuntu 24.04.4 LTS (x86_64)\nGCC version: (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nClang version: 18.1.3 (1ubuntu1)\nCMake version: version 3.28.3\nLibc version: glibc-2.39\n\nPython version: 3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0] (64-bit runtime)\nPython platform: Linux-6.18.44-fc-v51-x86_64-with-glibc2.39\nIs CUDA available: False\nCUDA runtime version: No CUDA\nCUDA_MODULE_LOADING set to: N/A\nGPU models and configuration: No CUDA\nNvidia driver version: No CUDA\ncuDNN version: No CUDA\nIs XPU available: False\nHIP runtime version: N/A\nMIOpen runtime version: N/A\nIs XNNPACK available: False\nCaching allocator config: N/A\n\nCPU:\nArchitecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  4\nOn-line CPU(s) list:                     0-3\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Processor @ 2.80GHz\nCPU family:                              6\nModel:                                   85\nThread(s) per core:                      1\nCore(s) per socket:                      4\nSocket(s):                               1\nStepping:                                7\nBogoMIPS:                                5600.54\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault ssbd ibrs ibpb stibp ibrs_enhanced fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm avx512f avx512dq rdseed adx smap clflushopt clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves arat umip avx512_vnni md_clear arch_capabilities\nHypervisor vendor:                       KVM\nVirtualization type:                     full\nL1d cache:                               128 KiB (4 instances)\nL1i cache:                               128 KiB (4 instances)\nL2 cache:                                4 MiB (4 instances)\nL3 cache:                                33 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-3\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Mitigation; Enhanced IBRS\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI Vulnerable\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown\nVulnerability Vmscape:                   Not affected\n\nVersions of relevant libraries:\n[pip3] numpy==2.2.6\n[pip3] nvidia-cublas==13.1.1.3\n[pip3] nvidia-cuda-cupti==13.0.85\n[pip3] nvidia-cuda-nvrtc==13.0.88\n[pip3] nvidia-cuda-runtime==13.0.96\n[pip3] nvidia-cudnn-cu13==9.24.0.43\n[pip3] nvidia-cufft==12.0.0.61\n[pip3] nvidia-curand==10.4.0.35\n[pip3] nvidia-cusolver==12.0.4.66\n[pip3] nvidia-cusparse==12.6.3.3\n[pip3] nvidia-cusparselt-cu13==0.8.1\n[pip3] nvidia-nccl-cu13==2.30.7\n[pip3] nvidia-nvjitlink==13.4.92\n[pip3] nvidia-nvtx==13.0.85\n[pip3] torch==2.14.1\n[pip3] torchao==0.18.0\n[pip3] triton==3.8.0\n[conda] Could not collect",
+  "transformers_version": "5.18.0",
+  "lm_eval_version": "0.4.13",
+  "upper_git_hash": null,
+  "tokenizer_pad_token": [
+    "t0",
+    "0"
+  ],
+  "tokenizer_eos_token": [
+    "t0",
+    "0"
+  ],
+  "tokenizer_bos_token": [
+    "t0",
+    "0"
+  ],
+  "eot_token_id": 0,
+  "max_length": 2048,
+  "task_hashes": {
+    "synth_arc_easy": "ec281757c77fdcf4437fb3dbb776ca157684b72b666bee802c3bcaa9332057d7",
+    "synth_hellaswag": "ca410fd1b89d457137ede06223fed7c1eab36e34acec2a4e25dfd6656beffa7e"
+  },
+  "model_source": "hf",
+  "model_name": "feasibility/models/synth-SmolLM2-135M",
+  "model_name_sanitized": "feasibility__models__synth-SmolLM2-135M",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": null,
+  "chat_template": null,
+  "chat_template_sha": null,
+  "total_evaluation_time_seconds": "211.737173085"
+}

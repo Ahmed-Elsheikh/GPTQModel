@@ -1,0 +1,105 @@
+# load_model:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      1 |      - |
+| total  |    0.467906 | s |
+| mean   |     0.467906 | s |
+| p50    |      0.467906 | s |
+| p90    |      0.467906 | s |
+| p95    |      0.467906 | s |
+| p99    |      0.467906 | s |
+| stdev  |    0.000000 | s |
+| stdev_ | 0.00 |      % |
+# first_generate:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      1 |      - |
+| total  |    1.450172 | s |
+| mean   |     1.450172 | s |
+| p50    |      1.450172 | s |
+| p90    |      1.450172 | s |
+| p95    |      1.450172 | s |
+| p99    |      1.450172 | s |
+| stdev  |    0.000000 | s |
+| stdev_ | 0.00 |      % |
+# generate:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      3 |      - |
+| total  |    4.615855 | s |
+| mean   |     1.538618 | s |
+| p50    |      1.501538 | s |
+| p90    |      1.600758 | s |
+| p95    |      1.613160 | s |
+| p99    |      1.623082 | s |
+| stdev  |    0.061700 | s |
+| stdev_ | 4.01 |      % |
+## throughput:
+
+| metric     |     value   |   unit |
+| :--------- | --------:   | -----: |
+| throughput | 12.35 | samples/s |
+# prefill:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      3 |      - |
+| total  |    0.848248 | s |
+| mean   |     0.282749 | s |
+| p50    |      0.291216 | s |
+| p90    |      0.308220 | s |
+| p95    |      0.310345 | s |
+| p99    |      0.312046 | s |
+| stdev  |    0.028363 | s |
+| stdev_ | 10.03 |      % |
+## throughput:
+
+| metric     |     value   |   unit |
+| :--------- | --------:   | -----: |
+| throughput | 3.54 | samples/s |
+# decode:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      3 |      - |
+| total  |    3.767607 | s |
+| mean   |     1.255869 | s |
+| p50    |      1.244193 | s |
+| p90    |      1.299312 | s |
+| p95    |      1.306202 | s |
+| p99    |      1.311714 | s |
+| stdev  |    0.042760 | s |
+| stdev_ | 3.40 |      % |
+## throughput:
+
+| metric     |     value   |   unit |
+| :--------- | --------:   | -----: |
+| throughput | 15.13 | tokens/s |
+# per_token:
+
+## latency:
+
+| metric | value        | unit   |
+| :----- | -----------: |------: |
+| count  |      117 |      - |
+| total  |    8.231069 | s |
+| mean   |     0.070351 | s |
+| p50    |      0.062073 | s |
+| p90    |      0.082209 | s |
+| p95    |      0.096632 | s |
+| p99    |      0.245645 | s |
+| stdev  |    0.035128 | s |
+| stdev_ | 49.93 |      % |

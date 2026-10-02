@@ -1,0 +1,222 @@
+[2026-10-02 15:17:10,824][HYDRA] Launching 16 jobs locally
+[2026-10-02 15:17:10,824][HYDRA] 	#0 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=0 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:17:10,970[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+[MAIN-PROCESS][[36m2026-10-02 15:17:10,970[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Setting multiprocessing start method to spawn[0m
+W1002 15:17:20.261000 7865 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:17:20.311000 7865 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:20,449[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:20,450[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:20,452[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:20,452[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:17:20,452[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:17:20,455][HYDRA] 	#1 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=0 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:17:20,613[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:17:29.528000 7899 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:17:29.581000 7899 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:29,725[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:29,725[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:29,727[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:29,727[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:17:29,728[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:17:29,730][HYDRA] 	#2 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=0 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:17:29,892[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:17:38.927000 7977 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:17:38.986000 7977 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:39,121[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:39,122[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:39,123[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:39,124[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:17:39,124[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:17:39,127][HYDRA] 	#3 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=0 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:17:39,272[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:17:49.126000 8038 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:17:49.177000 8038 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:49,316[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:49,316[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:49,319[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:49,320[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:17:49,320[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:17:49,322][HYDRA] 	#4 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=10 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:17:49,458[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:17:57.578000 8066 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:17:57.622000 8066 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:57,748[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:57,748[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:57,750[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:17:57,751[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:17:57,751[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:17:57,753][HYDRA] 	#5 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=10 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:17:57,885[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:18:07.269000 8091 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:18:07.338000 8091 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:07,491[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:07,491[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:07,494[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:07,495[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:18:07,495[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:18:07,498][HYDRA] 	#6 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=10 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:18:07,756[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:18:16.772000 8114 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:18:16.816000 8114 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:16,941[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:16,941[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:16,943[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:16,944[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:18:16,944[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:18:16,946][HYDRA] 	#7 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M scenario.warmup_runs=10 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:18:17,080[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:18:25.851000 8138 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:18:25.917000 8138 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:26,052[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:26,053[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:26,055[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:26,055[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:18:26,055[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:18:26,058][HYDRA] 	#8 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=0 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:18:26,211[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:18:34.518000 8165 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:18:34.562000 8165 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:34,746[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:34,747[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:34,750[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:34,751[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:18:34,751[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:18:34,753][HYDRA] 	#9 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=0 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:18:34,900[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:18:43.596000 8189 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:18:43.652000 8189 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:43,823[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:43,824[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:43,826[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:43,827[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:18:43,827[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:18:43,830][HYDRA] 	#10 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=0 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:18:44,052[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:18:53.053000 8215 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:18:53.097000 8215 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:53,217[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:53,218[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:53,220[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:18:53,220[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:18:53,220[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:18:53,223][HYDRA] 	#11 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=0 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:18:53,420[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:19:02.409000 8240 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:19:02.453000 8240 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:02,579[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:02,580[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:02,581[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:02,582[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:19:02,582[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:19:02,585][HYDRA] 	#12 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=10 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:19:03,140[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:19:12.125000 8263 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:19:12.168000 8263 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:12,303[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:12,304[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:12,306[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:12,306[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:19:12,306[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:19:12,309][HYDRA] 	#13 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=10 scenario.input_shapes.batch_size=1 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:19:12,473[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:19:21.333000 8286 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:19:21.380000 8286 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:21,513[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:21,513[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:21,515[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:21,516[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:19:21,516[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:19:21,518][HYDRA] 	#14 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=10 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=128
+[MAIN-PROCESS][[36m2026-10-02 15:19:21,655[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:19:30.483000 8306 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:19:30.533000 8306 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:30,683[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:30,683[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:30,686[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:30,686[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-02 15:19:30,686[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[2026-10-02 15:19:30,689][HYDRA] 	#15 : backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-360M scenario.warmup_runs=10 scenario.input_shapes.batch_size=4 scenario.input_shapes.sequence_length=512
+[MAIN-PROCESS][[36m2026-10-02 15:19:30,842[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+W1002 15:19:39.743000 8335 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 15:19:39.798000 8335 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:39,992[0m][[34mhydra.utils[0m][[31mERROR[0m] - Error getting class at optimum_benchmark.backends.pytorch.backend.PyTorchBackend: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:39,992[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Sending traceback string to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:39,995[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending traceback string directly (2939 bytes)[0m
+[MAIN-PROCESS][[36m2026-10-02 15:19:39,996[0m][[34mprocess[0m][[31mERROR[0m] - 	+ Received traceback from isolated process[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:19:39,996[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+Error executing job with overrides: ['backend.model=/home/user/GPTQModel/feasibility/models/synth-SmolLM2-135M', 'scenario.warmup_runs=0', 'scenario.input_shapes.batch_size=1', 'scenario.input_shapes.sequence_length=128']
+Traceback (most recent call last):
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/cli.py", line 74, in main
+    benchmark_report = Benchmark.launch(benchmark_config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/benchmark/base.py", line 51, in launch
+    report = launcher.launch(worker=Benchmark.run, worker_args=[config])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/launchers/process/launcher.py", line 72, in launch
+    raise ChildProcessError(response)
+ChildProcessError: Traceback (most recent call last):
+  File "/home/user/venv/lib/python3.11/site-packages/hydra/_internal/utils.py", line 644, in _locate
+    obj = getattr(obj, part)
+          ^^^^^^^^^^^^^^^^^^
+AttributeError: module 'optimum_benchmark.backends.pytorch' has no attribute 'backend'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/venv/lib/python3.11/site-packages/hydra/_internal/utils.py", line 650, in _locate
+    obj = import_module(mod)
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/backends/pytorch/backend.py", line 20, in <module>
+    from ..base import Backend
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/backends/base.py", line 24, in <module>
+    from .transformers_utils import (
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/backends/transformers_utils.py", line 7, in <module>
+    from transformers import (
+ImportError: cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/launchers/process/launcher.py", line 107, in target
+    report = worker(*worker_args)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/optimum_benchmark/benchmark/base.py", line 69, in run
+    backend_factory: Type[Backend] = get_class(backend_config._target_)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/hydra/utils.py", line 44, in get_class
+    raise e
+  File "/home/user/venv/lib/python3.11/site-packages/hydra/utils.py", line 35, in get_class
+    cls = _locate(path)
+          ^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/hydra/_internal/utils.py", line 658, in _locate
+    raise ImportError(
+ImportError: Error loading 'optimum_benchmark.backends.pytorch.backend.PyTorchBackend':
+ImportError("cannot import name 'SpecialTokensMixin' from 'transformers' (/home/user/venv/lib/python3.11/site-packages/transformers/__init__.py)")
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

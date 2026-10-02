@@ -1,0 +1,50 @@
+{
+  "c_base vs c_bs1 [synth_arc_easy]": {
+    "n_ll": 400,
+    "max_abs_dLL": 1.5e-05,
+    "mean_abs_dLL": 0.0,
+    "pred_flips": 0
+  },
+  "c_base vs c_bs1 [synth_hellaswag]": {
+    "n_ll": 400,
+    "max_abs_dLL": 6.1e-05,
+    "mean_abs_dLL": 7e-06,
+    "pred_flips": 0
+  },
+  "c_base vs c_bf16 [synth_arc_easy]": {
+    "n_ll": 400,
+    "max_abs_dLL": 0.410934,
+    "mean_abs_dLL": 0.10662,
+    "pred_flips": 0
+  },
+  "c_base vs c_bf16 [synth_hellaswag]": {
+    "n_ll": 400,
+    "max_abs_dLL": 1.486908,
+    "mean_abs_dLL": 0.460421,
+    "pred_flips": 0
+  },
+  "c_base vs c_fewshot5 [synth_arc_easy]": {
+    "n_ll": 400,
+    "max_abs_dLL": 3.097191,
+    "mean_abs_dLL": 0.538659,
+    "pred_flips": 2
+  },
+  "c_base vs c_fewshot5 [synth_hellaswag]": {
+    "n_ll": 400,
+    "max_abs_dLL": 24.36084,
+    "mean_abs_dLL": 4.057939,
+    "pred_flips": 2
+  },
+  "c_fewshot5 vs c_maxlen512 [synth_arc_easy]": {
+    "n_ll": 400,
+    "max_abs_dLL": 0.0,
+    "mean_abs_dLL": 0.0,
+    "pred_flips": 0
+  },
+  "c_fewshot5 vs c_maxlen512 [synth_hellaswag]": {
+    "n_ll": 400,
+    "max_abs_dLL": 24.992249,
+    "mean_abs_dLL": 3.327748,
+    "pred_flips": 1
+  }
+}
