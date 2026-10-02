@@ -1,0 +1,23 @@
+	Command being timed: "python feasibility/quant_eval.py --model feasibility/models/synth-SmolLM2-135M --eval_only feasibility/results/t1/_tmp_q_gptq_135m_s0_fp32 --backend torch --dtype float32 --out feasibility/results/t1/gptq_135m_s0_fp32_eval.json"
+	User time (seconds): 1227.41
+	System time (seconds): 51.31
+	Percent of CPU this job got: 349%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 6:05.73
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2387824
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 525
+	Minor (reclaiming a frame) page faults: 15328731
+	Voluntary context switches: 12128
+	Involuntary context switches: 22153
+	Swaps: 0
+	File system inputs: 333624
+	File system outputs: 346032
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
