@@ -113,8 +113,12 @@ def main():
 def eval_quantized(a, res, phase, evalw, save_dir):
     from gptqmodel import GPTQModel, BACKEND
     t = time.time()
+    # TorchLinear (the only GPTQModel CPU kernel that accepts K=576/960) supports only fp16/bf16 at inference,
+    # so a model quantized in float32 is reloaded in bfloat16 for evaluation.
+    rdt = {"auto": None, "float32": "bfloat16"}.get(a.dtype, a.dtype)
+    res["reload_dtype"] = rdt or "auto"
     qm = GPTQModel.load(save_dir, device="cpu", backend=BACKEND(a.backend),
-                        **({} if a.dtype == "auto" else {"dtype": getattr(torch, a.dtype)}))
+                        **({} if rdt is None else {"dtype": getattr(torch, rdt)}))
     res["quant_backend"] = str(getattr(qm, "backend", None))
     inner = getattr(qm, "model", qm)
     res["quant_qlinear_classes"] = sorted({type(m).__name__ for m in inner.modules() if "Quant" in type(m).__name__ or "Linear" in type(m).__name__})

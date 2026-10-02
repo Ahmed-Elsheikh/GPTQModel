@@ -1,0 +1,12 @@
+{
+  "backend": "tokenizers",
+  "bos_token": "t0",
+  "eos_token": "t0",
+  "fix_mistral_regex": true,
+  "is_local": true,
+  "local_files_only": false,
+  "model_max_length": 1000000000000000019884624838656,
+  "pad_token": "t0",
+  "tokenizer_class": "TokenizersBackendFast",
+  "unk_token": "t1"
+}
