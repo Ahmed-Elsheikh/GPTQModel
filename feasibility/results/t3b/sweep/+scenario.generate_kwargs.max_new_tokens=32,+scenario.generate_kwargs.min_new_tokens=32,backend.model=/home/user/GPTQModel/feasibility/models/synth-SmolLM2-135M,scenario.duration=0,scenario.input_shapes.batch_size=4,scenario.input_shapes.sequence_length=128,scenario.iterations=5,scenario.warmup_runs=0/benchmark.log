@@ -1,0 +1,15 @@
+[MAIN-PROCESS][[36m2026-10-02 15:38:31,047[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,730[0m][[34mpytorch[0m][[32mINFO[0m] - Allocating pytorch backend[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,731[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Seeding backend with 0[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,734[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Benchmarking a Transformers model[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,745[0m][[34minference[0m][[32mINFO[0m] - Allocating inference scenario[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,745[0m][[34minference[0m][[32mINFO[0m] - 	+ Updating Text Generation kwargs with default values[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,746[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Text Generation targets list[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,747[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Latency tracker[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,747[0m][[34mlatency[0m][[32mINFO[0m] - 		+ Tracking latency using CPU performance counter[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,747[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Per-Token Latency tracker[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,747[0m][[34mlatency[0m][[32mINFO[0m] - 		+ Tracking latency using CPU performance counter[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,748[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Memory tracker[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,748[0m][[34mmemory[0m][[32mINFO[0m] - 		+ Tracking RAM memory of process 9452[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,748[0m][[34minference[0m][[32mINFO[0m] - 	+ Generating inputs for task text-generation[0m
+[ISOLATED-PROCESS][[36m2026-10-02 15:38:38,750[0m][[34minference[0m][[32mINFO[0m] - 	+ Running model loading tracking[0m
