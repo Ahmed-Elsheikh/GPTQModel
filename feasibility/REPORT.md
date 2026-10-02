@@ -1,6 +1,6 @@
 # Feasibility study: SLM-compression reporting-practices project on a CPU-only cloud VM
 
-Date: 2026-10-02 (13:54–~19:00 UTC). VM: Intel Xeon @ 2.80 GHz, 4 vCPU (1 thread/core, AVX-512 + VNNI,
+Date: 2026-10-02 (13:54–21:05 UTC). VM: Intel Xeon @ 2.80 GHz, 4 vCPU (1 thread/core, AVX-512 + VNNI,
 **no AVX512-BF16 / AMX**), 15.7 GiB RAM, ~30 GB writable disk, no GPU. Python 3.11.15.
 All raw logs are in `feasibility/logs/`, machine-readable results in `feasibility/results/`, notes in `NOTES.md`.
 
@@ -27,8 +27,8 @@ All raw logs are in `feasibility/logs/`, machine-readable results in `feasibilit
 | 1a install GPTQModel | PASS | `pip install gptqmodel==7.5.0`: 1m36s, pure-Python sdist, **no CUDA compile**; JIT-compiles one CPU C++ op (`pack_block_cpu`) with g++/ninja at first quantize | none |
 | 1c calib.py | PASS (synthetic source only) | 128×512 dicts → GPTQModel kept 128/128, identical multiset, "Total tokens 65536, padded 0" | WikiText-2/C4 loaders written but untestable (HF blocked) |
 | 1d GPTQ W4 g128, 135M | PASS-with-workaround | quantize **976–993 s** (auto dtype=bf16; 1172 s when contended), **528 s with dtype=float32**; ppl eval 40×2048: dense fp32 176 s, quantized 373–430 s; peak RSS 2.6 GB | `BACKEND.AUTO` and `TORCH_FUSED` inference kernels **crash on SmolLM2 (K=576 not divisible by 128)**; must load with `backend=BACKEND.TORCH` |
-| 1e determinism / seed | PASS | seed 0 twice → **bit-identical ppl** (58944.632020…); seed 1 → 58811.203 (Δ=−0.23 %) | effect size on real models unknown |
-| 1f 360M / Qwen-0.5B | PASS | GPTQ W4 fp32 quantize: 360M **1110 s** (2.1× 135M), Qwen2.5-0.5B **1233 s**; ppl eval (bf16 reload): 360M 819 s, Qwen 1207 s; peak RSS 2.4 / 5.7 GB | fp32-quantized ckpt cannot be *evaluated* in fp32 (TorchLinear is fp16/bf16 only) |
+| 1e determinism / seed | PASS | seed 0 twice → **identical ppl to all 17 printed digits** (58944.63202017038); seed 1 → 58811.203 (Δ=−0.23 %) | effect size on real models unknown |
+| 1f 360M / Qwen-0.5B | PASS | GPTQ W4 fp32 quantize: 360M **1110 s** (2.1× 135M), Qwen2.5-0.5B **1233 s**; ppl eval (bf16 reload): 360M 819 s, Qwen 1207 s; peak RSS 2.7 / 6.0 GB | fp32-quantized ckpt cannot be *evaluated* in fp32 (TorchLinear is fp16/bf16 only) |
 | 1g AWQ W4 135M | PASS-with-workaround (g64, not g128) | default: `ValueError: AWQ: CUDA is not available`; with `quantize(backend=BACKEND.AWQ_TORCH)`: g128 → `in_features (576) not divisible by group_size (128)`; fp32 → AwqTorchLinear fp16/bf16 only; **g64 + bf16 + AWQ_TORCH: quantize 7036 s (1 h 57 min)**, ppl eval 367 s, peak 3.2 GB | AWQ ≈ 13× GPTQ-fp32 cost; g128 impossible on SmolLM2 |
 | 2a lm-eval dense | PASS (synthetic tasks) | 200 arc-like + 200 hellaswag-like items, 0-shot, bs 8, fp32: **4m02s**, 2.4 GB | real tasks need HF datasets |
 | 2b lm-eval GPTQ | PASS via in-memory model | `gptqmodel=True` → K=576 crash; `backend=torch` in model_args collides with HFLM's own `backend` arg; **in-memory `HFLM(pretrained=qm.model)`: 9m07s** (2.3× dense) | CLI path unusable for SmolLM2 |
