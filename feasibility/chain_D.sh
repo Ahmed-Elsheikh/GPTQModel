@@ -12,3 +12,7 @@ for n in gptq_135m_s0_fp32:synth-SmolLM2-135M gptq_360m_s0:synth-SmolLM2-360M; d
   echo "$(date -Is) eval $name rc=$?" >> feasibility/logs/chain_D.log
 done
 echo "$(date -Is) chain_D evals done" >> feasibility/logs/chain_D.log
+# AWQ on CPU: quantize() with BACKEND.AUTO picks AWQ_GEMM (CUDA-only) -> pass awq_torch explicitly
+/usr/bin/time -v -o feasibility/results/t1/awq_135m_s0_awqtorch.time python feasibility/quant_eval.py --model feasibility/models/synth-SmolLM2-135M --seed 0 --method awq --dtype float32 --quant_backend awq_torch --backend awq_torch --out feasibility/results/t1/awq_135m_s0_awqtorch.json > feasibility/logs/t1_awq_135m_s0_awqtorch.log 2>&1
+echo "$(date -Is) awq_torch rc=$?" >> feasibility/logs/chain_D.log
+echo "$(date -Is) chain_D all done" >> feasibility/logs/chain_D.log

@@ -40,6 +40,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--save_dir", default=None)
     ap.add_argument("--backend", default="auto", help="GPTQModel BACKEND for the post-quant reload (e.g. auto, torch, torch_fused)")
+    ap.add_argument("--quant_backend", default="auto", help="BACKEND passed to model.quantize() (AWQ on CPU needs awq_torch)")
     ap.add_argument("--eval_only", default=None, help="skip quantization; load this saved quantized dir and evaluate")
     ap.add_argument("--dtype", default="auto", choices=["auto", "float32", "bfloat16", "float16"])
     a = ap.parse_args()
@@ -96,7 +97,8 @@ def main():
     print("calib_check", res["calib_check"], flush=True)
 
     t = time.time()
-    model.quantize(samples, batch_size=1)
+    from gptqmodel import BACKEND
+    model.quantize(samples, batch_size=1, backend=BACKEND(a.quant_backend))
     phase("quantize", t)
 
     save_dir = a.save_dir or os.path.join(os.path.dirname(a.out), "_tmp_q_" + os.path.basename(a.out).replace(".json", ""))
