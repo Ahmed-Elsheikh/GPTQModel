@@ -39,6 +39,8 @@ def main():
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--out", required=True)
     ap.add_argument("--save_dir", default=None)
+    ap.add_argument("--backend", default="auto", help="GPTQModel BACKEND for the post-quant reload (e.g. auto, torch, torch_fused)")
+    ap.add_argument("--eval_only", default=None, help="skip quantization; load this saved quantized dir and evaluate")
     ap.add_argument("--dtype", default="auto", choices=["auto", "float32", "bfloat16", "float16"])
     a = ap.parse_args()
 
@@ -62,6 +64,9 @@ def main():
     res["calib_fingerprint"] = calib.fingerprint(samples)
     res["eval_fingerprint"] = calib.fingerprint(evalw)
     phase("data", t)
+
+    if a.eval_only:
+        return eval_quantized(a, res, phase, evalw, a.eval_only)
 
     if a.eval_dense:
         t = time.time()
@@ -100,8 +105,16 @@ def main():
     del model
     phase("save", t)
 
+    eval_quantized(a, res, phase, evalw, save_dir)
+    if a.save_dir is None:
+        shutil.rmtree(save_dir, ignore_errors=True)
+
+
+def eval_quantized(a, res, phase, evalw, save_dir):
+    from gptqmodel import GPTQModel, BACKEND
     t = time.time()
-    qm = GPTQModel.load(save_dir, device="cpu", **({} if a.dtype == "auto" else {"dtype": getattr(torch, a.dtype)}))
+    qm = GPTQModel.load(save_dir, device="cpu", backend=BACKEND(a.backend),
+                        **({} if a.dtype == "auto" else {"dtype": getattr(torch, a.dtype)}))
     res["quant_backend"] = str(getattr(qm, "backend", None))
     inner = getattr(qm, "model", qm)
     res["quant_qlinear_classes"] = sorted({type(m).__name__ for m in inner.modules() if "Quant" in type(m).__name__ or "Linear" in type(m).__name__})
@@ -114,8 +127,6 @@ def main():
     res["total_wall_s"] = stamp()
     res["peak_rss_gb"] = peak_gb()
     json.dump(res, open(a.out, "w"), indent=2)
-    if a.save_dir is None:
-        shutil.rmtree(save_dir, ignore_errors=True)
     print(json.dumps({k: v for k, v in res.items() if k.startswith(("ppl", "total", "peak", "calib"))}), flush=True)
 
 
