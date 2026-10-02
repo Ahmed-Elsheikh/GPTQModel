@@ -1,0 +1,24 @@
+Command exited with non-zero status 1
+	Command being timed: "python feasibility/quant_eval.py --model feasibility/models/synth-SmolLM2-135M --seed 0 --method awq --dtype float32 --quant_backend awq_torch --backend awq_torch --out feasibility/results/t1/awq_135m_s0_awqtorch.json"
+	User time (seconds): 32.68
+	System time (seconds): 6.60
+	Percent of CPU this job got: 185%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:21.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3619104
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 948613
+	Voluntary context switches: 65254
+	Involuntary context switches: 1263
+	Swaps: 0
+	File system inputs: 816
+	File system outputs: 426232
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

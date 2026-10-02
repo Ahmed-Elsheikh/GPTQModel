@@ -1,0 +1,168 @@
+[5.48s] data: {'wall_s': 0.6, 'rss_gb': 0.839, 'peak_rss_gb': 0.839}
+
+INFO  LogBar: headless/CI mode; progress animations disabled.                   
+WARN  Python GIL is enabled: Multi-gpu quant acceleration for MoE models is sub-optimal and multi-core accelerated cpu packing is also disabled. We recommend Python >= 3.13.3t with Pytorch > 2.8 for mult-gpu quantization and multi-cpu packing with env `PYTHON_GIL=0`.
+W1002 18:55:59.039000 21431 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1002 18:55:59.082000 21431 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+INFO  ENV: Auto setting PYTORCH_ALLOC_CONF='expandable_segments:True,max_split_size_mb:256,garbage_collection_threshold:0.7' for memory saving.
+INFO  ENV: Auto setting CUDA_DEVICE_ORDER=PCI_BUS_ID for correctness.           
+INFO  
+
+┌─────────────┐    ┌────────────────────────┐    ┌────────────┐    ┌─────────┐
+│ GPT-QModel  │ -> │ ▓▓▓▓▓▓▓▓▓▓▓▓ 16bit     │ -> │ ▒▒▒▒ 8bit  │ -> │ ░░ 4bit │
+└─────────────┘    └────────────────────────┘    └────────────┘    └─────────┘
+GPT-QModel   : 7.5.0
+Transformers : 5.18.0
+Torch        : 2.14.1+cu130
+Triton       : 3.8.0
+INFO  QuantizeConfig: offload_to_disk_path auto set to temporary dir `/tmp/gptqmodel_3b3xuuwt`
+INFO  Loader: Auto dtype (CPU + Torch Fused): `torch.bfloat16`                  
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='t0').
+INFO  Estimated Quantization BPW (bits per weight): 4.475 bpw, based on [bits: 4, group_size: 64]
+INFO  Loader: using checkpoint-backed lazy turtle source for `feasibility/models/synth-SmolLM2-135M`
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='t0').
+INFO  Model: Loaded `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 0,
+  "use_cache": true
+}
+
+INFO  Model: Auto-fixed `generation_config` mismatch between model and `generation_config.json`.
+INFO  Model: Updated `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "do_sample": true,
+  "eos_token_id": 0,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 0,
+  "use_cache": true
+}
+
+INFO  Kernel: loaded -> `[]`                                                    
+[7.12s] load_for_quant: {'wall_s': 0.26, 'rss_gb': 0.944, 'peak_rss_gb': 0.943}
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+calib_check {'passed': 128, 'after_prepare': 128, 'same_multiset': True, 'lengths': [512]}
+INFO  Packing Kernel: selected: `AwqTorchLinear`                                
+INFO  Packing Kernel: selected: `AwqTorchLinear`                                
+WARN  Calibration dataset size should be more than 256. Current: 128.           
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+WARN  Disk subsystem write throughput detected at 105.6 MB/s; quantization may be slowed by IO.
+INFO  ModuleLooper: capturing layer inputs from 128 calibration batches         
+INFO  Offloading base modules to disk...                                        
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | region     | count | last_s | avg_s | total_s | pct    | source  |      
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | Capture ... | 1     | 0.285  | 0.285 | 0.285   | 100.0% | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  AWQProcessor: layer 0 tracking 7 modules before quantization (subsets processed=4/4); first modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
+INFO  AWQProcessor: layer 0 sanitized 3 scaling groups; sample=[['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj'], ['mlp.gate_proj', 'mlp.up_proj'], ['mlp.down_proj']]
+INFO  +-+--+--+--+---+-+-+-+-+-+--+-+-----+------+---+----+--+----+-----+--+---+
+INFO  |p|la|mo|fe|...|l|s|d|t|f|(v|d|ac...|act...|...|a...|sc|s...|sc...|sc|...|
+INFO  +-+--+--+--+---+-+-+-+-+-+--+-+-----+------+---+----+--+----+-----+--+---+
+INFO  |a|0 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...| |n| |65|6...|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+-+-+-+--+----+-+--+------+--+--+-+--+
+INFO  |a|0 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |a|0 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |a|0 |s...|57...|bf...|...|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|0 |m...|5...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|0 |m...|5...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|0 |m...|1...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  | Process... | 7     | 198.313 | 28.333 | 198.331 | 88.8%  | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Pre-qua... | 4     | 7.489   | 4.290  | 17.159  | 7.7%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Post-qu... | 1     | 7.579   | 7.579  | 7.579   | 3.4%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Capture... | 1     | 0.285   | 0.285  | 0.285   | 0.1%   | cache_in... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Forward... | 896   | 0.000   | 0.000  | 0.058   | 0.0%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  AWQProcessor: layer 1 tracking 7 modules before quantization (subsets processed=4/4); first modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
+INFO  AWQProcessor: layer 1 sanitized 3 scaling groups; sample=[['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj'], ['mlp.gate_proj', 'mlp.up_proj'], ['mlp.down_proj']]
+INFO  |p|la|mo|fe|...|l|s|d|t|f|(v|d|ac...|act...|...|a...|sc|s...|sc...|sc|...|
+INFO  +-+--+--+--+---+-+-+-+-+-+--+-+-----+------+---+----+--+----+-----+--+---+
+INFO  |a|1 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...| |n| |65|6...|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+-+-+-+--+----+-+--+------+--+--+-+--+
+INFO  |a|1 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |a|1 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |a|1 |s...|57...|bf...|...|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|1 |m...|5...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|1 |m...|5...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|1 |m...|1...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  | Process... | 14    | 205.937 | 28.877 | 404.281 | 88.3%  | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Pre-qua... | 8     | 7.494   | 4.460  | 35.676  | 7.8%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Post-qu... | 2     | 7.710   | 7.645  | 15.290  | 3.3%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Submodu... | 7     | 0.139   | 0.174  | 1.216   | 0.3%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Finaliz... | 7     | 0.134   | 0.128  | 0.894   | 0.2%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Capture... | 1     | 0.285   | 0.285  | 0.285   | 0.1%   | cache_in... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Finaliz... | 7     | 0.001   | 0.019  | 0.136   | 0.0%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Forward... | 1792  | 0.000   | 0.000  | 0.128   | 0.0%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Finaliz... | 7     | 0.003   | 0.003  | 0.023   | 0.0%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  AWQProcessor: layer 2 tracking 7 modules before quantization (subsets processed=4/4); first modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
+INFO  AWQProcessor: layer 2 sanitized 3 scaling groups; sample=[['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj'], ['mlp.gate_proj', 'mlp.up_proj'], ['mlp.down_proj']]
+INFO  |p|la|mo|fe|...|l|s|d|t|f|(v|d|ac...|act...|...|a...|sc|s...|sc...|sc|...|
+INFO  +-+--+--+--+---+-+-+-+-+-+--+-+-----+------+---+----+--+----+-----+--+---+
+INFO  |a|2 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...| |n| |65|6...|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+-+-+-+--+----+-+--+------+--+--+-+--+
+INFO  |a|2 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |a|2 |s...|57...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |a|2 |s...|57...|bf...|...|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|sel...|65|65|1|ba|
+INFO  +-+--+----+-----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|2 |m...|5...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|2 |m...|5...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  |aw|2 |m...|1...|bf...|[32m...[0m|[38;5;76m65[0m|  |...|  |n|  |65|65|1|ba|mlp...|65|65|1|ba|
+INFO  +--+--+----+----+-----+---+--+--+---+--+-+--+--+--+-+--+------+--+--+-+--+
+INFO  | Process... | 21    | 209.371 | 29.223 | 613.678 | 88.2%  | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Pre-qua... | 12    | 7.794   | 4.509  | 54.113  | 7.8%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Post-qu... | 3     | 8.031   | 7.774  | 23.321  | 3.4%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Submodu... | 14    | 0.281   | 0.167  | 2.342   | 0.3%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Finaliz... | 14    | 0.113   | 0.110  | 1.537   | 0.2%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Finaliz... | 14    | 0.164   | 0.029  | 0.412   | 0.1%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Capture... | 1     | 0.285   | 0.285  | 0.285   | 0.0%   | cache_in... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Forward... | 2688  | 0.000   | 0.000  | 0.199   | 0.0%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  | Finaliz... | 14    | 0.003   | 0.006  | 0.077   | 0.0%   | model.la... |
+INFO  +------------+-------+---------+--------+---------+--------+-------------+
+INFO  AWQProcessor: layer 3 tracking 7 modules before quantization (subsets processed=4/4); first modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
+INFO  AWQProcessor: layer 3 sanitized 3 scaling groups; sample=[['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj'], ['mlp.gate_proj', 'mlp.up_proj'], ['mlp.down_proj']]

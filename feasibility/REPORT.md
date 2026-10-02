@@ -28,12 +28,12 @@ All raw logs are in `feasibility/logs/`, machine-readable results in `feasibilit
 | 1c calib.py | PASS (synthetic source only) | 128×512 dicts → GPTQModel kept 128/128, identical multiset, "Total tokens 65536, padded 0" | WikiText-2/C4 loaders written but untestable (HF blocked) |
 | 1d GPTQ W4 g128, 135M | PASS-with-workaround | quantize **976–993 s** (auto dtype=bf16; 1172 s when contended), **528 s with dtype=float32**; ppl eval 40×2048: dense fp32 176 s, quantized 373–430 s; peak RSS 2.6 GB | `BACKEND.AUTO` and `TORCH_FUSED` inference kernels **crash on SmolLM2 (K=576 not divisible by 128)**; must load with `backend=BACKEND.TORCH` |
 | 1e determinism / seed | PASS | seed 0 twice → **bit-identical ppl** (58944.632020…); seed 1 → 58811.203 (Δ=−0.23 %) | effect size on real models unknown |
-| 1f 360M / Qwen-0.5B | PASS (360M), see §3 (Qwen) | 360M GPTQ W4 fp32: **1110 s**, peak 2.4 GB; Qwen-0.5B: TBD_QWEN | fp32-quantized ckpt cannot be *evaluated* in fp32 (TorchLinear is fp16/bf16 only) |
+| 1f 360M / Qwen-0.5B | PASS | GPTQ W4 fp32 quantize: 360M **1110 s** (2.1× 135M), Qwen2.5-0.5B **1233 s**; ppl eval (bf16 reload): 360M 819 s, Qwen 1207 s; peak RSS 2.4 / 5.7 GB | fp32-quantized ckpt cannot be *evaluated* in fp32 (TorchLinear is fp16/bf16 only) |
 | 1g AWQ W4 135M | TBD_AWQ_STATUS | default: `ValueError: AWQ: CUDA is not available`; with `quantize(backend=BACKEND.AWQ_TORCH)`: TBD_AWQ | AUTO picks CUDA-only AWQ_GEMM |
 | 2a lm-eval dense | PASS (synthetic tasks) | 200 arc-like + 200 hellaswag-like items, 0-shot, bs 8, fp32: **4m02s**, 2.4 GB | real tasks need HF datasets |
 | 2b lm-eval GPTQ | PASS via in-memory model | `gptqmodel=True` → K=576 crash; `backend=torch` in model_args collides with HFLM's own `backend` arg; **in-memory `HFLM(pretrained=qm.model)`: 9m07s** (2.3× dense) | CLI path unusable for SmolLM2 |
 | 2c EXP3 factors | PASS | all 4 factors settable by flags/model_args; per-sample log-lik changes: bs 1 vs 8 ≤6e-5 nats; bf16 vs fp32 ≤1.49 nats; 5-shot changes predictions; max_length 512 truncates 5-shot hellaswag (Δ up to 25 nats) but not arc | bf16 is 2× *slower* than fp32 on this CPU |
-| 2d wikitext | FAIL at defaults / TBD_WT | real task: HF blocked; synthetic stand-in at default max_length (8192) & bs 8: **OOM-killed** (13.2 GB); re-run with max_length=2048: TBD_WT | |
+| 2d wikitext | PASS-with-setting | real task: HF blocked; synthetic stand-in at default max_length (8192) & bs 8: **OOM-killed** (13.2 GB); re-run with `max_length=2048`: **16:58**, 7.5 GB | |
 | 3a optimum-benchmark | PASS-with-workaround | 0.6.0 **fails on transformers 5.x** (`SpecialTokensMixin` import); works in separate venv (transformers 4.57.6). Default protocol run: 10m48s | default process launcher busy-waits → **6× latency inflation** on 4 vCPU |
 | 3b/c sweep + ratio | PASS | 16 runs, 24m36s; 360M/135M ratio: prefill **2.09–2.84**, per-token decode **1.65–2.36**, generate **1.66–2.43** across 8 protocols | iterations cut to 5, 32 new tokens, OMP=3 |
 | 4 Wanda | PASS-with-patch (old transformers) | 3-line patch; **only works with transformers ≤ 4.47.1** (4.48.3/4.57.6: `position_embeddings` None; 5.18: no `hf_device_map`); 32 samples: 92 s, 1.7 GB | needs its own venv; HF data loaders replaced in a driver |
@@ -92,9 +92,9 @@ Wall clock from `/usr/bin/time -v` (process tree) or in-script `time.time()`; pe
 | 135M seed0 run a | auto→bf16 | 1172 s (contended by pip installs) | 430 s (separate eval, TorchLinear) | – | 2.6 GB | 58944.632020 |
 | 135M seed0 run b | auto→bf16 | 993 s | 373 s | 23:06 | 2.6 GB | 58944.632020 (identical) |
 | 135M seed1 | auto→bf16 | 976 s | 375 s | 22:49 | 2.7 GB | 58811.202808 |
-| 135M seed0 | **fp32** | **528 s** | TBD_135FP32_EVAL | 9:01 (quant only) | 1.9 GB | TBD |
-| 360M seed0 | fp32 | 1110 s | TBD_360_EVAL | 18:44 (quant only) | 2.4 GB | TBD |
-| Qwen2.5-0.5B seed0 | fp32 | TBD_QWEN_Q | TBD_QWEN_E | | | |
+| 135M seed0 | **fp32** | **528 s** | 349 s (reloaded bf16) | 9:01 + 6:06 | 2.4 GB | 58845.097 (≠ bf16-quantized 58944.632) |
+| 360M seed0 | fp32 | 1110 s | 819 s (reloaded bf16) | 18:44 + 13:58 | 2.7 GB | 56037.99 |
+| Qwen2.5-0.5B seed0 | fp32 | 1233 s | 1207 s (bf16) | 41:06 | 6.0 GB | 176540.2 (vocab 151936) |
 | AWQ 135M seed0 | fp32, AWQ_TORCH | TBD_AWQ_Q | TBD_AWQ_E | | | |
 
 Per-layer pace: 135M ≈ 33 s/layer (bf16) vs 17.5 s/layer (fp32); 360M ≈ 35 s/layer (fp32); Qwen-0.5B ≈ 52 s/layer (fp32).
@@ -111,7 +111,7 @@ Reload of a quantized checkpoint: 3–6 s.
 | 2c dtype bfloat16 | | 4:01 | 1.9 GB |
 | 2c max_length 512 (with 5-shot) | | 8:44 | 4.1 GB |
 | 2d wikitext-like rolling ll, 62 docs ≈ 280k tok, bs 8, default max_len 8192 | | OOM-kill at 3:47 | 13.2 GB |
-| 2d same, max_length 2048 | | TBD_WT_TIME | |
+| 2d same, max_length 2048 | | **16:58** | 7.5 GB |
 
 ### Test 3 – optimum-benchmark 0.6.0 (venv-ob)
 | Run | Wall | Peak RSS |
@@ -187,7 +187,7 @@ regenerates the synthetic stand-ins. **Timing caveat:** with torch from PyPI the
 cold cache (torch 3:55 + gptqmodel 1:36); the two-venv script will exceed the 5-minute target unless
 `download.pytorch.org` is allowlisted (CPU wheel ≈ 0.2 GB) or the session snapshot keeps the pip cache. Wanda's
 transformers-4.47.1 venv is *not* in the script (create it on demand: `pip install torch==2.14.1 transformers==4.47.1
-accelerate datasets`, ~2 min from cache). TBD_SETUP_TEST
+accelerate datasets`, ~2 min from cache). Verified here only on the already-provisioned VM (warm path: exit 0 in 41 s, both import checks OK, wanda patch applied); a cold run could not be tested because the 30 GB allowance was nearly used up (see §6.11).
 
 ## 6. Surprises and contradictions to the design assumptions
 
@@ -224,7 +224,9 @@ accelerate datasets`, ~2 min from cache). TBD_SETUP_TEST
     `amr_v1`). It runs **two models (A/B) plus an optional arbiter** per field. Evidence is requested as "exact quote"
     but validated **fuzzily** (token-overlap > 0.80), so quotes are not guaranteed verbatim.
 11. Disk: the PyPI torch wheel brings ~4 GB of CUDA libraries per venv; four venvs ≈ 20 GB of the 30 GB allowance.
-    TBD_DISK
+    By the end free space was 4.2 GB (three torch venvs ≈ 6 GB each, pip cache 3.2 GB, MetaScreener clone 1.1 GB with
+    1 GB of `experiments/`); `pip cache purge` recovered 3.2 GB. Plan for one torch install shared across venvs, or a
+    CPU-only wheel.
 
 ## 7. State of the branch
 

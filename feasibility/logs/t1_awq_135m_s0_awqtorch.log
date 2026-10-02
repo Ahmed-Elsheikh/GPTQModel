@@ -56,3 +56,56 @@ calib_check {'passed': 128, 'after_prepare': 128, 'same_multiset': True, 'length
 INFO  Calibration: Total tokens: 65536                                          
 WARN  Disk subsystem write throughput detected at 123.0 MB/s; quantization may be slowed by IO.
 INFO  ModuleLooper: capturing layer inputs from 128 calibration batches         
+INFO  Offloading base modules to disk...                                        
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | region     | count | last_s | avg_s | total_s | pct    | source  |      
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | Capture ... | 1     | 0.667  | 0.667 | 0.667   | 100.0% | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  AWQProcessor: layer 0 tracking 7 modules before quantization (subsets processed=4/4); first modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
+INFO  AWQProcessor: layer 0 sanitized 3 scaling groups; sample=[['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj'], ['mlp.gate_proj', 'mlp.up_proj'], ['mlp.down_proj']]
+Traceback (most recent call last):
+  File "/home/user/GPTQModel/feasibility/quant_eval.py", line 140, in <module>
+    main()
+  File "/home/user/GPTQModel/feasibility/quant_eval.py", line 101, in main
+    model.quantize(samples, batch_size=1, backend=BACKEND(a.quant_backend))
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/utils/device_telemetry.py", line 51, in run
+    return fn(model, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/models/base.py", line 1219, in quantize
+    result = self._quantize_with_calibration(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/models/base.py", line 1487, in _quantize_with_calibration
+    return module_looper.loop(backend=backend, fallback=self.quantize_config.fallback)Traceback (most recent call last):
+
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/utils/threadx.py", line 503, in _run
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/utils/device_telemetry.py", line 63, in run
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+    File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/stage_subset.py", line 1159, in _process_on_worker
+    proc.process(
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 2387, in process
+    self._quantize_layer(layer_index, state)
+  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 1452, in _quantize_layer
+    scales_list = [
+                  ^
+    File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 1453, in <listcomp>
+    self._search_best_scale(layer_module_ref, **layer)
+      File "/home/user/venv/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+   ^^^^  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 1569, in _search_best_scale
+    w_mean = _compute_awq_weight_mean(layers, self.qcfg.group_size)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 134, in _compute_awq_weight_mean
+    w_sum, row_count = _accumulate_awq_weight_mean(layers, group_size)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^  File "/home/user/venv/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 83, in _accumulate_awq_weight_mean
+    raise ValueError(
+^^ValueError: Expected in_features (576) to be divisible by group_size (128).
+^^
