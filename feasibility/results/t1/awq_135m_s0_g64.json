@@ -29,9 +29,47 @@
       "wall_s": 0.26,
       "rss_gb": 0.944,
       "peak_rss_gb": 0.943
+    },
+    "quantize": {
+      "wall_s": 7035.9,
+      "rss_gb": 1.906,
+      "peak_rss_gb": 3.103
+    },
+    "save": {
+      "wall_s": 0.48,
+      "rss_gb": 1.907,
+      "peak_rss_gb": 3.103
+    },
+    "load_quantized": {
+      "wall_s": 2.52,
+      "rss_gb": 1.909,
+      "peak_rss_gb": 3.103
+    },
+    "eval_quant": {
+      "wall_s": 366.59,
+      "rss_gb": 1.929,
+      "peak_rss_gb": 3.103
     }
   },
   "calib_fingerprint": "520fede96e805933",
   "eval_fingerprint": "45545b6c82ede1e4",
-  "quant_config": "AWQConfig(bits=4, dynamic=None, group_size=64, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.AWQ: 'awq'>, format=<FORMAT.GEMM: 'gemm'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_3b3xuuwt', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, scale_search_chunked_activations=True)"
+  "quant_config": "AWQConfig(bits=4, dynamic=None, group_size=64, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.AWQ: 'awq'>, format=<FORMAT.GEMM: 'gemm'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_3b3xuuwt', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, scale_search_chunked_activations=True)",
+  "calib_check": {
+    "passed": 128,
+    "after_prepare": 128,
+    "same_multiset": true,
+    "lengths": [
+      512
+    ]
+  },
+  "reload_dtype": "auto",
+  "quant_backend": "None",
+  "quant_qlinear_classes": [
+    "AwqTorchLinear",
+    "Linear"
+  ],
+  "quant_dtype": "torch.bfloat16",
+  "ppl_quant": 59617.92821808965,
+  "total_wall_s": 7412.68,
+  "peak_rss_gb": 3.103
 }

@@ -42,3 +42,9 @@
   tf 4.48.3: same. tf 4.47.1: WORKS (3-line patch), 92 s, 1.7 GB.
 ## Test 5 (MetaScreener 2.0.0a5 @532ee3c)
 - Server starts on CPU; 77 API paths; extraction v2/v3 session API: template (.xlsx) + PDFs -> run -> results/evidence.
+
+## Test 1 (cont.)
+- AWQ: AUTO -> "AWQ: CUDA is not available"; AWQ_TORCH g128 -> in_features 576 % 128; g64 fp32 -> AwqTorchLinear fp16/bf16
+  only; g64 bf16 AWQ_TORCH: quantize 7036 s, eval 367 s, ppl 59617.93, peak 3.2 GB.
+- 135M fp32 GPTQ: 528 s quantize; ppl (bf16 reload) 58845.10 vs 58944.63 for bf16 quantization -> quant dtype matters.
+- 360M fp32 GPTQ: 1110 s; eval 819 s; Qwen 0.5B: 1233 s / 1207 s, peak 6.0 GB.
