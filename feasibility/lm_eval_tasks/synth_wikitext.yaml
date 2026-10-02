@@ -1,0 +1,15 @@
+task: synth_wikitext
+dataset_path: json
+dataset_kwargs:
+  data_files:
+    test: feasibility/lm_eval_tasks/wt_test.jsonl
+output_type: loglikelihood_rolling
+test_split: test
+doc_to_text: ""
+doc_to_target: "{{page}}"
+metric_list:
+  - metric: word_perplexity
+  - metric: byte_perplexity
+  - metric: bits_per_byte
+metadata:
+  version: 1.0

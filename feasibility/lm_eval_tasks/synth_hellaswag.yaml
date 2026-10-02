@@ -1,0 +1,21 @@
+task: synth_hellaswag
+dataset_path: json
+dataset_kwargs:
+  data_files:
+    train: feasibility/lm_eval_tasks/hs_train.jsonl
+    validation: feasibility/lm_eval_tasks/hs_val.jsonl
+output_type: multiple_choice
+training_split: train
+validation_split: validation
+doc_to_text: "{{query}}"
+doc_to_target: "{{label}}"
+doc_to_choice: "choices"
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0

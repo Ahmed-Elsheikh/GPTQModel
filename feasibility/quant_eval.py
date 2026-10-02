@@ -39,6 +39,7 @@ def main():
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--out", required=True)
     ap.add_argument("--save_dir", default=None)
+    ap.add_argument("--dtype", default="auto", choices=["auto", "float32", "bfloat16", "float16"])
     a = ap.parse_args()
 
     torch.set_num_threads(a.threads)
@@ -76,7 +77,7 @@ def main():
     else:
         qcfg = AWQConfig(bits=a.bits, group_size=a.group_size, device="cpu")
     res["quant_config"] = repr(qcfg)[:2000]
-    model = GPTQModel.load(a.model, qcfg, device="cpu")
+    model = GPTQModel.load(a.model, qcfg, dtype=a.dtype if a.dtype == "auto" else getattr(torch, a.dtype))  # QuantizeConfig.device="cpu"; passing device= here is rejected
     phase("load_for_quant", t)
 
     # Verify GPTQModel keeps exactly our samples: run the same normaliser quantize() uses.
@@ -100,7 +101,7 @@ def main():
     phase("save", t)
 
     t = time.time()
-    qm = GPTQModel.load(save_dir, device="cpu")
+    qm = GPTQModel.load(save_dir, device="cpu", **({} if a.dtype == "auto" else {"dtype": getattr(torch, a.dtype)}))
     res["quant_backend"] = str(getattr(qm, "backend", None))
     inner = getattr(qm, "model", qm)
     res["quant_qlinear_classes"] = sorted({type(m).__name__ for m in inner.modules() if "Quant" in type(m).__name__ or "Linear" in type(m).__name__})
