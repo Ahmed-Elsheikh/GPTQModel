@@ -1,0 +1,35 @@
+diff --git a/src/metascreener/llm/adapters/openrouter.py b/src/metascreener/llm/adapters/openrouter.py
+index d19f197..457f877 100644
+--- a/src/metascreener/llm/adapters/openrouter.py
++++ b/src/metascreener/llm/adapters/openrouter.py
+@@ -8,6 +8,8 @@ from __future__ import annotations
+ import asyncio
+ import time
+ 
++import os
++
+ import httpx
+ import structlog
+ 
+@@ -16,7 +18,7 @@ from metascreener.llm.base import INFERENCE_TEMPERATURE, LLMBackend
+ 
+ logger = structlog.get_logger(__name__)
+ 
+-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
++OPENROUTER_BASE_URL = os.environ.get("METASCREENER_LLM_BASE_URL", "https://openrouter.ai/api/v1")
+ DEFAULT_TIMEOUT_S = 45.0
+ DEFAULT_TIMEOUT_THINKING_S = 120.0
+ MAX_RETRIES = 2
+diff --git a/src/metascreener/llm/factory.py b/src/metascreener/llm/factory.py
+index 0e6455c..bd81233 100644
+--- a/src/metascreener/llm/factory.py
++++ b/src/metascreener/llm/factory.py
+@@ -38,7 +38,7 @@ def create_backends(
+     """
+     from metascreener.llm.adapters.openrouter import OpenRouterAdapter  # noqa: PLC0415
+ 
+-    key = api_key or os.environ.get("OPENROUTER_API_KEY")
++    key = api_key or os.environ.get("OPENROUTER_API_KEY") or os.environ.get("SLMREP_ANTHROPIC_API_KEY")
+     if not key:
+         msg = (
+             "No API key found. Set OPENROUTER_API_KEY environment variable:\n"

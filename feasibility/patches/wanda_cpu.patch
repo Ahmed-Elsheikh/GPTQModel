@@ -1,0 +1,29 @@
+diff --git a/main.py b/main.py
+index a94583c..7b28ec6 100644
+--- a/main.py
++++ b/main.py
+@@ -16,13 +16,13 @@ print('# of gpus: ', torch.cuda.device_count())
+ def get_llm(model_name, cache_dir="llm_weights"):
+     model = AutoModelForCausalLM.from_pretrained(
+         model_name, 
+-        torch_dtype=torch.float16, 
++        torch_dtype=torch.float32, 
+         cache_dir=cache_dir, 
+         low_cpu_mem_usage=True, 
+         device_map="auto"
+     )
+ 
+-    model.seqlen = model.config.max_position_embeddings 
++    model.seqlen = min(512, model.config.max_position_embeddings)
+     return model
+ 
+ def main():
+@@ -58,7 +58,7 @@ def main():
+     model.eval()
+     tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=False)
+ 
+-    device = torch.device("cuda:0")
++    device = torch.device("cpu")
+     if "30b" in args.model or "65b" in args.model: # for 30b and 65b we use device_map to load onto multiple A6000 GPUs, thus the processing here.
+         device = model.hf_device_map["lm_head"]
+     print("use device ", device)
