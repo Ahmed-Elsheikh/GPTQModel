@@ -1,0 +1,5 @@
+2026-10-02:14:44:02 WARNING  [config.evaluate_config:337] --limit SHOULD ONLY BE USED FOR TESTING. REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2026-10-02:14:44:14 INFO     [_cli.run:391] Including path: feasibility/lm_eval_tasks
+2026-10-02:14:44:14 INFO     [_cli.run:392] Selected Tasks: ['synth_arc_easy', 'synth_hellaswag']
+2026-10-02:14:44:16 INFO     [evaluator:214] Setting random seed to 0 | Setting numpy seed to 0 | Setting torch manual seed to 0 | Setting fewshot manual seed to 0
+2026-10-02:14:44:16 INFO     [evaluator:239] Initializing hf model, with arguments: {'pretrained': 'feasibility/models/synth-SmolLM2-135M', 'dtype': 'float32', 'max_length': 2048}

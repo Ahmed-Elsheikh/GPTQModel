@@ -1,0 +1,32 @@
+2026-10-02:14:43:40 WARNING  [config.evaluate_config:337] --limit SHOULD ONLY BE USED FOR TESTING. REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2026-10-02:14:43:51 INFO     [_cli.run:391] Including path: feasibility/lm_eval_tasks
+2026-10-02:14:43:51 INFO     [_cli.run:392] Selected Tasks: ['synth_arc_easy', 'synth_hellaswag']
+2026-10-02:14:43:54 INFO     [evaluator:214] Setting random seed to 0 | Setting numpy seed to 0 | Setting torch manual seed to 0 | Setting fewshot manual seed to 0
+2026-10-02:14:43:54 INFO     [evaluator:239] Initializing hf model, with arguments: {'pretrained': 'feasibility/models/q-gptq-135m-s0', 'gptqmodel': True, 'backend': 'torch'}
+2026-10-02:14:43:59 INFO     [models.huggingface:289] Using device 'cpu'
+Traceback (most recent call last):
+  File "/home/user/venv/bin/lm_eval", line 6, in <module>
+    sys.exit(cli_evaluate())
+             ^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/__main__.py", line 10, in cli_evaluate
+    parser.execute(args)
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/_cli/harness.py", line 60, in execute
+    args.func(args)
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/_cli/run.py", line 395, in _execute
+    results = simple_evaluate(
+              ^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/utils.py", line 580, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/evaluator.py", line 242, in simple_evaluate
+    lm = lm_eval.api.registry.get_model(model).create_from_arg_obj(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/api/model.py", line 169, in create_from_arg_obj
+    return cls(**arg_dict, **additional_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/models/huggingface.py", line 343, in __init__
+    self._get_backend(
+  File "/home/user/venv/lib/python3.11/site-packages/lm_eval/models/huggingface.py", line 682, in _get_backend
+    assert backend in ["default", "causal", "seq2seq"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
