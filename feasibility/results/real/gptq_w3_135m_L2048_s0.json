@@ -1,0 +1,33 @@
+{
+  "args": {
+    "model": "HuggingFaceTB/SmolLM2-135M",
+    "method": "gptq",
+    "bits": 3,
+    "group_size": 128,
+    "n": 128,
+    "L": 2048,
+    "seed": 0,
+    "source": "wikitext2",
+    "eval_source": "wikitext2",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": false,
+    "dense_only": false,
+    "threads": 4,
+    "out": "results/real/gptq_w3_135m_L2048_s0.json",
+    "save_dir": "ckpt_real/gptq_w3_135m_L2048_s0",
+    "backend": "torch",
+    "quant_backend": "auto",
+    "eval_only": null,
+    "dtype": "float32"
+  },
+  "phases": {
+    "data": {
+      "wall_s": 25.13,
+      "rss_gb": 1.36,
+      "peak_rss_gb": 2.067
+    }
+  },
+  "calib_fingerprint": "899864c1ee89b0d4",
+  "eval_fingerprint": "7da3b34bdebd1923"
+}

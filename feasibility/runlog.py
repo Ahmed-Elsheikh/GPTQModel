@@ -2,7 +2,7 @@
 
 usage: runlog.py JSONL RUN_ID [--json OUT.json] -- cmd args...
 Records wall time and peak RSS of the child process tree (RUSAGE_CHILDREN; /usr/bin/time is absent on this VM),
-the exit code, the tail of stderr/stdout on failure, and the contents of OUT.json if the command wrote one.
+the lscpu model name and flags, the exit code, the tail of stderr/stdout on failure, and the contents of OUT.json if the command wrote one.
 """
 import json, os, resource, subprocess, sys, time, datetime
 
@@ -20,7 +20,14 @@ with open(log, "w") as f:
     rc = subprocess.call(cmd, stdout=f, stderr=subprocess.STDOUT)
 wall = round(time.time() - t, 1)
 peak = round(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 2**20, 3)
-rec = {"run_id": run_id, "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
+def _lscpu():
+    try:
+        d = dict(l.split(":", 1) for l in subprocess.run(["lscpu"], capture_output=True, text=True).stdout.splitlines() if ":" in l)
+        return {"cpu_model": d.get("Model name", "").strip(), "cpu_flags": d.get("Flags", "").strip()}
+    except Exception as e:
+        return {"cpu_model": None, "cpu_flags": None, "lscpu_error": repr(e)}
+
+rec = {"run_id": run_id, **_lscpu(), "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
        "cmd": " ".join(cmd)}
 if rc != 0:
     rec["error_tail"] = open(log, errors="replace").read()[-1500:]
