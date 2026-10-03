@@ -46,6 +46,11 @@
       "wall_s": 3.06,
       "rss_gb": 1.873,
       "peak_rss_gb": 2.162
+    },
+    "eval_quant": {
+      "wall_s": 49.76,
+      "rss_gb": 1.915,
+      "peak_rss_gb": 2.852
     }
   },
   "calib_fingerprint": "eaa59f1166ef0558",
@@ -65,5 +70,8 @@
     "Linear",
     "TorchLinear"
   ],
-  "quant_dtype": "torch.bfloat16"
+  "quant_dtype": "torch.bfloat16",
+  "ppl_quant": 37.16930899224657,
+  "total_wall_s": 364.04,
+  "peak_rss_gb": 2.852
 }
