@@ -4,6 +4,10 @@
 # usage: commit_done.sh "message"
 cd "$(dirname "$0")/.."
 open_files=$(for p in /proc/[0-9]*; do ls -l $p/fd 2>/dev/null; done | awk '{print $NF}' | grep "$PWD/feasibility/logs/" | sort -u)
+# also skip logs written since the oldest running job started (GPTQModel reopens its gptq_log_* per write)
+for pid in $(pgrep -f "runlog.py" 2>/dev/null); do
+  [ -d /proc/$pid ] && open_files="$open_files $(find "$PWD/feasibility/logs" -type f -newer /proc/$pid 2>/dev/null)"
+done
 git add -A feasibility .gitignore
 for f in $open_files; do git reset -q -- "$f" 2>/dev/null; done
 git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
