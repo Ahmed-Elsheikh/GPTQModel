@@ -1,0 +1,116 @@
+{
+  "512": {
+    "n": 5,
+    "mean": 37.96065371104588,
+    "sd": 0.7225292342342193,
+    "cv_pct": 1.9033635188004576,
+    "min": 37.16930899224657,
+    "max": 38.90515331948164,
+    "range": 1.7358443272350712,
+    "sd_ci95": [
+      0.4328912082229348,
+      2.0762279518199622
+    ],
+    "runs": [
+      {
+        "seed": 0,
+        "ppl": 37.466791649222586,
+        "quantize_s": 309.65,
+        "eval_s": 68.33,
+        "wall_s": 407.2,
+        "peak_rss_gb": 2.868,
+        "calib_fp": "07db06dabcb03c98",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": null
+      },
+      {
+        "seed": 1,
+        "ppl": 38.90515331948164,
+        "quantize_s": 304.78,
+        "eval_s": 59.45,
+        "wall_s": 391.9,
+        "peak_rss_gb": 2.86,
+        "calib_fp": "ecd2326d62d1d923",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": null
+      },
+      {
+        "seed": 2,
+        "ppl": 37.76498299583722,
+        "quantize_s": 310.34,
+        "eval_s": 51.66,
+        "wall_s": 389.4,
+        "peak_rss_gb": 2.857,
+        "calib_fp": "21eb6029dad8e6e8",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": null
+      },
+      {
+        "seed": 3,
+        "ppl": 37.16930899224657,
+        "quantize_s": 291.24,
+        "eval_s": 49.76,
+        "wall_s": 367.2,
+        "peak_rss_gb": 2.852,
+        "calib_fp": "eaa59f1166ef0558",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": null
+      },
+      {
+        "seed": 4,
+        "ppl": 38.49703159844138,
+        "quantize_s": 291.39,
+        "eval_s": 59.89,
+        "wall_s": 379.1,
+        "peak_rss_gb": 2.886,
+        "calib_fp": "67f586b314a842ea",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": null
+      }
+    ],
+    "failed": []
+  },
+  "2048": {
+    "n": 2,
+    "mean": 42.1874342126751,
+    "sd": 1.2845858571147193,
+    "cv_pct": 3.0449490022049477,
+    "min": 41.279094842092945,
+    "max": 43.09577358325725,
+    "range": 1.8166787411643028,
+    "sd_ci95": [
+      0.5731169331124022,
+      40.99133939882967
+    ],
+    "runs": [
+      {
+        "seed": 0,
+        "ppl": 41.279094842092945,
+        "quantize_s": 1025.72,
+        "eval_s": 67.27,
+        "wall_s": 1140.5,
+        "peak_rss_gb": 4.328,
+        "calib_fp": "899864c1ee89b0d4",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+      },
+      {
+        "seed": 1,
+        "ppl": 43.09577358325725,
+        "quantize_s": 1066.55,
+        "eval_s": 68.15,
+        "wall_s": 1165.3,
+        "peak_rss_gb": 4.36,
+        "calib_fp": "0edfe174d4876132",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+      }
+    ],
+    "failed": []
+  },
+  "sd_ratio_2048_over_512": 1.7779015661230675,
+  "f_test_p_two_sided": 0.30010163229406844,
+  "f_stat": 3.160933978822856,
+  "welch_t_mean_diff": 4.2267805016292215,
+  "welch_t_p": 0.10278137478495364
+}
