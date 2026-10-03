@@ -1,10 +1,12 @@
 # Step 2 (parallel worker): Wanda seed sweep, C4 calibration, AWQ, Qwen2.5-0.5B, real lm-eval, optimum-benchmark launchers
 
-Date: 2026-10-03, 08:10–09:25 UTC. Same 4-vCPU CPU-only VM type as `REPORT.md`, **real weights and real data** (HF Hub now
+Date: 2026-10-03, 08:10–09:25 UTC (§7: 10:52–11:30). 4 vCPU, CPU-only, **real weights and real data** (HF Hub now
 reachable). Runs were one at a time in this container. The Step 1 session ran in a different container, so the two sessions
 did not compete for CPU. Every run went through `runlog.py` (wall time and peak RSS of the child tree).
 Raw records: `results/real_step2_{wanda,c4,awq,qwen,lmeval,ob}.jsonl`. Logs: `logs/real_s2_*.log`.
 Scripts: `chain_step2a2.sh` (Wanda), `chain_step2b.sh` (tasks 2–6), `wanda_real_driver.py`, `step2_summarize.py`.
+**This container's CPU is not the `REPORT.md` VM's:** it is an Intel Xeon @ 2.10 GHz *with* AMX and AVX512-BF16/FP16. The study VM
+(`env.json`) was a Xeon @ 2.80 GHz without them. This matters for reproducibility; see §7.
 Common settings: SmolLM2-135M unless noted. Calibration is 128 × 512 windows and perplexity uses the **Step 1 protocol**
 (first 40 non-overlapping 2048-token windows of the WikiText-2 test split, eval fingerprint `7da3b34bdebd1923`).
 Dense fp32 ppl = **14.487794** (identical to Step 1 `dense_135m`).
@@ -59,7 +61,11 @@ ships 0.23.2. On the joined WikiText-2 text they produce **different ids from to
   and **≈ 22× the Step 1 W4 seed range** (0.054).
 - The calibration source therefore dominates the seed for in-domain WikiText perplexity. Part of this is the
   calibration set matching the eval domain, which is the usual GPTQ-paper caveat.
-- Quantize time varies run to run: 257 s here vs 292–348 s for the five Step 1 W4 runs (same code, other container).
+- Quantize time: 257 s here vs 292–348 s for the five Step 1 W4 runs (same code, different container and possibly
+  a different CPU).
+- **Caveat:** this table compares checkpoints built in two containers. §7 rebuilds the WikiText checkpoint here
+  and gets 17.8110, not 17.7448. The in-container gap is **+1.114** (≈ 21× the seed range), and §7 has the
+  like-for-like 2×2.
 
 ## 3. AWQ W4 on 135M, `quantize(backend=BACKEND.AWQ_TORCH)`
 
@@ -127,6 +133,55 @@ p1 = bs 1 × seq 128 and p2 = bs 4 × seq 512 (two of the Test 3b grid points).
 - `runlog.py`'s peak-RSS value for these runs (1.30 GB for all four) is not reliable, because RUSAGE_CHILDREN misses the
   launcher's grandchild. Use optimum-benchmark's own memory fields instead.
 
+## 7. Add-on: calibration source × evaluation set (GPTQ W4 g128 seed 0, SmolLM2-135M)
+
+**C4-validation set.** GPTQ convention (`IST-DASLab/gptq` `datautils.get_c4`):
+- source `en/c4-validation.00000-of-00008.json.gz`, `random.seed(0)`;
+- 256 times: draw random docs until one has ≥ 2048 tokens, then take a random 2048-token window inside it;
+- ids cached as `256×2048 int32` (fingerprint `cbe443ebebeeceeb`, main-venv tokenizers 0.23.2; SmolLM2 adds no BOS).
+
+Finding the 256 windows took 8 288 doc draws (most C4 docs are < 2048 tokens). They come from 234 distinct docs, so a few
+docs supply two windows, which may overlap. Script: `step2_c4val.py`; chain: `chain_step2c.sh`;
+records: `results/real_step2_c4val.jsonl`.
+
+**WikiText-2 set.** The Step 1 40 × 2048 test windows, as everywhere else in this report.
+
+Both checkpoints were built **in this container**, and quantized models are evaluated in bf16 with `BACKEND.TORCH`, as above.
+The WikiText-calibrated checkpoint was rebuilt with the exact Step 1 command (`s2_gptq_w4_135m_wt_s0_rebuild`: quantize
+272 s, run 379 s, peak 2.90 GB).
+
+| calibration ↓ / eval → | WikiText-2 test (40×2048) | C4 val (256×2048) |
+|---|---|---|
+| dense fp32 (reference) | 14.4878 | 18.7520 (bf16: 18.7676) |
+| **WikiText-2 train, s0** | **17.8110** (+3.32) | 23.9849 (+5.23) |
+| **C4 train, s0** | 18.9251 (+4.44) | **23.3427** (+4.59) |
+
+- **Clean crossover: each calibration source wins on its own domain.**
+  - On WikiText-2, WikiText-2 calibration is better by 1.114 ppl, i.e. 25 % less degradation.
+  - On C4, C4 calibration is better by 0.642 ppl, i.e. 12 % less degradation.
+  - Both gaps are 12–21× the Step 1 W4 seed range (0.054), so for 135M the calibration-source effect dwarfs the seed effect.
+  - In-domain calibration matters more for WikiText, which is narrower than C4.
+- **Which result you report depends on the eval set.** A paper that evaluates only on WikiText-2 would call
+  WikiText calibration clearly better. Averaged over both sets the two are within 0.24 ppl:
+  20.90 for WikiText calibration vs 21.13 for C4 calibration.
+- **Cost of C4-val ppl.** 256 windows = 6.4× the WikiText set.
+  - Quantized (bf16): 279–288 s.
+  - Dense: fp32 523 s, bf16 204 s. On this AMX CPU bf16 is 2.6× *faster*, the opposite of `REPORT.md` §6.3.
+  - Building the cache: 80 s.
+
+**Reproducibility finding: the same command did not reproduce across containers.** The rebuilt WikiText s0 checkpoint used
+identical code, venv (GPTQModel 7.5.0, torch 2.14.1+cpu, transformers 5.18.0), calibration fingerprint (`07db06da…`)
+and eval fingerprint (`7da3b34b…`). Yet it gives **17.8110 vs Step 1's 17.7448**.
+- That Δ = 0.066 exceeds the whole Step 1 five-seed range (0.054).
+- GPTQModel's per-module losses match Step 1 exactly for layer 0 `k/q/v_proj` and first differ at layer 0 `o_proj`.
+- Dense fp32 perplexity is bit-identical across the containers (14.487794398879315).
+- The most likely cause is CPU-dependent kernel dispatch in the GPTQ Hessian/Cholesky path. This container has
+  AMX/AVX512-BF16/FP16 and the study VM had neither. Not confirmed: the Step 1 container's CPU was not recorded.
+- Implication for the study: "bit-identical with the same seed" (`REPORT.md` §6.5) holds only on identical hardware.
+  - Seed sweeps must run on one CPU type, or record `lscpu` per run.
+  - Hardware changes the result at the same order as the seed itself.
+  - Comparisons across cells built on different machines are confounded.
+
 ## Summary (10 lines)
 1. Wanda 50 % (135M, 5 seeds, Step 1 windows): ppl 31.49 ± 0.12 (CV 0.39 %, range 31.34–31.67) vs dense 14.49; seed range = 1.9 % of the +17.0 increase.
 2. GPTQ W4 seed spread is relatively similar (range = 1.7 % of +3.26) but 6× smaller in absolute ppl.
@@ -138,3 +193,11 @@ p1 = bs 1 × seq 128 and p2 = bs 4 × seq 512 (two of the Test 3b grid points).
 8. lm-eval real arc_easy/hellaswag (200 items, 0-shot): dense 0.570/0.425 vs GPTQ-W4 0.555/0.430 acc. All Δ < 1 stderr (≈ 0.035), so 200 items cannot resolve W4 effects.
 9. lm-eval on real tasks: 73 s dense, 85 s GPTQ (in-memory, BACKEND.TORCH bf16), 3–6× cheaper than the synthetic stand-ins (242 s / 547 s).
 10. optimum-benchmark: the default process launcher inflates per-token latency 8.7× (p1) and 7.1× (p2) vs inline. Inline still crashes after writing its report, so EXP4 needs `launcher=inline` or OMP ≤ 3.
+
+**Add-on (§7):**
+- 2×2 calibration × eval, GPTQ W4 s0, built in one container:
+  - WikiText-calibrated: 17.81 on WikiText-2, 23.98 on C4-val.
+  - C4-calibrated: 18.93 on WikiText-2, 23.34 on C4-val.
+  - Each source wins in-domain, by 1.11 and 0.64 ppl (12–21× the seed range).
+- The same seed-0 command gave 17.81 here vs 17.74 in the Step 1 container. The runs diverge at layer-0 `o_proj`,
+  most likely because of CPU differences (this one has AMX). Hardware matters about as much as the seed.
