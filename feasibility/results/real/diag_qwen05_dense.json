@@ -26,6 +26,16 @@
       "wall_s": 1.19,
       "rss_gb": 0.618,
       "peak_rss_gb": 0.646
+    },
+    "eval_dense_fp32": {
+      "wall_s": 367.46,
+      "rss_gb": 1.727,
+      "peak_rss_gb": 4.986
+    },
+    "eval_dense_bf16": {
+      "wall_s": 138.68,
+      "rss_gb": 1.757,
+      "peak_rss_gb": 5.581
     }
   },
   "token_cache": {
@@ -35,5 +45,9 @@
     "wikitext2_train_Qwen--Qwen2.5-0.5B.npy": "9372ef7056cf7fce"
   },
   "calib_fingerprint": "516aef8fb7a53ab7",
-  "eval_fingerprint": "1a5edcbd6b9a4d4f"
+  "eval_fingerprint": "1a5edcbd6b9a4d4f",
+  "ppl_dense_fp32": 12.22846221565484,
+  "ppl_dense_bf16": 12.234544624423366,
+  "total_wall_s": 510.99,
+  "peak_rss_gb": 5.581
 }
