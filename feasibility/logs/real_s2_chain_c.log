@@ -1,1 +1,3 @@
 chain2c start Sat Oct  3 10:52:10 UTC 2026
+{"run_id": "s2_c4val_cache", "wall_s": 79.6, "peak_rss_gb": 0.778, "rc": 0}
+{"run_id": "s2_gptq_w4_135m_wt_s0_rebuild", "wall_s": 379.0, "peak_rss_gb": 2.904, "rc": 0}
