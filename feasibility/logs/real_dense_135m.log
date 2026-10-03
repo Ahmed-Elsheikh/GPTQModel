@@ -8,3 +8,4 @@ W1003 07:55:21.924000 496 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMod
 Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 79/272 [00:00<00:00, 788.37it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 1369.91it/s]
 [118.0s] eval_dense_fp32: {'wall_s': 95.48, 'rss_gb': 1.945, 'peak_rss_gb': 2.8}
 Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 2807.13it/s]
+[157.95s] eval_dense_bf16: {'wall_s': 39.95, 'rss_gb': 1.911, 'peak_rss_gb': 3.099}

@@ -30,9 +30,17 @@
       "wall_s": 95.48,
       "rss_gb": 1.945,
       "peak_rss_gb": 2.8
+    },
+    "eval_dense_bf16": {
+      "wall_s": 39.95,
+      "rss_gb": 1.911,
+      "peak_rss_gb": 3.099
     }
   },
   "calib_fingerprint": "07db06dabcb03c98",
   "eval_fingerprint": "7da3b34bdebd1923",
-  "ppl_dense_fp32": 14.487794398879315
+  "ppl_dense_fp32": 14.487794398879315,
+  "ppl_dense_bf16": 14.49892870494732,
+  "total_wall_s": 157.95,
+  "peak_rss_gb": 3.099
 }
