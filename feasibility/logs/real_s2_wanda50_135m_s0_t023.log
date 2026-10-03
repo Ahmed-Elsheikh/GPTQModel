@@ -6,28 +6,34 @@ loading llm model HuggingFaceTB/SmolLM2-135M
 use device  cpu
 pruning starts
 loading calibdation data
-[driver] {"ppl": null, "sparsity": null, "phases": {}, "wall_s": 1.5, "peak_rss_gb": 1.25}
-Traceback (most recent call last):
-  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 70, in <module>
-    wanda_main.main()
-  File "/home/user/GPTQModel/third_party/wanda/main.py", line 69, in main
-    prune_wanda(args, model, tokenizer, device, prune_n=prune_n, prune_m=prune_m)
-  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 58, in timed_prune
-    t = time.time(); r = _prune(*a, **k); res["phases"]["prune"] = round(time.time() - t, 1); return r
-                         ^^^^^^^^^^^^^^^
-  File "/home/user/GPTQModel/third_party/wanda/lib/prune.py", line 132, in prune_wanda
-    dataloader, _ = get_loaders("c4",nsamples=args.nsamples,seed=args.seed,seqlen=model.seqlen,tokenizer=tokenizer)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 32, in real_get_loaders
-    wins = calib.draw_windows("wikitext2", tok, n=nsamples, L=seqlen, seed=seed)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/GPTQModel/feasibility/calib.py", line 49, in draw_windows
-    wins = _windows_from_stream(_wikitext_stream(tokenizer, "train"), n, L, rng)
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 25, in <lambda>
-    calib._wikitext_stream = lambda tokenizer, split: np.load(os.path.join(_SD, f"wikitext2_{split}_smollm2.npy")).tolist()
-                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/venvs/wanda/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 454, in load
-    fid = stack.enter_context(open(os.fspath(file), "rb"))
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-GPTQModel/1393271e-f5ad-5840-8da3-ec59957c45d1/scratchpad/out/wikitext2_train_smollm2.npy'
+[driver] wikitext2 calib 128x512 seed 0 fp 07db06dabcb03c98
+dataset loading complete
+The attention layers in this model are transitioning from computing the RoPE embeddings internally through `position_ids` (2D tensor with the indexes of the tokens), to using externally computed `position_embeddings` (Tuple of tensors, containing cos and sin). In v4.46 `position_ids` will be removed and `position_embeddings` will be mandatory.
+pruning layer 0 name self_attn.q_proj
+pruning layer 0 name self_attn.k_proj
+pruning layer 0 name self_attn.v_proj
+pruning layer 0 name self_attn.o_proj
+pruning layer 0 name mlp.gate_proj
+pruning layer 0 name mlp.up_proj
+pruning layer 0 name mlp.down_proj
+pruning layer 1 name self_attn.q_proj
+pruning layer 1 name self_attn.k_proj
+pruning layer 1 name self_attn.v_proj
+pruning layer 1 name self_attn.o_proj
+pruning layer 1 name mlp.gate_proj
+pruning layer 1 name mlp.up_proj
+pruning layer 1 name mlp.down_proj
+pruning layer 2 name self_attn.q_proj
+pruning layer 2 name self_attn.k_proj
+pruning layer 2 name self_attn.v_proj
+pruning layer 2 name self_attn.o_proj
+pruning layer 2 name mlp.gate_proj
+pruning layer 2 name mlp.up_proj
+pruning layer 2 name mlp.down_proj
+pruning layer 3 name self_attn.q_proj
+pruning layer 3 name self_attn.k_proj
+pruning layer 3 name self_attn.v_proj
+pruning layer 3 name self_attn.o_proj
+pruning layer 3 name mlp.gate_proj
+pruning layer 3 name mlp.up_proj
+pruning layer 3 name mlp.down_proj
