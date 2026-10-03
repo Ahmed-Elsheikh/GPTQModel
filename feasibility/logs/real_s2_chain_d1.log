@@ -1,1 +1,3 @@
 chain2d start Sat Oct  3 11:43:53 UTC 2026
+{"run_id": "s2_det_rep2", "wall_s": 372.2, "peak_rss_gb": 2.932, "rc": 0}
+{"run_id": "s2_det_rep3", "wall_s": 316.5, "peak_rss_gb": 2.443, "rc": 0}

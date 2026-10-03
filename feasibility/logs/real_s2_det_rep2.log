@@ -141,3 +141,4 @@ calib_check {'passed': 128, 'after_prepare': 128, 'same_multiset': True, 'length
 INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
 INFO  | ... | 1 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
 INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=1 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=6 status=verified
