@@ -1,3 +1,10 @@
 chain2d start Sat Oct  3 11:43:53 UTC 2026
 {"run_id": "s2_det_rep2", "wall_s": 372.2, "peak_rss_gb": 2.932, "rc": 0}
 {"run_id": "s2_det_rep3", "wall_s": 316.5, "peak_rss_gb": 2.443, "rc": 0}
+Created autostash: 96bb752
+error: Your local changes to the following files would be overwritten by checkout:
+	feasibility/logs/real_s2_chain_d1.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+Applied autostash.
+error: could not detach HEAD
