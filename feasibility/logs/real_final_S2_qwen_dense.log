@@ -1,0 +1,29 @@
+
+INFO  LogBar: headless/CI mode; progress animations disabled.                   
+WARN  Python GIL is enabled: Multi-gpu quant acceleration for MoE models is sub-optimal and multi-core accelerated cpu packing is also disabled. We recommend Python >= 3.13.3t with Pytorch > 2.8 for mult-gpu quantization and multi-cpu packing with env `PYTHON_GIL=0`.
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1003 16:22:22.921000 3425 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1003 16:22:22.952000 3425 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+INFO  ENV: Auto setting PYTORCH_ALLOC_CONF='expandable_segments:True,max_split_size_mb:256,garbage_collection_threshold:0.7' for memory saving.
+INFO  ENV: Auto setting CUDA_DEVICE_ORDER=PCI_BUS_ID for correctness.           
+INFO  
+
+┌─────────────┐    ┌────────────────────────┐    ┌────────────┐    ┌─────────┐
+│ GPT-QModel  │ -> │ ▓▓▓▓▓▓▓▓▓▓▓▓ 16bit     │ -> │ ▒▒▒▒ 8bit  │ -> │ ░░ 4bit │
+└─────────────┘    └────────────────────────┘    └────────────┘    └─────────┘
+GPT-QModel   : 7.5.0
+Transformers : 5.18.0
+Torch        : 2.14.1+cpu
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+[1.07s] data: {'wall_s': 1.07, 'rss_gb': 0.721, 'peak_rss_gb': 0.75}
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:   0%|          | 1/290 [00:02<09:46,  2.03s/it]Loading weights:  71%|███████▏  | 207/290 [00:02<00:00, 129.37it/s]Loading weights:  95%|█████████▌| 276/290 [00:02<00:00, 121.11it/s]Loading weights: 100%|██████████| 290/290 [00:03<00:00, 96.48it/s] 
+[561.24s] eval_dense_fp32: {'wall_s': 560.16, 'rss_gb': 1.735, 'peak_rss_gb': 5.076}
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:  72%|███████▏  | 208/290 [00:00<00:00, 2078.46it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 2723.30it/s]
+[1000.22s] eval_dense_bf16: {'wall_s': 438.98, 'rss_gb': 1.746, 'peak_rss_gb': 5.566}
