@@ -1,0 +1,37 @@
+{
+  "argv": [
+    "--model",
+    "HuggingFaceTB/SmolLM2-135M",
+    "--sparsity_ratio",
+    "0",
+    "--sparsity_type",
+    "unstructured",
+    "--prune_method",
+    "wanda",
+    "--nsamples",
+    "128",
+    "--seed",
+    "0",
+    "--save",
+    "/home/user/GPTQModel/feasibility/ckpt_real/diag_wanda_dense_135m"
+  ],
+  "wikitext_stream_dir": null,
+  "transformers": "4.47.1",
+  "torch": "2.14.1+cpu",
+  "phases": {
+    "eval": 110.1
+  },
+  "model": "HuggingFaceTB/SmolLM2-135M",
+  "sparsity": 0.0,
+  "eval_fingerprint": "7da3b34bdebd1923",
+  "ppl": 14.487794398879315,
+  "wall_s": 111.8,
+  "peak_rss_gb": 1.92,
+  "wanda_seqlen": 512,
+  "token_cache": {
+    "wikitext2_test_HuggingFaceTB--SmolLM2-135M.npy": "b0a4aec332f08008",
+    "wikitext2_test_Qwen--Qwen2.5-0.5B.npy": "c378dfa8e175c20c",
+    "wikitext2_train_HuggingFaceTB--SmolLM2-135M.npy": "e9e35f7c5a45f096",
+    "wikitext2_train_Qwen--Qwen2.5-0.5B.npy": "9372ef7056cf7fce"
+  }
+}

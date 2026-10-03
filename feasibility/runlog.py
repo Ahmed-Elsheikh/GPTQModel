@@ -39,7 +39,7 @@ def _versions(py):
     except Exception as e:
         return {"error": repr(e)}
 
-rec = {"run_id": run_id, **_lscpu(), "versions": _versions(cmd[0]) if cmd[0].endswith(("python", "python3")) else None, "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
+rec = {"run_id": run_id, **_lscpu(), "versions": next((_versions(c) for c in cmd if c.endswith(("/python", "/python3"))), None), "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
        "cmd": " ".join(cmd)}
 if rc != 0:
     rec["error_tail"] = open(log, errors="replace").read()[-1500:]
