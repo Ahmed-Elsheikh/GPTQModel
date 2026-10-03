@@ -4,7 +4,7 @@ source "$(dirname "$0")/step2_common.sh"
 PY=/opt/venvs/main/bin/python; M=HuggingFaceTB/SmolLM2-135M
 COMMON="--n 128 --L 512 --eval_n 40 --eval_L 2048 --threads 4"
 CK=$OUT/ckpt
-while pgrep -f chain_step2a.sh >/dev/null; do sleep 30; done
+while pgrep -f 'bash ./chain_step2a' >/dev/null; do sleep 30; done
 echo "chain2b start $(date -u)"
 
 # 2. C4 calibration, GPTQ W4 g128 seed 0, fp32 quantize, ppl on the WikiText-2 test windows (bf16 TorchLinear)

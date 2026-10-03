@@ -1,0 +1,59 @@
+torch 2.14.1+cpu
+transformers 4.47.1
+accelerate 1.15.0
+# of gpus:  0
+loading llm model HuggingFaceTB/SmolLM2-135M
+use device  cpu
+******************************
+layer 0 sparsity 0.000000
+layer 1 sparsity 0.000000
+layer 2 sparsity 0.000000
+layer 3 sparsity 0.000000
+layer 4 sparsity 0.000000
+layer 5 sparsity 0.000000
+layer 6 sparsity 0.000000
+layer 7 sparsity 0.000000
+layer 8 sparsity 0.000000
+layer 9 sparsity 0.000000
+layer 10 sparsity 0.000000
+layer 11 sparsity 0.000000
+layer 12 sparsity 0.000000
+layer 13 sparsity 0.000000
+layer 14 sparsity 0.000000
+layer 15 sparsity 0.000000
+layer 16 sparsity 0.000000
+layer 17 sparsity 0.000000
+layer 18 sparsity 0.000000
+layer 19 sparsity 0.000000
+layer 20 sparsity 0.000000
+layer 21 sparsity 0.000000
+layer 22 sparsity 0.000000
+layer 23 sparsity 0.000000
+layer 24 sparsity 0.000000
+layer 25 sparsity 0.000000
+layer 26 sparsity 0.000000
+layer 27 sparsity 0.000000
+layer 28 sparsity 0.000000
+layer 29 sparsity 0.000000
+sparsity sanity check 0.0000
+******************************
+[driver] {"ppl": null, "sparsity": 0.0, "phases": {}, "wall_s": 1.6, "peak_rss_gb": 1.25}
+Traceback (most recent call last):
+  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 70, in <module>
+    wanda_main.main()
+  File "/home/user/GPTQModel/third_party/wanda/main.py", line 83, in main
+    ppl_test = eval_ppl(args, model, tokenizer, device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 45, in real_eval_ppl
+    evalw = calib.eval_windows("wikitext2", tok, n=40, L=2048)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/GPTQModel/feasibility/calib.py", line 69, in eval_windows
+    stream = _wikitext_stream(tokenizer, "test")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/GPTQModel/feasibility/wanda_real_driver.py", line 25, in <lambda>
+    calib._wikitext_stream = lambda tokenizer, split: np.load(os.path.join(_SD, f"wikitext2_{split}_smollm2.npy")).tolist()
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venvs/wanda/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 454, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-GPTQModel/1393271e-f5ad-5840-8da3-ec59957c45d1/scratchpad/out/wikitext2_test_smollm2.npy'

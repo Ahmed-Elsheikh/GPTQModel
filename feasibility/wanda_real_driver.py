@@ -15,9 +15,17 @@ import transformers
 import calib
 import lib.data, lib.prune, lib.eval
 from quant_eval import perplexity
+import numpy as np
+
+# The wanda venv's tokenizers 0.21.4 tokenises WikiText-2 differently from the main venv's 0.23.2 (Step 1):
+# 15k of the first 82k test ids differ from position 66557 on. With WIKITEXT_STREAM_DIR set, use token streams
+# produced by the main venv (wikitext2_{train,test}_smollm2.npy) so calibration and eval windows match Step 1 exactly.
+_SD = os.environ.get("WIKITEXT_STREAM_DIR")
+if _SD:
+    calib._wikitext_stream = lambda tokenizer, split: np.load(os.path.join(_SD, f"wikitext2_{split}_smollm2.npy")).tolist()
 
 out = sys.argv[1]
-res = {"argv": sys.argv[2:], "transformers": transformers.__version__, "torch": torch.__version__, "phases": {}}
+res = {"argv": sys.argv[2:], "wikitext_stream_dir": _SD, "transformers": transformers.__version__, "torch": torch.__version__, "phases": {}}
 
 def real_get_loaders(name, nsamples=128, seed=0, seqlen=2048, tokenizer=None):
     tok = transformers.AutoTokenizer.from_pretrained(res["model"])  # fast tokenizer (same ids as Step 1)
