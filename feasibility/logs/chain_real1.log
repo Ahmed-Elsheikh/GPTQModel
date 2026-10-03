@@ -1,3 +1,4 @@
 chain start Sat Oct  3 07:54:56 UTC 2026
 {"run_id": "dense_135m", "wall_s": 160.4, "peak_rss_gb": 3.099, "rc": 0}
 {"run_id": "gptq_w4_135m_s0", "wall_s": 478.8, "peak_rss_gb": 2.908, "rc": 0}
+{"run_id": "gptq_w4_135m_s1", "wall_s": 407.8, "peak_rss_gb": 2.896, "rc": 0}
