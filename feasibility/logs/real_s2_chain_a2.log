@@ -1,3 +1,5 @@
 chain2a2 start Sat Oct  3 08:17:23 UTC 2026
 {"run_id": "s2_wanda_dense_135m_t023", "wall_s": 4.5, "peak_rss_gb": 1.247, "rc": 1}
 {"run_id": "s2_wanda50_135m_s0_t023", "wall_s": 4.5, "peak_rss_gb": 1.247, "rc": 1}
+{"run_id": "s2_wanda50_135m_s1_t023", "wall_s": 4.3, "peak_rss_gb": 1.247, "rc": 1}
+{"run_id": "s2_wanda50_135m_s2_t023", "wall_s": 4.0, "peak_rss_gb": 1.247, "rc": 1}

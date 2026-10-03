@@ -1,0 +1,5 @@
+torch 2.14.1+cpu
+transformers 4.47.1
+accelerate 1.15.0
+# of gpus:  0
+loading llm model HuggingFaceTB/SmolLM2-135M
