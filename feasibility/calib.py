@@ -14,7 +14,7 @@ Sources
               A fixed Zipf(1.1) token stream (corpus_seed fixed), same window-start logic as wikitext2.
 eval_windows(source, tokenizer, n=40, L=2048) -> first n non-overlapping windows of the *test* stream.
 """
-import hashlib, json, random
+import hashlib, json, os, random
 import numpy as np
 
 SYN_TRAIN_SEED, SYN_TEST_SEED, SYN_TOKENS = 1234, 5678, 400_000
@@ -28,7 +28,38 @@ def _synthetic_stream(vocab, corpus_seed, n_tokens=SYN_TOKENS):
     return perm[ranks].tolist()
 
 
+TOKEN_CACHE_DIR = os.environ.get("TOKEN_CACHE_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache_tok"))
+
+
+def _cache_path(tokenizer, split):
+    name = getattr(tokenizer, "name_or_path", "tok").replace("/", "--")
+    return os.path.join(TOKEN_CACHE_DIR, f"wikitext2_{split}_{name}.npy")
+
+
 def _wikitext_stream(tokenizer, split):
+    """Token ids of the joined split, cached as .npy (int32) so every venv uses identical ids.
+    The cache is filled by the main venv (tokenizers 0.23.x); other venvs (wanda: tokenizers 0.21.4, which
+    tokenises WikiText-2 differently) must only read it."""
+    p = _cache_path(tokenizer, split)
+    if os.path.exists(p):
+        return np.load(p).tolist()
+    ids = _wikitext_stream_uncached(tokenizer, split)
+    os.makedirs(TOKEN_CACHE_DIR, exist_ok=True)
+    np.save(p, np.asarray(ids, dtype=np.int32))
+    return ids
+
+
+def cache_info():
+    """sha256 (16 hex) of every cached stream file, for provenance in result JSONs."""
+    out = {}
+    if os.path.isdir(TOKEN_CACHE_DIR):
+        for f in sorted(os.listdir(TOKEN_CACHE_DIR)):
+            if f.endswith(".npy"):
+                out[f] = hashlib.sha256(open(os.path.join(TOKEN_CACHE_DIR, f), "rb").read()).hexdigest()[:16]
+    return out
+
+
+def _wikitext_stream_uncached(tokenizer, split):
     from datasets import load_dataset
     # "Salesforce/wikitext" is the canonical Hub id (the bare "wikitext" alias redirects to it)
     ds = load_dataset("Salesforce/wikitext", "wikitext-2-raw-v1", split=split)

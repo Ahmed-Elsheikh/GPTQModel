@@ -65,6 +65,7 @@ def main():
     samples = calib.draw_windows(a.source, tok, n=a.n, L=a.L, seed=a.seed, vocab=vocab)
     a.eval_source = a.eval_source or ("wikitext2" if a.source == "c4" else a.source)
     evalw = calib.eval_windows(a.eval_source, tok, n=a.eval_n, L=a.eval_L, vocab=vocab)
+    res["token_cache"] = calib.cache_info()
     res["calib_fingerprint"] = calib.fingerprint(samples)
     res["eval_fingerprint"] = calib.fingerprint(evalw)
     phase("data", t)

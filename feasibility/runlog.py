@@ -2,7 +2,7 @@
 
 usage: runlog.py JSONL RUN_ID [--json OUT.json] -- cmd args...
 Records wall time and peak RSS of the child process tree (RUSAGE_CHILDREN; /usr/bin/time is absent on this VM),
-the lscpu model name and flags, the exit code, the tail of stderr/stdout on failure, and the contents of OUT.json if the command wrote one.
+the lscpu model name and flags, package versions of the command venv, the exit code, the tail of stderr/stdout on failure, and the contents of OUT.json if the command wrote one.
 """
 import json, os, resource, subprocess, sys, time, datetime
 
@@ -27,7 +27,19 @@ def _lscpu():
     except Exception as e:
         return {"cpu_model": None, "cpu_flags": None, "lscpu_error": repr(e)}
 
-rec = {"run_id": run_id, **_lscpu(), "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
+def _versions(py):
+    """Versions of the key packages in the venv that runs the command (cmd[0] is that venv's python)."""
+    code = ("import importlib.metadata as m, json, sys; out={'python': sys.version.split()[0]}\n"
+            "for p in ('torch','transformers','tokenizers','gptqmodel','datasets','numpy','accelerate','lm_eval','optimum-benchmark'):\n"
+            "    try: out[p]=m.version(p)\n"
+            "    except Exception: pass\n"
+            "print(json.dumps(out))")
+    try:
+        return json.loads(subprocess.run([py, "-c", code], capture_output=True, text=True, timeout=120).stdout)
+    except Exception as e:
+        return {"error": repr(e)}
+
+rec = {"run_id": run_id, **_lscpu(), "versions": _versions(cmd[0]) if cmd[0].endswith(("python", "python3")) else None, "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
        "cmd": " ".join(cmd)}
 if rc != 0:
     rec["error_tail"] = open(log, errors="replace").read()[-1500:]
