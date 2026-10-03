@@ -50,3 +50,29 @@
     "fwd_time": "6.133",
     "(v)ram": "n/a"
 }
+{
+    "process": "gptq",
+    "layer": 0,
+    "module": "mlp.up_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "f32: 3.4MB",
+    "loss": "0.0000277036",
+    "samples": "262144",
+    "damp": "0.05000",
+    "time": "0.634",
+    "fwd_time": "11.732",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 0,
+    "module": "mlp.gate_proj",
+    "feat: in, out": "576, 1536",
+    "dtype: size": "f32: 3.4MB",
+    "loss": "0.0000267218",
+    "samples": "262144",
+    "damp": "0.05000",
+    "time": "0.644",
+    "fwd_time": "11.732",
+    "(v)ram": "n/a"
+}

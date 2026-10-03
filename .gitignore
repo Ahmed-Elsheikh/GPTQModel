@@ -5,3 +5,4 @@ __pycache__/
 feasibility/results/t1/_tmp_q_*/
 *.bundle
 feasibility/ckpt_real/
+feasibility/cache_tok/
