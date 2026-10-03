@@ -1,12 +1,13 @@
 # Step 2 (parallel worker): Wanda seed sweep, C4 calibration, AWQ, Qwen2.5-0.5B, real lm-eval, optimum-benchmark launchers
 
-Date: 2026-10-03, 08:10–09:25 UTC (§7: 10:52–11:30). 4 vCPU, CPU-only, **real weights and real data** (HF Hub now
+Date: 2026-10-03, 08:10–09:25 UTC (§7: 10:52–11:30; §8: 11:43–13:20). 4 vCPU, CPU-only, **real weights and real data** (HF Hub now
 reachable). Runs were one at a time in this container. The Step 1 session ran in a different container, so the two sessions
 did not compete for CPU. Every run went through `runlog.py` (wall time and peak RSS of the child tree).
 Raw records: `results/real_step2_{wanda,c4,awq,qwen,lmeval,ob}.jsonl`. Logs: `logs/real_s2_*.log`.
 Scripts: `chain_step2a2.sh` (Wanda), `chain_step2b.sh` (tasks 2–6), `wanda_real_driver.py`, `step2_summarize.py`.
-**This container's CPU is not the `REPORT.md` VM's:** it is an Intel Xeon @ 2.10 GHz *with* AMX and AVX512-BF16/FP16. The study VM
-(`env.json`) was a Xeon @ 2.80 GHz without them. This matters for reproducibility; see §7.
+CPU: Intel Xeon @ 2.10 GHz with AVX512-BF16 and AMX. That is the **same model as Session B's Step 1 VM**, and all 115
+`lscpu` flags match Session B's per-run records (`results/real_step1b.jsonl`). It differs from the Part B study VM
+(`env.json`: 2.80 GHz, no BF16/AMX).
 Common settings: SmolLM2-135M unless noted. Calibration is 128 × 512 windows and perplexity uses the **Step 1 protocol**
 (first 40 non-overlapping 2048-token windows of the WikiText-2 test split, eval fingerprint `7da3b34bdebd1923`).
 Dense fp32 ppl = **14.487794** (identical to Step 1 `dense_135m`).
@@ -61,11 +62,10 @@ ships 0.23.2. On the joined WikiText-2 text they produce **different ids from to
   and **≈ 22× the Step 1 W4 seed range** (0.054).
 - The calibration source therefore dominates the seed for in-domain WikiText perplexity. Part of this is the
   calibration set matching the eval domain, which is the usual GPTQ-paper caveat.
-- Quantize time: 257 s here vs 292–348 s for the five Step 1 W4 runs (same code, different container and possibly
-  a different CPU).
-- **Caveat:** this table compares checkpoints built in two containers. §7 rebuilds the WikiText checkpoint here
-  and gets 17.8110, not 17.7448. The in-container gap is **+1.114** (≈ 21× the seed range), and §7 has the
-  like-for-like 2×2.
+- Quantize time: 257 s here vs 292–348 s for the five Step 1 W4 runs (same code, same CPU model, other container).
+- **Caveat:** the exact same seed-0 command does not always give the same checkpoint (§8, Determinism). Its default
+  outcomes are 17.7448 (Step 1's value) or 17.8110. The C4 gap is therefore +1.11 to +1.18, still ≈ 21× the seed
+  range. §7 has the 2×2.
 
 ## 3. AWQ W4 on 135M, `quantize(backend=BACKEND.AWQ_TORCH)`
 
@@ -169,18 +169,96 @@ The WikiText-calibrated checkpoint was rebuilt with the exact Step 1 command (`s
   - Dense: fp32 523 s, bf16 204 s. On this AMX CPU bf16 is 2.6× *faster*, the opposite of `REPORT.md` §6.3.
   - Building the cache: 80 s.
 
-**Reproducibility finding: the same command did not reproduce across containers.** The rebuilt WikiText s0 checkpoint used
-identical code, venv (GPTQModel 7.5.0, torch 2.14.1+cpu, transformers 5.18.0), calibration fingerprint (`07db06da…`)
-and eval fingerprint (`7da3b34b…`). Yet it gives **17.8110 vs Step 1's 17.7448**.
-- That Δ = 0.066 exceeds the whole Step 1 five-seed range (0.054).
-- GPTQModel's per-module losses match Step 1 exactly for layer 0 `k/q/v_proj` and first differ at layer 0 `o_proj`.
-- Dense fp32 perplexity is bit-identical across the containers (14.487794398879315).
-- The most likely cause is CPU-dependent kernel dispatch in the GPTQ Hessian/Cholesky path. This container has
-  AMX/AVX512-BF16/FP16 and the study VM had neither. Not confirmed: the Step 1 container's CPU was not recorded.
-- Implication for the study: "bit-identical with the same seed" (`REPORT.md` §6.5) holds only on identical hardware.
-  - Seed sweeps must run on one CPU type, or record `lscpu` per run.
-  - Hardware changes the result at the same order as the seed itself.
-  - Comparisons across cells built on different machines are confounded.
+**Reproducibility note (revised; see §8).** The first rebuild of the WikiText s0 checkpoint gave 17.8110, not
+Step 1's 17.7448. An earlier version of this section blamed a CPU difference between containers. **That was wrong.**
+- Session B ran on the same CPU model with identical flags.
+- Repeating the command in this container reproduces Step 1's value exactly in 2 of 4 runs.
+- The cause is **run-to-run nondeterminism of the default GPTQModel CPU path**, not hardware.
+- The WikiText-calibrated cells above use the 17.8110 checkpoint. With the other default outcome, the in-domain
+  WikiText gap would be +1.18 instead of +1.11. Its C4-val value was not measured.
+
+## 8. Determinism
+
+**Setup.** The exact Step 1 command: SmolLM2-135M, GPTQ W4 g128, WikiText-2 seed 0, fp32 quantize, bf16 TorchLinear eval
+on the cached Step 1 ids (calibration fingerprint `07db06da…`, eval fingerprint `7da3b34b…`).
+- Each run goes through `step2_det.py`, which applies one setting and then runs `quant_eval.py` unchanged.
+- Runner: `chain_step2d.sh`. Comparison: `step2_detcmp.py`. Records: `results/real_step2_det.jsonl`.
+- Columns: the checkpoint is compared by SHA-256 over its safetensors. GPTQ losses are compared per (layer, module),
+  because GPTQModel quantizes `gate_proj` and `up_proj` concurrently and logs them in completion order.
+- All runs were in this container, one at a time.
+
+| run | setting | threads | attention | ppl (40×2048 WikiText-2) | checkpoint sha | L0 `o_proj` loss | first module differing from Step 1 | quantize s |
+|---|---|---|---|---|---|---|---|---|
+| Step 1 (Session B) | default | 4 | sdpa | 17.744842947166127 | – | 5.59e-8 | – | 348 |
+| rebuild 1 | default | 4 | sdpa | 17.811016451979064 | `72b61b9e` | 5.60e-8 | L0 `o_proj` | 272 |
+| rep 2 | default | 4 | sdpa | 17.811016451979064 | `72b61b9e` | (log lost)† | (identical ckpt to rebuild 1) | 268 |
+| rep 3 | default | 4 | sdpa | **17.744842947166127** | `3c9ab62e` | 5.59e-8 | **none** (all 210 losses = Step 1) | 246 |
+| det 1 | `use_deterministic_algorithms(True)` | 4 | sdpa | 17.744842947166127 | `3c9ab62e` | 5.59e-8 | none | 247 |
+| det 2 | `use_deterministic_algorithms(True)` | 4 | sdpa | 17.744842947166127 | `3c9ab62e` | 5.59e-8 | none | 267 |
+| thr1 a | `set_num_threads(1)` | 1 | sdpa | 17.790198509693287 | `5952c417` | 5.61e-8 | L0 `k_proj` (first module) | 571 |
+| thr1 b | `set_num_threads(1)` | 1 | sdpa | 17.790198509693287 | `5952c417` | 5.61e-8 | L0 `k_proj` | 545 |
+| eager 1 | `attn_implementation="eager"` | 4 | eager | 17.66059890313337 | `9b3c5e64` | 5.60e-8 | L0 `o_proj` | 315 |
+| eager 2 | `attn_implementation="eager"` | 4 | eager | 17.66059890313337 | `9b3c5e64` | 5.60e-8 | L0 `o_proj` | 298 |
+
+† My mid-run `git pull --autostash` replaced the live log file, so the process kept writing to an unlinked inode.
+The checkpoint is byte-identical to rebuild 1's, so its losses are rebuild 1's.
+
+**1. Are 3 rebuilds in this container bit-identical? No.**
+- Default runs in this container: rebuild 1, rep 2 and rep 3, plus Session B's Step 1.
+- They land on **two discrete outcomes**, each bit-identical when it recurs:
+  - A = 17.811016 (2 of 3 here, checkpoint `72b61b9e`);
+  - B = 17.744843 (1 of 3 here, checkpoint `3c9ab62e`, and Step 1's exact value with all 210 losses identical).
+- The A/B gap is 0.066, more than Step 1's whole five-seed range (0.054).
+- **The original Step 1 result is reproducible in this container. It is simply one of at least two outcomes the
+  default path can produce.**
+
+**2. Which setting makes repeats identical?** Each setting was run twice, and all three gave a bit-identical pair.
+Two runs per setting is weak evidence, especially for a two-outcome process:
+
+| setting | result | interpretation |
+|---|---|---|
+| `use_deterministic_algorithms(True)` | 2/2 outcome B | **Inconclusive.** B is also a default outcome, so this does not show the flag changed anything. No op raised a "no deterministic implementation" error. |
+| `set_num_threads(1)` | 2/2 = 17.790199, a third value | Consistent with removing a thread-count-dependent reduction order. It changes results from the very first module (L0 `k_proj` loss 2.9682e-6 vs 2.9675e-6), so single-thread GEMM/Hessian accumulation differs numerically from 4-thread. Costs 2.2× quantize time. |
+| `attn_implementation="eager"` | 2/2 = 17.660599, a fourth value | Consistent with the nondeterminism being in the SDPA attention path: the first divergence is L0 `o_proj`, the first module whose Hessian input passes through attention. Costs about 1.15× quantize time and 1.6× run time. |
+
+- **Where it starts.** Under the default settings, q/k/v_proj losses (computed from the pre-attention layernorm
+  output) are always identical. The first difference is always L0 `o_proj`, whose input is the attention output
+  (5.59e-8 vs 5.60e-8). Everything downstream then diverges.
+- **Likely mechanism (not proven).** GPTQModel quantizes modules and replays layer forwards concurrently
+  (`auto_forward_data_parallel=True`, parallel `gate_proj`/`up_proj`). Concurrent work would give the SDPA kernel a
+  varying share of the 4 intra-op threads, and so a varying fp32 reduction order.
+- **Recommendation.** Use `attn_implementation="eager"` or 1 thread, and confirm with ≥ 5 repeats.
+  `auto_forward_data_parallel=False` is the next candidate to test.
+- **Spread caused by implementation alone.** Over the same seed and data, the four distinct values span
+  17.6606–17.8110 = **0.150 ppl**. That is **2.8× the five-seed range** and 7× the seed SD.
+  - The Step 1 W4 seed SD (0.021) therefore mixes calibration-seed variance with this run-to-run noise, and does
+    not cleanly measure seed sensitivity.
+  - "Which attention kernel and how many threads" belong in the reported protocol.
+  - EXP1 seed sweeps should fix them, and should verify determinism with repeats before attributing variance to
+    seeds.
+
+**3. Cross-container check (requested only if the repeats were identical; given here because the CPU question
+needed an answer).**
+
+| item | this container | Session B (Step 1) |
+|---|---|---|
+| CPU model | Intel(R) Xeon(R) Processor @ 2.10GHz | same (`REPORT.md` Part A; `real_step1b.jsonl` `cpu_model`) |
+| `lscpu` flags | 115 flags incl. avx512_bf16, avx512_fp16, amx_bf16/int8/tile | **identical set** (diff empty) |
+| torch | 2.14.1+cpu, MKL 2024.2, oneDNN (MKL-DNN) v3.12.0, OpenMP 4.5, "CPU capability usage: AVX512" | 2.14.1+cpu (build config not recorded) |
+| gptqmodel / transformers | 7.5.0 / 5.18.0 | 7.5.0 / 5.18.0 |
+
+There is no evidence of a hardware or library difference. Step 1's exact result recurs here.
+
+**Status of earlier follow-ups.**
+- **Tokenizer-version effect on dense perplexity: measured (§1).**
+  - tokenizers 0.21.4 (wanda venv, own tokenization) gives dense fp32 ppl **14.487248**; 0.23.2 (Step 1 windows) gives **14.487794**.
+  - Δ = −0.00055 (−0.004 %). Only eval windows 33–40 differ.
+  - The effect is negligible for dense, but 0.114 for Wanda s0, where the calibration windows also change.
+  - No dedicated dense rerun beyond these two runs was done.
+- **Wanda 2:4 / 60 % / 70 % sweep: not started.** It is not in this session's queue and no runs exist. Estimated cost
+  on this VM: about 3 min per run (prune ~90 s + eval ~70 s). Seeds 0–4 × {2:4, 60 %, 70 %} = 15 runs ≈ 45 min,
+  ready to launch with `chain_step2a2.sh`-style flags (`--sparsity_type 2:4 --sparsity_ratio 0.5`;
+  `--sparsity_ratio 0.6/0.7`).
 
 ## Summary (10 lines)
 1. Wanda 50 % (135M, 5 seeds, Step 1 windows): ppl 31.49 ± 0.12 (CV 0.39 %, range 31.34–31.67) vs dense 14.49; seed range = 1.9 % of the +17.0 increase.
@@ -199,5 +277,11 @@ and eval fingerprint (`7da3b34b…`). Yet it gives **17.8110 vs Step 1's 17.7448
   - WikiText-calibrated: 17.81 on WikiText-2, 23.98 on C4-val.
   - C4-calibrated: 18.93 on WikiText-2, 23.34 on C4-val.
   - Each source wins in-domain, by 1.11 and 0.64 ppl (12–21× the seed range).
-- The same seed-0 command gave 17.81 here vs 17.74 in the Step 1 container. The runs diverge at layer-0 `o_proj`,
-  most likely because of CPU differences (this one has AMX). Hardware matters about as much as the seed.
+- Earlier CPU explanation retracted (same CPU, identical flags).
+
+**Add-on (§8, Determinism):**
+- The exact Step 1 seed-0 command is **not deterministic** on the default path (4 threads, SDPA). It gives two
+  outcomes, 17.8110 or 17.7448 (Step 1's exact value), diverging at layer-0 `o_proj`.
+- With eager attention (17.6606) or 1 thread (17.7902), 2/2 repeats were bit-identical.
+- `use_deterministic_algorithms(True)` was inconclusive.
+- Implementation-only spread of 0.150 ppl ≈ 2.8× the five-seed range.
