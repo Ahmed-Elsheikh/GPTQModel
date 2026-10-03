@@ -1,0 +1,45 @@
+torch 2.14.1+cpu
+transformers 4.47.1
+accelerate 1.15.0
+# of gpus:  0
+loading llm model HuggingFaceTB/SmolLM2-135M
+use device  cpu
+******************************
+layer 0 sparsity 0.000000
+layer 1 sparsity 0.000000
+layer 2 sparsity 0.000000
+layer 3 sparsity 0.000000
+layer 4 sparsity 0.000000
+layer 5 sparsity 0.000000
+layer 6 sparsity 0.000000
+layer 7 sparsity 0.000000
+layer 8 sparsity 0.000000
+layer 9 sparsity 0.000000
+layer 10 sparsity 0.000000
+layer 11 sparsity 0.000000
+layer 12 sparsity 0.000000
+layer 13 sparsity 0.000000
+layer 14 sparsity 0.000000
+layer 15 sparsity 0.000000
+layer 16 sparsity 0.000000
+layer 17 sparsity 0.000000
+layer 18 sparsity 0.000000
+layer 19 sparsity 0.000000
+layer 20 sparsity 0.000000
+layer 21 sparsity 0.000000
+layer 22 sparsity 0.000000
+layer 23 sparsity 0.000000
+layer 24 sparsity 0.000000
+layer 25 sparsity 0.000000
+layer 26 sparsity 0.000000
+layer 27 sparsity 0.000000
+layer 28 sparsity 0.000000
+layer 29 sparsity 0.000000
+sparsity sanity check 0.0000
+******************************
+Generating test split:   0%|          | 0/4358 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 4358/4358 [00:00<00:00, 57848.26 examples/s]
+Generating train split:   0%|          | 0/36718 [00:00<?, ? examples/s]Generating train split:  27%|██▋       | 10000/36718 [00:00<00:00, 77042.54 examples/s]Generating train split: 100%|██████████| 36718/36718 [00:00<00:00, 184585.87 examples/s]
+Generating validation split:   0%|          | 0/3760 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 3760/3760 [00:00<00:00, 422407.47 examples/s]
+Token indices sequence length is longer than the specified maximum sequence length for this model (304978 > 8192). Running this sequence through the model will result in indexing errors
+wikitext perplexity 14.487247694234059
+[driver] {"ppl": 14.487247694234059, "sparsity": 0.0, "phases": {"eval": 85.0}, "wall_s": 96.4, "peak_rss_gb": 2.2}
