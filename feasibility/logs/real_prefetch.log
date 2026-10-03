@@ -1,0 +1,38 @@
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 10 files:  10%|█         | 1/10 [00:00<00:01,  5.54it/s]Fetching 10 files:  20%|██        | 2/10 [00:00<00:01,  5.32it/s]Fetching 10 files:  60%|██████    | 6/10 [00:00<00:00, 15.48it/s]Fetching 10 files:  80%|████████  | 8/10 [00:00<00:00, 13.06it/s]Fetching 10 files: 100%|██████████| 10/10 [00:09<00:00,  1.50s/it]Fetching 10 files: 100%|██████████| 10/10 [00:09<00:00,  1.07it/s]
+/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B/snapshots/060db6499f32faf8b98477b0a26969ef7d8b9987
+/root/.cache/huggingface/hub/datasets--allenai--c4/snapshots/1588ec454efa1a09f29cd18ddd04fe05fc8653a2/en/c4-train.00000-of-01024.json.gz
+Generating train split:   0%|          | 0/2251 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 2251/2251 [00:00<00:00, 112563.53 examples/s]
+Generating test split:   0%|          | 0/2376 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 2376/2376 [00:00<00:00, 314761.58 examples/s]
+Generating validation split:   0%|          | 0/570 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 570/570 [00:00<00:00, 172343.81 examples/s]
+DatasetDict({
+    train: Dataset({
+        features: ['id', 'question', 'choices', 'answerKey'],
+        num_rows: 2251
+    })
+    test: Dataset({
+        features: ['id', 'question', 'choices', 'answerKey'],
+        num_rows: 2376
+    })
+    validation: Dataset({
+        features: ['id', 'question', 'choices', 'answerKey'],
+        num_rows: 570
+    })
+})
+Generating train split:   0%|          | 0/39905 [00:00<?, ? examples/s]Generating train split:  33%|███▎      | 13000/39905 [00:00<00:00, 109535.17 examples/s]Generating train split:  95%|█████████▌| 38000/39905 [00:00<00:00, 182410.86 examples/s]Generating train split: 100%|██████████| 39905/39905 [00:00<00:00, 170336.01 examples/s]
+Generating test split:   0%|          | 0/10003 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 10003/10003 [00:00<00:00, 366255.12 examples/s]
+Generating validation split:   0%|          | 0/10042 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 10042/10042 [00:00<00:00, 257026.57 examples/s]
+DatasetDict({
+    train: Dataset({
+        features: ['ind', 'activity_label', 'ctx_a', 'ctx_b', 'ctx', 'endings', 'source_id', 'split', 'split_type', 'label'],
+        num_rows: 39905
+    })
+    test: Dataset({
+        features: ['ind', 'activity_label', 'ctx_a', 'ctx_b', 'ctx', 'endings', 'source_id', 'split', 'split_type', 'label'],
+        num_rows: 10003
+    })
+    validation: Dataset({
+        features: ['ind', 'activity_label', 'ctx_a', 'ctx_b', 'ctx', 'endings', 'source_id', 'split', 'split_type', 'label'],
+        num_rows: 10042
+    })
+})

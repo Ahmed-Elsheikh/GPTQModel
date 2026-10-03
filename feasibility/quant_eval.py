@@ -33,9 +33,11 @@ def main():
     ap.add_argument("--L", type=int, default=512)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--source", default="synthetic")
+    ap.add_argument("--eval_source", default=None, help="perplexity source (default: --source; c4 calibration is evaluated on wikitext2)")
     ap.add_argument("--eval_n", type=int, default=40)
     ap.add_argument("--eval_L", type=int, default=2048)
     ap.add_argument("--eval_dense", action="store_true")
+    ap.add_argument("--dense_only", action="store_true", help="evaluate the dense model (fp32 and bf16) and exit")
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--out", required=True)
     ap.add_argument("--save_dir", default=None)
@@ -61,7 +63,8 @@ def main():
     from transformers import AutoConfig
     vocab = AutoConfig.from_pretrained(a.model).vocab_size
     samples = calib.draw_windows(a.source, tok, n=a.n, L=a.L, seed=a.seed, vocab=vocab)
-    evalw = calib.eval_windows(a.source, tok, n=a.eval_n, L=a.eval_L, vocab=vocab)
+    a.eval_source = a.eval_source or ("wikitext2" if a.source == "c4" else a.source)
+    evalw = calib.eval_windows(a.eval_source, tok, n=a.eval_n, L=a.eval_L, vocab=vocab)
     res["calib_fingerprint"] = calib.fingerprint(samples)
     res["eval_fingerprint"] = calib.fingerprint(evalw)
     phase("data", t)
@@ -69,12 +72,21 @@ def main():
     if a.eval_only:
         return eval_quantized(a, res, phase, evalw, a.eval_only)
 
-    if a.eval_dense:
+    if a.eval_dense or a.dense_only:
         t = time.time()
         dense = AutoModelForCausalLM.from_pretrained(a.model, dtype=torch.float32).eval()
         res["ppl_dense_fp32"] = perplexity(dense, evalw)
         del dense
         phase("eval_dense_fp32", t)
+    if a.dense_only:
+        t = time.time()
+        dense = AutoModelForCausalLM.from_pretrained(a.model, dtype=torch.bfloat16).eval()
+        res["ppl_dense_bf16"] = perplexity(dense, evalw)
+        del dense
+        phase("eval_dense_bf16", t)
+        res["total_wall_s"] = stamp(); res["peak_rss_gb"] = peak_gb()
+        json.dump(res, open(a.out, "w"), indent=2)
+        return
 
     from gptqmodel import GPTQModel, GPTQConfig, AWQConfig
     t = time.time()

@@ -1,0 +1,10 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (2568237 > 8192). Running this sequence through the model will result in indexing errors
+[22.51s] data: {'wall_s': 18.64, 'rss_gb': 1.362, 'peak_rss_gb': 2.071}
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1003 07:55:21.867000 496 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1003 07:55:21.924000 496 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 79/272 [00:00<00:00, 788.37it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 1369.91it/s]
+[118.0s] eval_dense_fp32: {'wall_s': 95.48, 'rss_gb': 1.945, 'peak_rss_gb': 2.8}
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 2807.13it/s]

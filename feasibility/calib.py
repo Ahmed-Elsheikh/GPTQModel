@@ -6,7 +6,7 @@ L <= max_position_embeddings GPTQModel neither drops nor trims any sample (see
 gptqmodel/utils/calibration.py: calibration_data_min_length=10 filter, max_position trim).
 
 Sources
-  wikitext2 : HF datasets wikitext/wikitext-2-raw-v1 train, docs joined with "\n\n", tokenised once,
+  wikitext2 : HF datasets Salesforce/wikitext wikitext-2-raw-v1 train, docs joined with "\n\n", tokenised once,
               window starts ~ random.Random(seed).randint(0, T-L-1)                (GPTQ-paper style)
   c4        : allenai/c4 en/c4-train.00000-of-01024.json.gz; sample a doc index with the same RNG
               until a doc has > L tokens, then a window start inside it                 (GPTQ-paper style)
@@ -30,7 +30,8 @@ def _synthetic_stream(vocab, corpus_seed, n_tokens=SYN_TOKENS):
 
 def _wikitext_stream(tokenizer, split):
     from datasets import load_dataset
-    ds = load_dataset("wikitext", "wikitext-2-raw-v1", split=split)
+    # "Salesforce/wikitext" is the canonical Hub id (the bare "wikitext" alias redirects to it)
+    ds = load_dataset("Salesforce/wikitext", "wikitext-2-raw-v1", split=split)
     return tokenizer("\n\n".join(ds["text"]), add_special_tokens=False)["input_ids"]
 
 
