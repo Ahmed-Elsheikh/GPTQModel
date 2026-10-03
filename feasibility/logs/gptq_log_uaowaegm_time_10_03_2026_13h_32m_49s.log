@@ -2169,3 +2169,16 @@
     "fwd_time": "5.263",
     "(v)ram": "n/a"
 }
+{
+    "process": "gptq",
+    "layer": 23,
+    "module": "mlp.down_proj",
+    "feat: in, out": "4864, 896",
+    "dtype: size": "f32: 16.9MB",
+    "loss": "0.0006215015",
+    "samples": "65536",
+    "damp": "0.05000",
+    "time": "2.430",
+    "fwd_time": "18.748",
+    "(v)ram": "n/a"
+}
