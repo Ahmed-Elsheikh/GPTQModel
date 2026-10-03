@@ -1,6 +1,6 @@
 """Run one experiment command, then append one JSON line to a results/real_*.jsonl file.
 
-usage: runlog.py JSONL RUN_ID [--json OUT.json] -- cmd args...
+usage: runlog.py JSONL RUN_ID [--json OUT.json] [--meta JSON] -- cmd args...
 Records wall time and peak RSS of the child process tree (RUSAGE_CHILDREN; /usr/bin/time is absent on this VM),
 the lscpu model name and flags, package versions of the command venv, the exit code, the tail of stderr/stdout on failure, and the contents of OUT.json if the command wrote one.
 """
@@ -9,8 +9,12 @@ import json, os, resource, subprocess, sys, time, datetime
 jsonl, run_id = sys.argv[1], sys.argv[2]
 rest = sys.argv[3:]
 out_json = None
-if rest[0] == "--json":
-    out_json, rest = rest[1], rest[2:]
+meta = None
+while rest[0] in ("--json", "--meta"):
+    if rest[0] == "--json":
+        out_json, rest = rest[1], rest[2:]
+    else:  # --meta '{"model": ..., ...}': normalised run description stored as rec["meta"]
+        meta, rest = json.loads(rest[1]), rest[2:]
 assert rest[0] == "--"
 cmd = rest[1:]
 log = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs", f"real_{run_id}.log")
@@ -41,6 +45,8 @@ def _versions(py):
 
 rec = {"run_id": run_id, **_lscpu(), "versions": next((_versions(c) for c in cmd if c.endswith(("/python", "/python3"))), None), "start_utc": start, "wall_s": wall, "peak_rss_gb": peak, "rc": rc, "log": os.path.relpath(log),
        "cmd": " ".join(cmd)}
+if meta is not None:
+    rec["meta"] = meta
 if rc != 0:
     rec["error_tail"] = open(log, errors="replace").read()[-1500:]
 if out_json and os.path.exists(out_json):
