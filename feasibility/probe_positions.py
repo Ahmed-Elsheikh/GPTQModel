@@ -1,13 +1,14 @@
 """Diagnosis probe (no quantization): squared L2 norm of the mlp.down_proj INPUT per token position in the dense
-SmolLM2-135M (fp32), on the first 8 calibration windows of seed 0 at L=512 and at L=2048. GPTQ's Hessian is the
+model (default SmolLM2-135M; argv[2] = another model id, then all layers are probed) in fp32, on the first 8 calibration windows of seed 0 at L=512 and at L=2048. GPTQ's Hessian is the
 mean of x x^T over calibration tokens, so a token's weight in H is proportional to ||x||^2 / N. Reports the share
 of the Hessian trace contributed by position 0 and positions 0-3 for each window length."""
 import json, sys, torch, calib
 from transformers import AutoTokenizer, AutoModelForCausalLM
 torch.set_num_threads(int(sys.argv[1]) if len(sys.argv) > 1 else 1)
-M = "HuggingFaceTB/SmolLM2-135M"
+M = sys.argv[2] if len(sys.argv) > 2 else "HuggingFaceTB/SmolLM2-135M"
+OUT = sys.argv[3] if len(sys.argv) > 3 else "results/real_diag_probe_positions.json"
 tok = AutoTokenizer.from_pretrained(M); model = AutoModelForCausalLM.from_pretrained(M, dtype=torch.float32).eval()
-LAYERS = [2, 11, 20, 28, 29]
+LAYERS = [2, 11, 20, 28, 29] if len(sys.argv) <= 2 else list(range(model.config.num_hidden_layers))
 cap = {}
 def hook(i):
     def f(mod, inp): cap[i] = inp[0].detach().pow(2).sum(-1)[0]  # (L,)
@@ -27,4 +28,4 @@ for L in (512, 2048):
         out[L][i] = {"share_pos0_pct": 100 * a[0].item() / tot, "share_pos0_3_pct": 100 * a[:4].sum().item() / tot,
                      "pos0_over_median": a[0].item() / a[1:].median().item(), "max_pos": int(a.argmax())}
 print(json.dumps(out, indent=1))
-json.dump(out, open("results/real_diag_probe_positions.json", "w"), indent=2)
+json.dump(out, open(OUT, "w"), indent=2)
