@@ -1,0 +1,114 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (2568237 > 8192). Running this sequence through the model will result in indexing errors
+[16.13s] data: {'wall_s': 13.17, 'rss_gb': 1.486, 'peak_rss_gb': 2.193}
+
+INFO  LogBar: headless/CI mode; progress animations disabled.                   
+WARN  Python GIL is enabled: Multi-gpu quant acceleration for MoE models is sub-optimal and multi-core accelerated cpu packing is also disabled. We recommend Python >= 3.13.3t with Pytorch > 2.8 for mult-gpu quantization and multi-cpu packing with env `PYTHON_GIL=0`.
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1003 08:40:16.397000 3446 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1003 08:40:16.428000 3446 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+INFO  ENV: Auto setting PYTORCH_ALLOC_CONF='expandable_segments:True,max_split_size_mb:256,garbage_collection_threshold:0.7' for memory saving.
+INFO  ENV: Auto setting CUDA_DEVICE_ORDER=PCI_BUS_ID for correctness.           
+INFO  
+
+┌─────────────┐    ┌────────────────────────┐    ┌────────────┐    ┌─────────┐
+│ GPT-QModel  │ -> │ ▓▓▓▓▓▓▓▓▓▓▓▓ 16bit     │ -> │ ▒▒▒▒ 8bit  │ -> │ ░░ 4bit │
+└─────────────┘    └────────────────────────┘    └────────────┘    └─────────┘
+GPT-QModel   : 7.5.0
+Transformers : 5.18.0
+Torch        : 2.14.1+cpu
+INFO  QuantizeConfig: offload_to_disk_path auto set to temporary dir `/tmp/gptqmodel_g_ebre61`
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/revision/main "HTTP/1.1 200 OK"
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 1987.92it/s]
+INFO  Loader: Auto dtype (CPU + Torch Fused): `torch.bfloat16`                  
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='<|endoftext|>').
+INFO  Estimated Quantization BPW (bits per weight): 4.2875 bpw, based on [bits: 4, group_size: 128]
+INFO  Loader: using checkpoint-backed lazy turtle source for `/root/.cache/huggingface/hub/models--HuggingFaceTB--SmolLM2-135M/snapshots/93efa2f097d58c2a74874c7e644dbc9b0cee75a2`
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='<|endoftext|>').
+INFO  Model: Loaded `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 0,
+  "use_cache": true
+}
+
+INFO  Model: Auto-fixed `generation_config` mismatch between model and `generation_config.json`.
+INFO  Model: Updated `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "do_sample": true,
+  "eos_token_id": 0,
+  "pad_token_id": 0
+}
+
+INFO  Kernel: loaded -> `[]`                                                    
+[17.44s] load_for_quant: {'wall_s': 0.7, 'rss_gb': 1.496, 'peak_rss_gb': 2.193}
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+calib_check {'passed': 128, 'after_prepare': 128, 'same_multiset': True, 'lengths': [512]}
+INFO  Packing Kernel: selected: `AwqTorchLinear`                                
+INFO  Packing Kernel: selected: `AwqTorchLinear`                                
+WARN  Calibration dataset size should be more than 256. Current: 128.           
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+INFO  Disk subsystem write throughput detected at 209.6 MB/s.                   
+INFO  ModuleLooper: capturing layer inputs from 128 calibration batches         
+INFO  Offloading base modules to disk...                                        
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | region     | count | last_s | avg_s | total_s | pct    | source  |      
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | Capture ... | 1     | 0.334  | 0.334 | 0.334   | 100.0% | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  AWQProcessor: layer 0 tracking 7 modules before quantization (subsets processed=4/4); first modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
+INFO  AWQProcessor: layer 0 sanitized 3 scaling groups; sample=[['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj'], ['mlp.gate_proj', 'mlp.up_proj'], ['mlp.down_proj']]
+Traceback (most recent call last):
+  File "/home/user/GPTQModel/feasibility/quant_eval.py", line 152, in <module>
+    main()
+  File "/home/user/GPTQModel/feasibility/quant_eval.py", line 113, in main
+    model.quantize(samples, batch_size=1, backend=BACKEND(a.quant_backend))
+  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/utils/device_telemetry.py", line 51, in run
+    return fn(model, *args, **kwargs)
+           ^^^^^^^^^^^^^Traceback (most recent call last):
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/utils/threadx.py", line 503, in _run
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/utils/device_telemetry.py", line 63, in run
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/venvs/main/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/stage_subset.py", line 1159, in _process_on_worker
+    proc.process(
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 2387, in process
+    self._quantize_layer(layer_index, state)
+^^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 1452, in _quantize_layer
+    scales_list = [
+                  ^
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 1453, in <listcomp>
+    self._search_best_scale(layer_module_ref, **layer)
+^  File "/opt/venvs/main/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 1569, in _search_best_scale
+    w_mean = _compute_awq_weight_mean(layers, self.qcfg.group_size)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 134, in _compute_awq_weight_mean
+    w_sum, row_count = _accumulate_awq_weight_mean(layers, group_size)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^  File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/looper/awq_processor.py", line 83, in _accumulate_awq_weight_mean
+    raise ValueError(
+^ValueError: Expected in_features (576) to be divisible by group_size (128).
+^

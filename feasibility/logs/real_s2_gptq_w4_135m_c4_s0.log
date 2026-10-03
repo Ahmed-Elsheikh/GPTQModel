@@ -1,0 +1,1685 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 4435 examples [00:00, 28491.03 examples/s]Generating train split: 13602 examples [00:00, 44339.97 examples/s]Generating train split: 22590 examples [00:00, 39030.16 examples/s]Generating train split: 27276 examples [00:00, 36903.28 examples/s]Generating train split: 36862 examples [00:00, 43147.67 examples/s]Generating train split: 45854 examples [00:01, 46704.71 examples/s]Generating train split: 55073 examples [00:01, 49541.74 examples/s]Generating train split: 64140 examples [00:01, 51402.27 examples/s]Generating train split: 73387 examples [00:01, 53502.04 examples/s]Generating train split: 82339 examples [00:01, 53813.91 examples/s]Generating train split: 91398 examples [00:01, 54123.84 examples/s]Generating train split: 100344 examples [00:02, 55484.51 examples/s]Generating train split: 109336 examples [00:02, 56363.28 examples/s]Generating train split: 118215 examples [00:02, 55208.59 examples/s]Generating train split: 127363 examples [00:02, 55434.00 examples/s]Generating train split: 136630 examples [00:02, 54662.02 examples/s]Generating train split: 145869 examples [00:02, 55845.32 examples/s]Generating train split: 154999 examples [00:03, 55984.26 examples/s]Generating train split: 164342 examples [00:03, 53393.12 examples/s]Generating train split: 173282 examples [00:03, 53381.21 examples/s]Generating train split: 182003 examples [00:03, 51998.59 examples/s]Generating train split: 191256 examples [00:03, 51254.21 examples/s]Generating train split: 200508 examples [00:03, 51793.35 examples/s]Generating train split: 209378 examples [00:04, 52498.97 examples/s]Generating train split: 218473 examples [00:04, 52508.58 examples/s]Generating train split: 227618 examples [00:04, 50424.56 examples/s]Generating train split: 236617 examples [00:04, 50445.42 examples/s]Generating train split: 245816 examples [00:04, 49753.83 examples/s]Generating train split: 254993 examples [00:04, 51457.61 examples/s]Generating train split: 263922 examples [00:05, 52975.72 examples/s]Generating train split: 273202 examples [00:05, 51257.58 examples/s]Generating train split: 282396 examples [00:05, 46705.71 examples/s]Generating train split: 291456 examples [00:05, 47417.09 examples/s]Generating train split: 300440 examples [00:05, 47726.95 examples/s]Generating train split: 309452 examples [00:06, 46902.47 examples/s]Generating train split: 318529 examples [00:06, 46688.51 examples/s]Generating train split: 327690 examples [00:06, 46800.87 examples/s]Generating train split: 336793 examples [00:06, 44592.92 examples/s]Generating train split: 345705 examples [00:06, 44664.04 examples/s]Generating train split: 350356 examples [00:07, 44939.18 examples/s]Generating train split: 354936 examples [00:07, 41780.16 examples/s]Generating train split: 356317 examples [00:07, 49206.26 examples/s]
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (8597 > 8192). Running this sequence through the model will result in indexing errors
+[19.11s] data: {'wall_s': 16.16, 'rss_gb': 0.899, 'peak_rss_gb': 1.092}
+
+INFO  LogBar: headless/CI mode; progress animations disabled.                   
+WARN  Python GIL is enabled: Multi-gpu quant acceleration for MoE models is sub-optimal and multi-core accelerated cpu packing is also disabled. We recommend Python >= 3.13.3t with Pytorch > 2.8 for mult-gpu quantization and multi-cpu packing with env `PYTHON_GIL=0`.
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1003 08:34:15.920000 3051 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1003 08:34:15.949000 3051 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+INFO  ENV: Auto setting PYTORCH_ALLOC_CONF='expandable_segments:True,max_split_size_mb:256,garbage_collection_threshold:0.7' for memory saving.
+INFO  ENV: Auto setting CUDA_DEVICE_ORDER=PCI_BUS_ID for correctness.           
+INFO  
+
+┌─────────────┐    ┌────────────────────────┐    ┌────────────┐    ┌─────────┐
+│ GPT-QModel  │ -> │ ▓▓▓▓▓▓▓▓▓▓▓▓ 16bit     │ -> │ ▒▒▒▒ 8bit  │ -> │ ░░ 4bit │
+└─────────────┘    └────────────────────────┘    └────────────┘    └─────────┘
+GPT-QModel   : 7.5.0
+Transformers : 5.18.0
+Torch        : 2.14.1+cpu
+INFO  QuantizeConfig: offload_to_disk_path auto set to temporary dir `/tmp/gptqmodel_m7rhwlpr`
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/revision/main "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/tree/93efa2f097d58c2a74874c7e644dbc9b0cee75a2?recursive=true&expand=false "HTTP/1.1 200 OK"
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]INFO:httpx:HTTP Request: HEAD https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/HuggingFaceTB/SmolLM2-135M/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/.gitattributes?%2FHuggingFaceTB%2FSmolLM2-135M%2Fresolve%2F93efa2f097d58c2a74874c7e644dbc9b0cee75a2%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/resolve-cache/models/HuggingFaceTB/SmolLM2-135M/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/.gitattributes?%2FHuggingFaceTB%2FSmolLM2-135M%2Fresolve%2F93efa2f097d58c2a74874c7e644dbc9b0cee75a2%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+Fetching 10 files:  70%|███████   | 7/10 [00:00<00:00, 36.56it/s]INFO:httpx:HTTP Request: HEAD https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/HuggingFaceTB/SmolLM2-135M/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/README.md?%2FHuggingFaceTB%2FSmolLM2-135M%2Fresolve%2F93efa2f097d58c2a74874c7e644dbc9b0cee75a2%2FREADME.md=&etag=%224049f762cb41ec6f526936c9af80ae216048bc74%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/resolve-cache/models/HuggingFaceTB/SmolLM2-135M/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/README.md?%2FHuggingFaceTB%2FSmolLM2-135M%2Fresolve%2F93efa2f097d58c2a74874c7e644dbc9b0cee75a2%2FREADME.md=&etag=%224049f762cb41ec6f526936c9af80ae216048bc74%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M/xet-read-token/93efa2f097d58c2a74874c7e644dbc9b0cee75a2 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/HuggingFaceTB/SmolLM2-135M/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/generation_config.json?%2FHuggingFaceTB%2FSmolLM2-135M%2Fresolve%2F93efa2f097d58c2a74874c7e644dbc9b0cee75a2%2Fgeneration_config.json=&etag=%220fce861c328ff24830f3037d91ce773254447bf7%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/resolve-cache/models/HuggingFaceTB/SmolLM2-135M/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/generation_config.json?%2FHuggingFaceTB%2FSmolLM2-135M%2Fresolve%2F93efa2f097d58c2a74874c7e644dbc9b0cee75a2%2Fgeneration_config.json=&etag=%220fce861c328ff24830f3037d91ce773254447bf7%22 "HTTP/1.1 200 OK"
+Fetching 10 files: 100%|██████████| 10/10 [00:02<00:00,  3.35it/s]
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='<|endoftext|>').
+INFO  Estimated Quantization BPW (bits per weight): 4.2875 bpw, based on [bits: 4, group_size: 128]
+INFO  Loader: using checkpoint-backed lazy turtle source for `/root/.cache/huggingface/hub/models--HuggingFaceTB--SmolLM2-135M/snapshots/93efa2f097d58c2a74874c7e644dbc9b0cee75a2`
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='<|endoftext|>').
+INFO  Model: Loaded `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 0,
+  "use_cache": true
+}
+
+INFO  Model: Auto-fixed `generation_config` mismatch between model and `generation_config.json`.
+INFO  Model: Updated `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "do_sample": true,
+  "eos_token_id": 0,
+  "pad_token_id": 0
+}
+
+INFO  Kernel: loaded -> `[]`                                                    
+[23.63s] load_for_quant: {'wall_s': 3.74, 'rss_gb': 1.086, 'peak_rss_gb': 1.137}
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+calib_check {'passed': 128, 'after_prepare': 128, 'same_multiset': True, 'lengths': [512]}
+INFO  Packing Kernel: selected: `TorchLinear`                                   
+INFO  Packing Kernel: selected: `TorchLinear`                                   
+WARN  Calibration dataset size should be more than 256. Current: 128.           
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+WARN  Disk subsystem write throughput detected at 195.2 MB/s; quantization may be slowed by IO.
+INFO  ModuleLooper: capturing layer inputs from 128 calibration batches         
+INFO  Offloading base modules to disk...                                        
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | region     | count | last_s | avg_s | total_s | pct    | source  |      
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 100.0% | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=0 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=2 status=verified
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 0 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 0 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=0 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=3 status=verified
+INFO  | ... | 0 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 4     | 2.118  | 1.148 | 4.594   | 49.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 7     | 0.386  | 0.284 | 1.988   | 21.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 1     | 1.624  | 1.624 | 1.624   | 17.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 896   | 0.006  | 0.001 | 0.894   | 9.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 1.7%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 7     | 0.059  | 0.017 | 0.120   | 1.3%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  Extension load requested for `pack_block_cpu`: pack_block_cpu             
+INFO  pack_block_cpu: compiling torch.ops JIT extension in `/root/.cache/gptqmodel/torch_extensions/pack_block_cpu/580832ec415c1d4e`.
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=1 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=5 status=verified
+INFO  pack_block_cpu: torch.ops JIT extension ready in 27s (estimated ~31s, -3.8s).
+INFO  Extension load finished successfully: pack_block_cpu                      
+INFO  Format: Converting GPTQ v2 to v1                                          
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 1 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=1 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=6 status=verified
+INFO  | ... | 1 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 7     | 0.006  | 7.809 | 54.665  | 42.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 7     | 0.004  | 3.904 | 27.328  | 21.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 7     | 0.000  | 3.902 | 27.313  | 21.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 8     | 2.124  | 1.156 | 9.251   | 7.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 14    | 0.342  | 0.284 | 3.978   | 3.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 2     | 1.528  | 1.576 | 3.152   | 2.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 1792  | 0.004  | 0.001 | 1.791   | 1.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 14    | 0.059  | 0.016 | 0.229   | 0.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 7     | 0.001  | 0.002 | 0.011   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=2 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=8 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 2 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=2 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=9 status=verified
+INFO  | ... | 2 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 14    | 0.015  | 3.910 | 54.746  | 40.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 14    | 0.004  | 1.954 | 27.352  | 20.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 14    | 0.007  | 1.952 | 27.324  | 20.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 12    | 2.035  | 1.141 | 13.687  | 10.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 21    | 0.350  | 0.276 | 5.801   | 4.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 3     | 1.546  | 1.566 | 4.698   | 3.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 2688  | 0.004  | 0.001 | 2.655   | 1.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 21    | 0.060  | 0.016 | 0.342   | 0.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 14    | 0.001  | 0.003 | 0.036   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=3 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=11 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 3 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 3 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=3 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=12 status=verified
+INFO  | ... | 3 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 21    | 0.015  | 2.611 | 54.830  | 37.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 21    | 0.006  | 1.304 | 27.383  | 18.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 21    | 0.006  | 1.302 | 27.333  | 18.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 16    | 2.192  | 1.149 | 18.391  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 28    | 0.333  | 0.276 | 7.718   | 5.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 4     | 1.425  | 1.531 | 6.123   | 4.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 3584  | 0.004  | 0.001 | 3.562   | 2.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 28    | 0.050  | 0.016 | 0.445   | 0.3%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 21    | 0.001  | 0.003 | 0.065   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=4 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=14 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 4 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 4 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=4 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=15 status=verified
+INFO  | ... | 4 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 28    | 0.018  | 1.961 | 54.922  | 35.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 28    | 0.004  | 0.979 | 27.414  | 17.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 28    | 0.005  | 0.977 | 27.343  | 17.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 20    | 2.047  | 1.163 | 23.256  | 15.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 35    | 0.342  | 0.278 | 9.717   | 6.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 5     | 1.482  | 1.521 | 7.606   | 4.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 4480  | 0.004  | 0.001 | 4.450   | 2.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 35    | 0.052  | 0.016 | 0.556   | 0.4%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 28    | 0.004  | 0.003 | 0.089   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=5 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=17 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 5 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 5 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=5 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=18 status=verified
+INFO  | ... | 5 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 35    | 0.015  | 1.572 | 55.013  | 33.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 24    | 2.166  | 1.164 | 27.947  | 16.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 35    | 0.006  | 0.784 | 27.449  | 16.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 35    | 0.006  | 0.782 | 27.362  | 16.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 42    | 0.338  | 0.278 | 11.691  | 7.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 6     | 1.512  | 1.520 | 9.118   | 5.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 5376  | 0.004  | 0.001 | 5.371   | 3.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 42    | 0.055  | 0.016 | 0.673   | 0.4%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 35    | 0.002  | 0.003 | 0.115   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=6 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=20 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 6 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 6 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=6 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=21 status=verified
+INFO  | ... | 6 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 42    | 0.009  | 1.312 | 55.103  | 31.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 28    | 2.038  | 1.160 | 32.487  | 18.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 42    | 0.007  | 0.654 | 27.481  | 15.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 42    | 0.000  | 0.652 | 27.375  | 15.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 49    | 0.363  | 0.277 | 13.563  | 7.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 7     | 1.450  | 1.510 | 10.568  | 6.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 6272  | 0.005  | 0.001 | 6.237   | 3.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 49    | 0.063  | 0.016 | 0.788   | 0.5%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 42    | 0.001  | 0.003 | 0.139   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=7 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=23 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 7 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 7 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=7 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=24 status=verified
+INFO  | ... | 7 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 49    | 0.015  | 1.126 | 55.195  | 30.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 32    | 2.134  | 1.159 | 37.098  | 20.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 49    | 0.005  | 0.562 | 27.524  | 15.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 49    | 0.001  | 0.559 | 27.385  | 15.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 56    | 0.383  | 0.276 | 15.450  | 8.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 8     | 1.558  | 1.516 | 12.126  | 6.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 7168  | 0.004  | 0.001 | 7.129   | 3.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 56    | 0.063  | 0.016 | 0.908   | 0.5%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 49    | 0.001  | 0.003 | 0.158   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=8 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=26 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 8 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 8 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=8 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=27 status=verified
+INFO  | ... | 8 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 56    | 0.011  | 0.987 | 55.271  | 28.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 36    | 2.240  | 1.167 | 42.017  | 21.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 56    | 0.005  | 0.492 | 27.551  | 14.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 56    | 0.002  | 0.489 | 27.393  | 14.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 63    | 0.348  | 0.276 | 17.391  | 9.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 9     | 1.575  | 1.522 | 13.701  | 7.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 8064  | 0.004  | 0.001 | 8.080   | 4.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 63    | 0.052  | 0.016 | 1.014   | 0.5%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 56    | 0.001  | 0.003 | 0.181   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=9 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=29 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 9 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 9 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=9 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=30 status=verified
+INFO  | ... | 9 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 57... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 15... | f32:... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+---+-----+-------+---------+-----+------+----+----+------+---+----+
+INFO  | Submodul... | 63    | 0.006  | 0.879 | 55.351  | 27.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 40    | 2.269  | 1.173 | 46.917  | 23.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 63    | 0.004  | 0.438 | 27.585  | 13.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 63    | 0.000  | 0.435 | 27.409  | 13.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 70    | 0.361  | 0.276 | 19.344  | 9.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 10    | 1.596  | 1.530 | 15.297  | 7.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 8960  | 0.005  | 0.001 | 9.030   | 4.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 70    | 0.053  | 0.016 | 1.115   | 0.6%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 63    | 0.001  | 0.003 | 0.199   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=10 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=32 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 10 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 10 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 10 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=10 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=33 status=verified
+INFO  | ... | 10 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 10 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 10 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Submodul... | 70    | 0.013  | 0.792 | 55.439  | 26.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Pre-quan... | 44    | 2.388  | 1.186 | 52.173  | 24.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 70    | 0.005  | 0.395 | 27.618  | 13.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 70    | 0.003  | 0.392 | 27.422  | 12.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 77    | 0.378  | 0.278 | 21.427  | 10.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 11    | 1.565  | 1.533 | 16.862  | 7.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 9856  | 0.005  | 0.001 | 10.036  | 4.7%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 77    | 0.055  | 0.016 | 1.223   | 0.6%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 70    | 0.001  | 0.003 | 0.217   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=11 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=35 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 11 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 11 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 11 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=11 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=36 status=verified
+INFO  | ... | 11 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 11 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 11 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 48    | 2.209  | 1.187 | 56.980  | 25.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 77    | 0.006  | 0.721 | 55.521  | 25.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 77    | 0.004  | 0.359 | 27.652  | 12.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 77    | 0.000  | 0.356 | 27.427  | 12.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 84    | 0.380  | 0.279 | 23.409  | 10.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 12    | 1.615  | 1.540 | 18.477  | 8.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 10752 | 0.004  | 0.001 | 10.952  | 4.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 84    | 0.051  | 0.016 | 1.326   | 0.6%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 77    | 0.001  | 0.003 | 0.235   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=12 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=38 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 12 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 12 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 12 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=12 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=39 status=verified
+INFO  | ... | 12 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 12 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 12 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 52    | 2.260  | 1.194 | 62.063  | 26.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 84    | 0.007  | 0.662 | 55.633  | 24.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 84    | 0.005  | 0.330 | 27.689  | 11.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 84    | 0.000  | 0.327 | 27.449  | 11.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 91    | 0.388  | 0.279 | 25.427  | 11.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 13    | 1.666  | 1.549 | 20.143  | 8.7%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 11648 | 0.004  | 0.001 | 11.924  | 5.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 91    | 0.054  | 0.016 | 1.441   | 0.6%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 84    | 0.002  | 0.003 | 0.260   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=13 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=41 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 13 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 13 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 13 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=13 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=42 status=verified
+INFO  | ... | 13 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 13 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 13 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 56    | 2.079  | 1.195 | 66.893  | 27.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 91    | 0.009  | 0.612 | 55.722  | 23.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 91    | 0.006  | 0.305 | 27.722  | 11.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 98    | 0.426  | 0.281 | 27.583  | 11.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 91    | 0.000  | 0.302 | 27.456  | 11.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 14    | 1.474  | 1.544 | 21.618  | 8.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 12544 | 0.004  | 0.001 | 12.849  | 5.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 98    | 0.064  | 0.016 | 1.559   | 0.6%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 91    | 0.002  | 0.003 | 0.277   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=14 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=44 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 14 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 14 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 14 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=14 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=45 status=verified
+INFO  | ... | 14 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 14 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 14 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 60    | 2.202  | 1.195 | 71.726  | 28.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 98    | 0.012  | 0.570 | 55.812  | 22.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 105   | 0.383  | 0.282 | 29.584  | 11.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 98    | 0.005  | 0.283 | 27.752  | 11.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 98    | 0.002  | 0.280 | 27.472  | 10.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 15    | 1.565  | 1.546 | 23.183  | 9.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 13440 | 0.005  | 0.001 | 13.776  | 5.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 105   | 0.070  | 0.016 | 1.684   | 0.7%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 98    | 0.001  | 0.003 | 0.298   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=15 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=47 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 15 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 15 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 15 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=15 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=48 status=verified
+INFO  | ... | 15 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 15 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 15 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 64    | 2.251  | 1.199 | 76.713  | 29.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 105   | 0.013  | 0.532 | 55.900  | 21.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 112   | 0.362  | 0.281 | 31.519  | 12.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 105   | 0.004  | 0.265 | 27.778  | 10.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 105   | 0.006  | 0.262 | 27.487  | 10.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 16    | 1.578  | 1.548 | 24.761  | 9.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 14336 | 0.006  | 0.001 | 14.722  | 5.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 112   | 0.067  | 0.016 | 1.805   | 0.7%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 105   | 0.001  | 0.003 | 0.329   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=16 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=50 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 16 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 16 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 16 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=16 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=51 status=verified
+INFO  | ... | 16 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 16 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 16 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 68    | 2.100  | 1.197 | 81.376  | 30.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 112   | 0.009  | 0.500 | 56.000  | 20.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 119   | 0.362  | 0.282 | 33.510  | 12.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 112   | 0.005  | 0.248 | 27.814  | 10.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 112   | 0.000  | 0.246 | 27.500  | 10.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 17    | 1.550  | 1.548 | 26.311  | 9.7%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 15232 | 0.004  | 0.001 | 15.638  | 5.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 119   | 0.052  | 0.016 | 1.910   | 0.7%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 112   | 0.002  | 0.003 | 0.358   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=17 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=53 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 17 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 17 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 17 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=17 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=54 status=verified
+INFO  | ... | 17 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 17 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 17 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 72    | 2.071  | 1.195 | 86.010  | 30.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 119   | 0.006  | 0.471 | 56.079  | 20.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 126   | 0.323  | 0.282 | 35.504  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 119   | 0.004  | 0.234 | 27.851  | 10.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 18    | 1.520  | 1.546 | 27.832  | 9.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 119   | 0.000  | 0.231 | 27.514  | 9.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 16128 | 0.004  | 0.001 | 16.533  | 5.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 126   | 0.052  | 0.016 | 2.025   | 0.7%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 119   | 0.001  | 0.003 | 0.373   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=18 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=56 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 18 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 18 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 18 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=18 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=57 status=verified
+INFO  | ... | 18 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 18 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 18 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 76    | 2.030  | 1.193 | 90.671  | 31.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 126   | 0.015  | 0.446 | 56.172  | 19.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 133   | 0.365  | 0.281 | 37.406  | 12.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 19    | 1.466  | 1.542 | 29.298  | 10.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 126   | 0.007  | 0.221 | 27.889  | 9.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 126   | 0.002  | 0.218 | 27.521  | 9.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 17024 | 0.004  | 0.001 | 17.422  | 6.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 133   | 0.057  | 0.016 | 2.135   | 0.7%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 126   | 0.002  | 0.003 | 0.409   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=19 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=59 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 19 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 19 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 19 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=19 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=60 status=verified
+INFO  | ... | 19 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 19 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 19 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 80    | 2.073  | 1.192 | 95.340  | 31.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 133   | 0.013  | 0.423 | 56.271  | 18.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 140   | 0.368  | 0.281 | 39.296  | 13.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 20    | 1.641  | 1.547 | 30.938  | 10.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 133   | 0.005  | 0.210 | 27.934  | 9.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 133   | 0.005  | 0.207 | 27.537  | 9.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 17920 | 0.004  | 0.001 | 18.308  | 6.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 140   | 0.055  | 0.016 | 2.239   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 133   | 0.001  | 0.003 | 0.433   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=20 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=62 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 20 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 20 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 20 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=20 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=63 status=verified
+INFO  | ... | 20 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 20 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 20 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 84    | 2.024  | 1.190 | 99.999  | 32.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 140   | 0.006  | 0.403 | 56.357  | 18.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 147   | 0.340  | 0.280 | 41.198  | 13.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 21    | 1.569  | 1.548 | 32.508  | 10.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 140   | 0.004  | 0.200 | 27.959  | 9.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 140   | 0.000  | 0.197 | 27.551  | 9.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 18816 | 0.004  | 0.001 | 19.187  | 6.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 147   | 0.062  | 0.016 | 2.351   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 140   | 0.002  | 0.003 | 0.457   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=21 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=65 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 21 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 21 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 21 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=21 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=66 status=verified
+INFO  | ... | 21 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 21 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 21 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 88    | 2.113  | 1.192 | 104.884 | 33.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 147   | 0.007  | 0.384 | 56.449  | 17.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 154   | 0.356  | 0.281 | 43.203  | 13.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 22    | 1.398  | 1.541 | 33.905  | 10.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 147   | 0.005  | 0.190 | 27.989  | 8.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 147   | 0.000  | 0.188 | 27.564  | 8.7%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 19712 | 0.004  | 0.001 | 20.098  | 6.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 154   | 0.057  | 0.016 | 2.468   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 147   | 0.002  | 0.003 | 0.488   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=22 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=68 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 22 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 22 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 22 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=22 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=69 status=verified
+INFO  | ... | 22 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 22 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 22 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 92    | 1.971  | 1.188 | 109.282 | 33.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 154   | 0.006  | 0.367 | 56.530  | 17.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 161   | 0.360  | 0.280 | 45.087  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 23    | 1.478  | 1.538 | 35.383  | 10.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 154   | 0.004  | 0.182 | 28.019  | 8.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 154   | 0.000  | 0.179 | 27.584  | 8.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 20608 | 0.004  | 0.001 | 20.941  | 6.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 161   | 0.052  | 0.016 | 2.571   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 154   | 0.001  | 0.003 | 0.507   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=23 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=71 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 23 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 23 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 23 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=23 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=72 status=verified
+INFO  | ... | 23 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 23 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 23 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 96    | 2.070  | 1.187 | 113.952 | 34.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 161   | 0.006  | 0.352 | 56.607  | 16.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 168   | 0.336  | 0.279 | 46.949  | 14.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 24    | 1.561  | 1.539 | 36.945  | 11.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 161   | 0.004  | 0.174 | 28.043  | 8.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 161   | 0.000  | 0.171 | 27.592  | 8.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 21504 | 0.007  | 0.001 | 21.825  | 6.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 168   | 0.058  | 0.016 | 2.681   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 161   | 0.002  | 0.003 | 0.547   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=24 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=74 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 24 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 24 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 24 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=24 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=75 status=verified
+INFO  | ... | 24 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 24 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 24 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 100   | 2.417  | 1.191 | 119.121 | 34.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 168   | 0.013  | 0.338 | 56.704  | 16.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 175   | 0.364  | 0.281 | 49.102  | 14.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 25    | 1.505  | 1.538 | 38.450  | 11.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 168   | 0.004  | 0.167 | 28.074  | 8.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 168   | 0.000  | 0.164 | 27.602  | 8.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 22400 | 0.004  | 0.001 | 22.829  | 6.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 175   | 0.056  | 0.016 | 2.805   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 168   | 0.002  | 0.003 | 0.574   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=25 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=77 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 25 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 25 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 25 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=25 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=78 status=verified
+INFO  | ... | 25 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 25 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 25 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 104   | 2.123  | 1.192 | 123.955 | 34.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 175   | 0.007  | 0.325 | 56.790  | 16.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 182   | 0.376  | 0.281 | 51.101  | 14.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 26    | 1.606  | 1.541 | 40.056  | 11.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 175   | 0.005  | 0.161 | 28.106  | 7.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 175   | 0.000  | 0.158 | 27.622  | 7.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 23296 | 0.004  | 0.001 | 23.740  | 6.7%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 182   | 0.055  | 0.016 | 2.916   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 175   | 0.002  | 0.003 | 0.595   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=26 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=80 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 26 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 26 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 26 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=26 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=81 status=verified
+INFO  | ... | 26 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 26 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 26 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 108   | 2.195  | 1.193 | 128.818 | 35.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 182   | 0.010  | 0.313 | 56.899  | 15.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 189   | 0.383  | 0.281 | 53.106  | 14.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 27    | 1.650  | 1.545 | 41.706  | 11.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 182   | 0.007  | 0.155 | 28.141  | 7.7%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 182   | 0.000  | 0.152 | 27.632  | 7.6%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 24192 | 0.004  | 0.001 | 24.700  | 6.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 189   | 0.055  | 0.016 | 3.031   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 182   | 0.003  | 0.003 | 0.628   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=27 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=83 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 27 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 27 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 27 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=27 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=84 status=verified
+INFO  | ... | 27 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 27 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 27 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 112   | 2.212  | 1.194 | 133.738 | 35.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 189   | 0.014  | 0.302 | 56.998  | 15.2%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 196   | 0.385  | 0.281 | 55.053  | 14.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 28    | 1.674  | 1.549 | 43.380  | 11.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 189   | 0.004  | 0.149 | 28.168  | 7.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 189   | 0.000  | 0.146 | 27.642  | 7.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 25088 | 0.006  | 0.001 | 25.654  | 6.8%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 196   | 0.072  | 0.016 | 3.157   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 189   | 0.002  | 0.004 | 0.664   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=28 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=86 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 28 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 28 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 28 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=28 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=87 status=verified
+INFO  | ... | 28 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 28 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 28 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 116   | 2.102  | 1.196 | 138.738 | 36.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 196   | 0.012  | 0.291 | 57.093  | 14.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 203   | 0.383  | 0.281 | 57.079  | 14.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 29    | 1.639  | 1.552 | 45.019  | 11.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 196   | 0.005  | 0.144 | 28.194  | 7.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 196   | 0.001  | 0.141 | 27.664  | 7.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 25984 | 0.004  | 0.001 | 26.615  | 6.9%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 203   | 0.048  | 0.016 | 3.265   | 0.8%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 196   | 0.001  | 0.004 | 0.691   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=29 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=89 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 5... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 29 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 29 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 29 | ... | 576... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=29 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=90 status=verified
+INFO  | ... | 29 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 29 | ... | 57... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 29 | ... | 15... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 2... | n |    |
+INFO  +-----+----+-----+-------+---------+----+------+----+----+------+---+----+
+INFO  | Pre-quan... | 120   | 2.098  | 1.195 | 143.410 | 36.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 210   | 0.369  | 0.281 | 59.054  | 15.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 203   | 0.014  | 0.282 | 57.206  | 14.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 29    | 1.639  | 1.552 | 45.019  | 11.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 203   | 0.005  | 0.139 | 28.229  | 7.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 203   | 0.005  | 0.136 | 27.684  | 7.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 26880 | 0.004  | 0.001 | 27.519  | 7.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 210   | 0.055  | 0.016 | 3.374   | 0.9%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 203   | 0.002  | 0.004 | 0.712   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000032624', 'samples': '65536', 'damp': '0.05000', 'time': '0.267', 'fwd_time': '0.303', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000052435', 'samples': '65536', 'damp': '0.05000', 'time': '0.302', 'fwd_time': '0.303', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000000384', 'samples': '65536', 'damp': '0.05000', 'time': '0.085', 'fwd_time': '0.303', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000000668', 'samples': '65536', 'damp': '0.05000', 'time': '0.126', 'fwd_time': '0.904', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000242960', 'samples': '65536', 'damp': '0.05000', 'time': '0.402', 'fwd_time': '1.269', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000255509', 'samples': '65536', 'damp': '0.05000', 'time': '0.408', 'fwd_time': '1.269', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 0, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000996210', 'samples': '65536', 'damp': '0.05000', 'time': '0.384', 'fwd_time': '2.118', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000143883', 'samples': '65536', 'damp': '0.05000', 'time': '0.277', 'fwd_time': '0.428', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000323500', 'samples': '65536', 'damp': '0.05000', 'time': '0.317', 'fwd_time': '0.428', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000027142', 'samples': '65536', 'damp': '0.05000', 'time': '0.090', 'fwd_time': '0.428', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000142589', 'samples': '65536', 'damp': '0.05000', 'time': '0.110', 'fwd_time': '0.823', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000372789', 'samples': '65536', 'damp': '0.05000', 'time': '0.421', 'fwd_time': '1.282', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000293935', 'samples': '65536', 'damp': '0.05000', 'time': '0.423', 'fwd_time': '1.282', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 1, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000360603', 'samples': '65536', 'damp': '0.05000', 'time': '0.340', 'fwd_time': '2.124', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000234043', 'samples': '65536', 'damp': '0.05000', 'time': '0.250', 'fwd_time': '0.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000543376', 'samples': '65536', 'damp': '0.05000', 'time': '0.287', 'fwd_time': '0.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000037874', 'samples': '65536', 'damp': '0.05000', 'time': '0.085', 'fwd_time': '0.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000103572', 'samples': '65536', 'damp': '0.05000', 'time': '0.107', 'fwd_time': '0.766', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000461247', 'samples': '65536', 'damp': '0.05000', 'time': '0.361', 'fwd_time': '1.276', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000386383', 'samples': '65536', 'damp': '0.05000', 'time': '0.371', 'fwd_time': '1.276', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 2, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000743648', 'samples': '65536', 'damp': '0.05000', 'time': '0.347', 'fwd_time': '2.035', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000304706', 'samples': '65536', 'damp': '0.05000', 'time': '0.280', 'fwd_time': '0.346', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000761769', 'samples': '65536', 'damp': '0.05000', 'time': '0.312', 'fwd_time': '0.346', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000117563', 'samples': '65536', 'damp': '0.05000', 'time': '0.084', 'fwd_time': '0.346', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000141432', 'samples': '65536', 'damp': '0.05000', 'time': '0.109', 'fwd_time': '0.829', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000421779', 'samples': '65536', 'damp': '0.05000', 'time': '0.393', 'fwd_time': '1.338', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000481872', 'samples': '65536', 'damp': '0.05000', 'time': '0.394', 'fwd_time': '1.338', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 3, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000531575', 'samples': '65536', 'damp': '0.05000', 'time': '0.330', 'fwd_time': '2.192', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000287555', 'samples': '65536', 'damp': '0.05000', 'time': '0.253', 'fwd_time': '0.376', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000698139', 'samples': '65536', 'damp': '0.05000', 'time': '0.285', 'fwd_time': '0.376', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000111361', 'samples': '65536', 'damp': '0.05000', 'time': '0.080', 'fwd_time': '0.376', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000153994', 'samples': '65536', 'damp': '0.05000', 'time': '0.138', 'fwd_time': '0.921', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000530179', 'samples': '65536', 'damp': '0.05000', 'time': '0.445', 'fwd_time': '1.520', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000602503', 'samples': '65536', 'damp': '0.05000', 'time': '0.446', 'fwd_time': '1.520', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 4, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000686099', 'samples': '65536', 'damp': '0.05000', 'time': '0.339', 'fwd_time': '2.047', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000313727', 'samples': '65536', 'damp': '0.05000', 'time': '0.288', 'fwd_time': '0.390', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000726662', 'samples': '65536', 'damp': '0.05000', 'time': '0.322', 'fwd_time': '0.390', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000121642', 'samples': '65536', 'damp': '0.05000', 'time': '0.090', 'fwd_time': '0.390', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000170986', 'samples': '65536', 'damp': '0.05000', 'time': '0.111', 'fwd_time': '0.809', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000647928', 'samples': '65536', 'damp': '0.05000', 'time': '0.402', 'fwd_time': '1.327', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000590741', 'samples': '65536', 'damp': '0.05000', 'time': '0.411', 'fwd_time': '1.327', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 5, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000786117', 'samples': '65536', 'damp': '0.05000', 'time': '0.336', 'fwd_time': '2.166', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000249935', 'samples': '65536', 'damp': '0.05000', 'time': '0.260', 'fwd_time': '0.359', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000613237', 'samples': '65536', 'damp': '0.05000', 'time': '0.293', 'fwd_time': '0.359', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000106941', 'samples': '65536', 'damp': '0.05000', 'time': '0.078', 'fwd_time': '0.359', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000139097', 'samples': '65536', 'damp': '0.05000', 'time': '0.103', 'fwd_time': '0.850', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000625034', 'samples': '65536', 'damp': '0.05000', 'time': '0.377', 'fwd_time': '1.293', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000636211', 'samples': '65536', 'damp': '0.05000', 'time': '0.387', 'fwd_time': '1.293', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 6, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000953999', 'samples': '65536', 'damp': '0.05000', 'time': '0.360', 'fwd_time': '2.038', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000385594', 'samples': '65536', 'damp': '0.05000', 'time': '0.268', 'fwd_time': '0.350', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001040000', 'samples': '65536', 'damp': '0.05000', 'time': '0.303', 'fwd_time': '0.350', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000240498', 'samples': '65536', 'damp': '0.05000', 'time': '0.084', 'fwd_time': '0.350', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000142694', 'samples': '65536', 'damp': '0.05000', 'time': '0.105', 'fwd_time': '0.858', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000676731', 'samples': '65536', 'damp': '0.05000', 'time': '0.363', 'fwd_time': '1.269', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000666303', 'samples': '65536', 'damp': '0.05000', 'time': '0.371', 'fwd_time': '1.269', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 7, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001168939', 'samples': '65536', 'damp': '0.05000', 'time': '0.381', 'fwd_time': '2.134', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000350171', 'samples': '65536', 'damp': '0.05000', 'time': '0.251', 'fwd_time': '0.399', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000904706', 'samples': '65536', 'damp': '0.05000', 'time': '0.284', 'fwd_time': '0.399', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000184311', 'samples': '65536', 'damp': '0.05000', 'time': '0.076', 'fwd_time': '0.399', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000264659', 'samples': '65536', 'damp': '0.05000', 'time': '0.141', 'fwd_time': '0.887', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000683456', 'samples': '65536', 'damp': '0.05000', 'time': '0.410', 'fwd_time': '1.392', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000749254', 'samples': '65536', 'damp': '0.05000', 'time': '0.420', 'fwd_time': '1.392', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 8, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001570856', 'samples': '65536', 'damp': '0.05000', 'time': '0.346', 'fwd_time': '2.240', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000242455', 'samples': '65536', 'damp': '0.05000', 'time': '0.255', 'fwd_time': '0.439', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000679638', 'samples': '65536', 'damp': '0.05000', 'time': '0.286', 'fwd_time': '0.439', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000103585', 'samples': '65536', 'damp': '0.05000', 'time': '0.079', 'fwd_time': '0.439', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000316579', 'samples': '65536', 'damp': '0.05000', 'time': '0.120', 'fwd_time': '0.820', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000804970', 'samples': '65536', 'damp': '0.05000', 'time': '0.415', 'fwd_time': '1.372', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000661369', 'samples': '65536', 'damp': '0.05000', 'time': '0.427', 'fwd_time': '1.372', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 9, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001847603', 'samples': '65536', 'damp': '0.05000', 'time': '0.358', 'fwd_time': '2.269', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000212597', 'samples': '65536', 'damp': '0.05000', 'time': '0.336', 'fwd_time': '0.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000607111', 'samples': '65536', 'damp': '0.05000', 'time': '0.375', 'fwd_time': '0.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000105437', 'samples': '65536', 'damp': '0.05000', 'time': '0.084', 'fwd_time': '0.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000564586', 'samples': '65536', 'damp': '0.05000', 'time': '0.118', 'fwd_time': '0.951', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000634663', 'samples': '65536', 'damp': '0.05000', 'time': '0.387', 'fwd_time': '1.500', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000818106', 'samples': '65536', 'damp': '0.05000', 'time': '0.390', 'fwd_time': '1.500', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 10, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001702844', 'samples': '65536', 'damp': '0.05000', 'time': '0.376', 'fwd_time': '2.388', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000181150', 'samples': '65536', 'damp': '0.05000', 'time': '0.277', 'fwd_time': '0.364', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000539400', 'samples': '65536', 'damp': '0.05000', 'time': '0.312', 'fwd_time': '0.364', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000097962', 'samples': '65536', 'damp': '0.05000', 'time': '0.092', 'fwd_time': '0.364', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000635734', 'samples': '65536', 'damp': '0.05000', 'time': '0.117', 'fwd_time': '0.797', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000575833', 'samples': '65536', 'damp': '0.05000', 'time': '0.394', 'fwd_time': '1.437', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000782689', 'samples': '65536', 'damp': '0.05000', 'time': '0.398', 'fwd_time': '1.437', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 11, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0100269336', 'samples': '65536', 'damp': '0.05000', 'time': '0.378', 'fwd_time': '2.209', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000266332', 'samples': '65536', 'damp': '0.05000', 'time': '0.279', 'fwd_time': '0.409', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000748645', 'samples': '65536', 'damp': '0.05000', 'time': '0.309', 'fwd_time': '0.409', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000148108', 'samples': '65536', 'damp': '0.05000', 'time': '0.091', 'fwd_time': '0.409', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000479363', 'samples': '65536', 'damp': '0.05000', 'time': '0.128', 'fwd_time': '0.957', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000702068', 'samples': '65536', 'damp': '0.05000', 'time': '0.403', 'fwd_time': '1.456', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000558341', 'samples': '65536', 'damp': '0.05000', 'time': '0.409', 'fwd_time': '1.456', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 12, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001391202', 'samples': '65536', 'damp': '0.05000', 'time': '0.379', 'fwd_time': '2.260', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000272231', 'samples': '65536', 'damp': '0.05000', 'time': '0.322', 'fwd_time': '0.452', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000781109', 'samples': '65536', 'damp': '0.05000', 'time': '0.351', 'fwd_time': '0.452', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000123726', 'samples': '65536', 'damp': '0.05000', 'time': '0.099', 'fwd_time': '0.452', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000564968', 'samples': '65536', 'damp': '0.05000', 'time': '0.139', 'fwd_time': '0.908', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000659013', 'samples': '65536', 'damp': '0.05000', 'time': '0.399', 'fwd_time': '1.392', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000705885', 'samples': '65536', 'damp': '0.05000', 'time': '0.406', 'fwd_time': '1.392', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 13, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001407504', 'samples': '65536', 'damp': '0.05000', 'time': '0.423', 'fwd_time': '2.079', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000302226', 'samples': '65536', 'damp': '0.05000', 'time': '0.277', 'fwd_time': '0.351', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000824939', 'samples': '65536', 'damp': '0.05000', 'time': '0.313', 'fwd_time': '0.351', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000224617', 'samples': '65536', 'damp': '0.05000', 'time': '0.087', 'fwd_time': '0.351', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000601641', 'samples': '65536', 'damp': '0.05000', 'time': '0.116', 'fwd_time': '0.806', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000681371', 'samples': '65536', 'damp': '0.05000', 'time': '0.406', 'fwd_time': '1.474', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000716166', 'samples': '65536', 'damp': '0.05000', 'time': '0.407', 'fwd_time': '1.474', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 14, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001736619', 'samples': '65536', 'damp': '0.05000', 'time': '0.378', 'fwd_time': '2.202', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000272889', 'samples': '65536', 'damp': '0.05000', 'time': '0.265', 'fwd_time': '0.353', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000772328', 'samples': '65536', 'damp': '0.05000', 'time': '0.314', 'fwd_time': '0.353', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000203520', 'samples': '65536', 'damp': '0.05000', 'time': '0.087', 'fwd_time': '0.353', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000561673', 'samples': '65536', 'damp': '0.05000', 'time': '0.121', 'fwd_time': '0.931', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000716209', 'samples': '65536', 'damp': '0.05000', 'time': '0.382', 'fwd_time': '1.451', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000719113', 'samples': '65536', 'damp': '0.05000', 'time': '0.391', 'fwd_time': '1.451', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 15, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001920029', 'samples': '65536', 'damp': '0.05000', 'time': '0.360', 'fwd_time': '2.251', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000245093', 'samples': '65536', 'damp': '0.05000', 'time': '0.269', 'fwd_time': '0.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000669736', 'samples': '65536', 'damp': '0.05000', 'time': '0.309', 'fwd_time': '0.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000170313', 'samples': '65536', 'damp': '0.05000', 'time': '0.122', 'fwd_time': '0.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001041806', 'samples': '65536', 'damp': '0.05000', 'time': '0.118', 'fwd_time': '0.867', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000675172', 'samples': '65536', 'damp': '0.05000', 'time': '0.396', 'fwd_time': '1.279', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000705807', 'samples': '65536', 'damp': '0.05000', 'time': '0.400', 'fwd_time': '1.279', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 16, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001846004', 'samples': '65536', 'damp': '0.05000', 'time': '0.356', 'fwd_time': '2.100', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000361901', 'samples': '65536', 'damp': '0.05000', 'time': '0.262', 'fwd_time': '0.422', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001234256', 'samples': '65536', 'damp': '0.05000', 'time': '0.303', 'fwd_time': '0.422', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000302712', 'samples': '65536', 'damp': '0.05000', 'time': '0.081', 'fwd_time': '0.422', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000873073', 'samples': '65536', 'damp': '0.05000', 'time': '0.114', 'fwd_time': '0.824', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000707521', 'samples': '65536', 'damp': '0.05000', 'time': '0.444', 'fwd_time': '1.318', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000638209', 'samples': '65536', 'damp': '0.05000', 'time': '0.454', 'fwd_time': '1.318', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 17, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0002059527', 'samples': '65536', 'damp': '0.05000', 'time': '0.321', 'fwd_time': '2.071', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000382549', 'samples': '65536', 'damp': '0.05000', 'time': '0.244', 'fwd_time': '0.391', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001221168', 'samples': '65536', 'damp': '0.05000', 'time': '0.289', 'fwd_time': '0.391', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000468853', 'samples': '65536', 'damp': '0.05000', 'time': '0.102', 'fwd_time': '0.391', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000781597', 'samples': '65536', 'damp': '0.05000', 'time': '0.108', 'fwd_time': '0.761', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000758348', 'samples': '65536', 'damp': '0.05000', 'time': '0.391', 'fwd_time': '1.479', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000712682', 'samples': '65536', 'damp': '0.05000', 'time': '0.391', 'fwd_time': '1.479', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 18, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0003698664', 'samples': '65536', 'damp': '0.05000', 'time': '0.363', 'fwd_time': '2.030', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000199035', 'samples': '65536', 'damp': '0.05000', 'time': '0.257', 'fwd_time': '0.393', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000865529', 'samples': '65536', 'damp': '0.05000', 'time': '0.288', 'fwd_time': '0.393', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000324211', 'samples': '65536', 'damp': '0.05000', 'time': '0.085', 'fwd_time': '0.393', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001415111', 'samples': '65536', 'damp': '0.05000', 'time': '0.118', 'fwd_time': '0.819', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000917990', 'samples': '65536', 'damp': '0.05000', 'time': '0.378', 'fwd_time': '1.384', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000874429', 'samples': '65536', 'damp': '0.05000', 'time': '0.385', 'fwd_time': '1.384', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 19, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0004051112', 'samples': '65536', 'damp': '0.05000', 'time': '0.366', 'fwd_time': '2.073', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000250541', 'samples': '65536', 'damp': '0.05000', 'time': '0.285', 'fwd_time': '0.399', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000912739', 'samples': '65536', 'damp': '0.05000', 'time': '0.321', 'fwd_time': '0.399', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000524618', 'samples': '65536', 'damp': '0.05000', 'time': '0.088', 'fwd_time': '0.399', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000968356', 'samples': '65536', 'damp': '0.05000', 'time': '0.111', 'fwd_time': '0.877', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0000922372', 'samples': '65536', 'damp': '0.05000', 'time': '0.372', 'fwd_time': '1.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001050067', 'samples': '65536', 'damp': '0.05000', 'time': '0.374', 'fwd_time': '1.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 20, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0007793399', 'samples': '65536', 'damp': '0.05000', 'time': '0.338', 'fwd_time': '2.024', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000241306', 'samples': '65536', 'damp': '0.05000', 'time': '0.287', 'fwd_time': '0.419', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000836710', 'samples': '65536', 'damp': '0.05000', 'time': '0.318', 'fwd_time': '0.419', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000384982', 'samples': '65536', 'damp': '0.05000', 'time': '0.108', 'fwd_time': '0.419', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001485654', 'samples': '65536', 'damp': '0.05000', 'time': '0.114', 'fwd_time': '0.854', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001067049', 'samples': '65536', 'damp': '0.05000', 'time': '0.403', 'fwd_time': '1.499', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001172594', 'samples': '65536', 'damp': '0.05000', 'time': '0.408', 'fwd_time': '1.499', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 21, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0006822263', 'samples': '65536', 'damp': '0.05000', 'time': '0.354', 'fwd_time': '2.113', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000241326', 'samples': '65536', 'damp': '0.05000', 'time': '0.267', 'fwd_time': '0.366', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000849622', 'samples': '65536', 'damp': '0.05000', 'time': '0.295', 'fwd_time': '0.366', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000414802', 'samples': '65536', 'damp': '0.05000', 'time': '0.081', 'fwd_time': '0.366', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0002020553', 'samples': '65536', 'damp': '0.05000', 'time': '0.111', 'fwd_time': '0.837', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001362147', 'samples': '65536', 'damp': '0.05000', 'time': '0.378', 'fwd_time': '1.224', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001187431', 'samples': '65536', 'damp': '0.05000', 'time': '0.380', 'fwd_time': '1.224', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 22, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0011560137', 'samples': '65536', 'damp': '0.05000', 'time': '0.358', 'fwd_time': '1.971', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000368709', 'samples': '65536', 'damp': '0.05000', 'time': '0.284', 'fwd_time': '0.402', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001239813', 'samples': '65536', 'damp': '0.05000', 'time': '0.314', 'fwd_time': '0.402', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0001283760', 'samples': '65536', 'damp': '0.05000', 'time': '0.084', 'fwd_time': '0.402', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0003646410', 'samples': '65536', 'damp': '0.05000', 'time': '0.111', 'fwd_time': '0.801', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001250855', 'samples': '65536', 'damp': '0.05000', 'time': '0.358', 'fwd_time': '1.398', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001616742', 'samples': '65536', 'damp': '0.05000', 'time': '0.363', 'fwd_time': '1.398', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 23, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0012937132', 'samples': '65536', 'damp': '0.05000', 'time': '0.335', 'fwd_time': '2.070', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000288140', 'samples': '65536', 'damp': '0.05000', 'time': '0.308', 'fwd_time': '0.400', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0001164801', 'samples': '65536', 'damp': '0.05000', 'time': '0.351', 'fwd_time': '0.400', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0001244059', 'samples': '65536', 'damp': '0.05000', 'time': '0.097', 'fwd_time': '0.400', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0002695715', 'samples': '65536', 'damp': '0.05000', 'time': '0.168', 'fwd_time': '0.986', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001259661', 'samples': '65536', 'damp': '0.05000', 'time': '0.422', 'fwd_time': '1.366', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001650032', 'samples': '65536', 'damp': '0.05000', 'time': '0.432', 'fwd_time': '1.366', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 24, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0017360842', 'samples': '65536', 'damp': '0.05000', 'time': '0.361', 'fwd_time': '2.417', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000266781', 'samples': '65536', 'damp': '0.05000', 'time': '0.269', 'fwd_time': '0.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000927925', 'samples': '65536', 'damp': '0.05000', 'time': '0.305', 'fwd_time': '0.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000564276', 'samples': '65536', 'damp': '0.05000', 'time': '0.094', 'fwd_time': '0.360', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0002959564', 'samples': '65536', 'damp': '0.05000', 'time': '0.122', 'fwd_time': '0.856', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001345058', 'samples': '65536', 'damp': '0.05000', 'time': '0.404', 'fwd_time': '1.495', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001704471', 'samples': '65536', 'damp': '0.05000', 'time': '0.413', 'fwd_time': '1.495', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 25, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0016017187', 'samples': '65536', 'damp': '0.05000', 'time': '0.373', 'fwd_time': '2.123', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000254978', 'samples': '65536', 'damp': '0.05000', 'time': '0.282', 'fwd_time': '0.452', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000917872', 'samples': '65536', 'damp': '0.05000', 'time': '0.319', 'fwd_time': '0.452', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000798631', 'samples': '65536', 'damp': '0.05000', 'time': '0.094', 'fwd_time': '0.452', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0003444647', 'samples': '65536', 'damp': '0.05000', 'time': '0.142', 'fwd_time': '0.834', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001926444', 'samples': '65536', 'damp': '0.05000', 'time': '0.383', 'fwd_time': '1.382', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001507327', 'samples': '65536', 'damp': '0.05000', 'time': '0.390', 'fwd_time': '1.382', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 26, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0021480373', 'samples': '65536', 'damp': '0.05000', 'time': '0.380', 'fwd_time': '2.195', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000259551', 'samples': '65536', 'damp': '0.05000', 'time': '0.273', 'fwd_time': '0.382', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000975916', 'samples': '65536', 'damp': '0.05000', 'time': '0.306', 'fwd_time': '0.382', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000667506', 'samples': '65536', 'damp': '0.05000', 'time': '0.081', 'fwd_time': '0.382', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0005098321', 'samples': '65536', 'damp': '0.05000', 'time': '0.144', 'fwd_time': '0.896', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001973305', 'samples': '65536', 'damp': '0.05000', 'time': '0.371', 'fwd_time': '1.429', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001594016', 'samples': '65536', 'damp': '0.05000', 'time': '0.375', 'fwd_time': '1.429', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 27, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0029812774', 'samples': '65536', 'damp': '0.05000', 'time': '0.383', 'fwd_time': '2.212', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000226397', 'samples': '65536', 'damp': '0.05000', 'time': '0.284', 'fwd_time': '0.540', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000770287', 'samples': '65536', 'damp': '0.05000', 'time': '0.327', 'fwd_time': '0.540', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000821969', 'samples': '65536', 'damp': '0.05000', 'time': '0.095', 'fwd_time': '0.540', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0003263168', 'samples': '65536', 'damp': '0.05000', 'time': '0.139', 'fwd_time': '0.887', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0001584661', 'samples': '65536', 'damp': '0.05000', 'time': '0.390', 'fwd_time': '1.472', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0002217165', 'samples': '65536', 'damp': '0.05000', 'time': '0.396', 'fwd_time': '1.472', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 28, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0243378580', 'samples': '65536', 'damp': '0.05000', 'time': '0.381', 'fwd_time': '2.102', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'self_attn.k_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000214058', 'samples': '65536', 'damp': '0.05000', 'time': '0.303', 'fwd_time': '0.436', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'self_attn.q_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0000910224', 'samples': '65536', 'damp': '0.05000', 'time': '0.331', 'fwd_time': '0.436', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'self_attn.v_proj', 'feat: in, out': '576, 192', 'dtype: size': 'f32: 0.4MB', 'loss': '0.0000971357', 'samples': '65536', 'damp': '0.05000', 'time': '0.083', 'fwd_time': '0.436', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'self_attn.o_proj', 'feat: in, out': '576, 576', 'dtype: size': 'f32: 1.3MB', 'loss': '0.0007399051', 'samples': '65536', 'damp': '0.05000', 'time': '0.113', 'fwd_time': '0.799', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'mlp.gate_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0002666896', 'samples': '65536', 'damp': '0.05000', 'time': '0.379', 'fwd_time': '1.338', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'mlp.up_proj', 'feat: in, out': '576, 1536', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0003638157', 'samples': '65536', 'damp': '0.05000', 'time': '0.385', 'fwd_time': '1.338', '(v)ram': 'n/a'}
+INFO  {'process': 'gptq', 'layer': 29, 'module': 'mlp.down_proj', 'feat: in, out': '1536, 576', 'dtype: size': 'f32: 3.4MB', 'loss': '0.0225013923', 'samples': '65536', 'damp': '0.05000', 'time': '0.367', 'fwd_time': '2.098', '(v)ram': 'n/a'}
+INFO  | Pre-quan... | 120   | 2.098  | 1.195 | 143.410 | 36.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 210   | 0.369  | 0.281 | 59.054  | 15.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 210   | 0.006  | 0.273 | 57.260  | 14.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 29    | 1.639  | 1.552 | 45.019  | 11.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 210   | 0.004  | 0.135 | 28.249  | 7.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 210   | 0.000  | 0.132 | 27.691  | 7.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 26880 | 0.004  | 0.001 | 27.519  | 7.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 210   | 0.055  | 0.016 | 3.374   | 0.9%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 210   | 0.001  | 0.003 | 0.730   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 1     | 0.000  | 0.000 | 0.000   | 0.0%   | gptq         |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+[280.49s] quantize: {'wall_s': 256.83, 'rss_gb': 1.678, 'peak_rss_gb': 1.695}
+Writing model shards: 0it [00:00, ?it/s]Writing model shards: 0it [00:00, ?it/s]
+INFO  Saved Quantize Config: 
+{
+  "bits": 4,
+  "group_size": 128,
+  "desc_act": false,
+  "lm_head": false,
+  "method": "gptq",
+  "quant_method": "gptq",
+  "format": "gptq",
+  "checkpoint_format": "gptq",
+  "pack_dtype": "int32",
+  "meta": {
+    "quantizer": [
+      "gptqmodel:7.5.0"
+    ],
+    "uri": "https://github.com/modelcloud/gptqmodel",
+    "damp_percent": 0.05,
+    "damp_auto_increment": 0.01,
+    "static_groups": false,
+    "true_sequential": true,
+    "mse": 0.0,
+    "gptaq": null,
+    "foem": null,
+    "act_group_aware": true,
+    "fallback": {
+      "strategy": "rtn",
+      "threshold": "0.5%",
+      "smooth": null
+    },
+    "offload_to_disk": true,
+    "telemetry": {
+      "device": false
+    },
+    "offload_to_disk_path": "/tmp/gptqmodel_m7rhwlpr",
+    "pack_impl": "cpu",
+    "gc_mode": "interval",
+    "wait_for_submodule_finalizers": false,
+    "auto_forward_data_parallel": true,
+    "dense_vram_strategy": "exclusive",
+    "dense_vram_strategy_devices": null,
+    "moe_vram_strategy": "exclusive",
+    "moe_vram_strategy_devices": null,
+    "mock_quantization": false,
+    "hessian": {
+      "chunk_size": null,
+      "chunk_bytes": null,
+      "staging_dtype": "float32",
+      "dedup_shared_inputs": true
+    }
+  },
+  "sym": true
+}
+Files in directory:
+quantize_config.json
+quant_log.csv
+config.json
+generation_config.json
+Content of saved `generation_config.json`:
+{
+    "_from_model_config": true,
+    "bos_token_id": 0,
+    "do_sample": true,
+    "eos_token_id": 0,
+    "pad_token_id": 0,
+    "transformers_version": "5.18.0"
+}
+Content of saved `config.json`:
+{
+    "architectures": [
+        "LlamaForCausalLM"
+    ],
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "bos_token_id": 0,
+    "dtype": "float32",
+    "eos_token_id": 0,
+    "head_dim": 64,
+    "hidden_act": "silu",
+    "hidden_size": 576,
+    "initializer_range": 0.041666666666666664,
+    "intermediate_size": 1536,
+    "is_llama_config": true,
+    "max_position_embeddings": 8192,
+    "mlp_bias": false,
+    "model_type": "llama",
+    "num_attention_heads": 9,
+    "num_hidden_layers": 30,
+    "num_key_value_heads": 3,
+    "pad_token_id": 0,
+    "pretraining_tp": 1,
+    "quantization_config": {
+        "bits": 4,
+        "checkpoint_format": "gptq",
+        "desc_act": false,
+        "format": "gptq",
+        "group_size": 128,
+        "lm_head": false,
+        "meta": {
+            "act_group_aware": true,
+            "auto_forward_data_parallel": true,
+            "damp_auto_increment": 0.01,
+            "damp_percent": 0.05,
+            "dense_vram_strategy": "exclusive",
+            "dense_vram_strategy_devices": null,
+            "fallback": {
+                "smooth": null,
+                "strategy": "rtn",
+                "threshold": "0.5%"
+            },
+            "foem": null,
+            "gc_mode": "interval",
+            "gptaq": null,
+            "hessian": {
+                "chunk_bytes": null,
+                "chunk_size": null,
+                "dedup_shared_inputs": true,
+                "staging_dtype": "float32"
+            },
+            "mock_quantization": false,
+            "moe_vram_strategy": "exclusive",
+            "moe_vram_strategy_devices": null,
+            "mse": 0.0,
+            "offload_to_disk": true,
+            "offload_to_disk_path": "/tmp/gptqmodel_m7rhwlpr",
+            "pack_impl": "cpu",
+            "quantizer": [
+                "gptqmodel:7.5.0"
+            ],
+            "static_groups": false,
+            "telemetry": {
+                "device": false
+            },
+            "true_sequential": true,
+            "uri": "https://github.com/modelcloud/gptqmodel",
+            "wait_for_submodule_finalizers": false
+        },
+        "method": "gptq",
+        "pack_dtype": "int32",
+        "quant_method": "gptq",
+        "sym": true
+    },
+    "rms_norm_eps": 1e-05,
+    "rope_interleaved": false,
+    "rope_parameters": {
+        "rope_theta": 100000,
+        "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "transformers_version": "5.18.0",
+    "use_cache": true,
+    "vocab_size": 49152
+}
+INFO  Module: Re-tied embedding weights on shell model after lazy sync          
+INFO  Module: Total direct tensors materialized from lazy checkpoint source: 1  
+INFO  Pre-Quantized model size: 256.60MB, 0.25GB                                
+INFO  Quantized model size: 161.57MB, 0.16GB                                    
+INFO  Size difference: 95.03MB, 0.09GB - 37.03%                                 
+INFO  | Pre-quan... | 120   | 2.098  | 1.195 | 143.410 | 36.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 210   | 0.369  | 0.281 | 59.054  | 15.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 210   | 0.006  | 0.273 | 57.260  | 14.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 29    | 1.639  | 1.552 | 45.019  | 11.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 210   | 0.004  | 0.135 | 28.249  | 7.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 210   | 0.000  | 0.132 | 27.691  | 7.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 26880 | 0.004  | 0.001 | 27.519  | 7.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 210   | 0.055  | 0.016 | 3.374   | 0.9%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Model save  | 1     | 0.750  | 0.750 | 0.750   | 0.2%   | /tmp/clau... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 210   | 0.001  | 0.003 | 0.730   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.162  | 0.162 | 0.162   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 1     | 0.000  | 0.000 | 0.000   | 0.0%   | gptq         |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+[281.25s] save: {'wall_s': 0.76, 'rss_gb': 1.785, 'peak_rss_gb': 1.943}
+from_quantized: adapter: None
+INFO  Estimated Quantization BPW (bits per weight): 4.2875 bpw, based on [bits: 4, group_size: 128]
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='<|endoftext|>').
+INFO  The layer model.embed_tokens is not quantized.                            
+INFO  Kernel: selected: `TorchLinear`                                           
+INFO  Kernel: candidates -> `[TorchLinear]`                                     
+INFO  Kernel: per-module selections -> `[TorchLinear=210]`                      
+INFO  Kernel: selected -> `TorchLinear`.                                        
+INFO  Loader: device = cpu                                                      
+INFO  Loader: Built map across 1 GPU(s), 34 entries. First 8: [('model.embed_tokens', 'cpu'), ('model.layers.0', 'cpu'), ('model.layers.1', 'cpu'), ('model.layers.2', 'cpu'), ('model.layers.3', 'cpu'), ('model.layers.4', 'cpu'), ('model.layers.5', 'cpu'), ('model.layers.6', 'cpu')]
+INFO  Loader: device_map = {'model.embed_tokens': 'cpu', 'model.layers.0': 'cpu', 'model.layers.1': 'cpu', 'model.layers.2': 'cpu', 'model.layers.3': 'cpu', 'model.layers.4': 'cpu', 'model.layers.5': 'cpu', 'model.layers.6': 'cpu', 'model.layers.7': 'cpu', 'model.layers.8': 'cpu', 'model.layers.9': 'cpu', 'model.layers.10': 'cpu', 'model.layers.11': 'cpu', 'model.layers.12': 'cpu', 'model.layers.13': 'cpu', 'model.layers.14': 'cpu', 'model.layers.15': 'cpu', 'model.layers.16': 'cpu', 'model.layers.17': 'cpu', 'model.layers.18': 'cpu', 'model.layers.19': 'cpu', 'model.layers.20': 'cpu', 'model.layers.21': 'cpu', 'model.layers.22': 'cpu', 'model.layers.23': 'cpu', 'model.layers.24': 'cpu', 'model.layers.25': 'cpu', 'model.layers.26': 'cpu', 'model.layers.27': 'cpu', 'model.layers.28': 'cpu', 'model.layers.29': 'cpu', 'lm_head': 'cpu', 'model.norm': 'cpu', 'model.rotary_emb': 'cpu'}
+WARNING:accelerate.utils.modeling:The model weights are not tied. Please use the `tie_weights` method before using the `infer_auto_device` function.
+INFO  Format: Converting `format` from `FORMAT.GPTQ` to internal `FORMAT.GPTQ_V2`.
+INFO  Format: Converting GPTQ v1 to v2                                          
+INFO  Kernel: selected: `TorchLinear`                                           
+INFO  Optimize: `TorchLinear` compilation triggered.                            
+INFO  gc.collect() reclaimed 142 objects in 0.255s                              
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=0 (token='<|endoftext|>').
+INFO  Model: Loaded `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 0,
+  "use_cache": true
+}
+
+INFO  Model: Auto-fixed `generation_config` mismatch between model and `generation_config.json`.
+INFO  Model: Updated `generation_config`: GenerationConfig {
+  "bos_token_id": 0,
+  "do_sample": true,
+  "eos_token_id": 0,
+  "pad_token_id": 0
+}
+
+INFO  Kernel: loaded -> `[TorchLinear]`                                         
+[284.76s] load_quantized: {'wall_s': 3.51, 'rss_gb': 1.879, 'peak_rss_gb': 2.175}
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128] torch._dynamo hit config.recompile_limit (128)
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128]    function: '_stream_decode_qzeros' (/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/nn_modules/qlinear/torch.py:466)
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128]    last reason: 2/127: self._zeros_cache_state == (726150976, device(type='cpu'), torch.Size([5, 192]))  # if self._zeros_cache is not None and self._zeros_cache_state == cache_state:  # gptqmodel/nn_modules/qlinear/torch.py:468 in _stream_decode_qzeros
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128] User stack trace:
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128]   File "/opt/venvs/main/lib/python3.11/site-packages/gptqmodel/nn_modules/qlinear/torch.py", line 468, in _stream_decode_qzeros
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128]     if self._zeros_cache is not None and self._zeros_cache_state == cache_state:
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128] To log all recompilation reasons, use TORCH_LOGS="recompiles".
+W1003 08:39:14.681000 3051 torch/_dynamo/convert_frame.py:2008] [2/128] To diagnose recompilation issues, see https://docs.pytorch.org/docs/main/user_guide/torch_compiler/compile/programming_model.recompilation.html
+[360.71s] eval_quant: {'wall_s': 75.95, 'rss_gb': 2.0, 'peak_rss_gb': 2.937}
+{"calib_fingerprint": "9d3328272dd6188b", "calib_check": {"passed": 128, "after_prepare": 128, "same_multiset": true, "lengths": [512]}, "ppl_quant": 18.925104954420075, "total_wall_s": 360.71, "peak_rss_gb": 2.937}
