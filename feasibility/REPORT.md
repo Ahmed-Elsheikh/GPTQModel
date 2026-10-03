@@ -4,7 +4,7 @@ This report has two parts:
 
 - **Part A – Real-data results (2026-10-03).** Hugging Face is reachable now. Step 1 of the real-data rerun was run
   on the real SmolLM2-135M weights and real WikiText-2: calibration-seed sensitivity of GPTQ (A.1–A.4), plus
-  extra check A on calibration window length (A.5). Step 2 (Qwen2.5-0.5B,
+  extra check A on calibration window length (A.5) and its diagnosis (A.6). Step 2 (Qwen2.5-0.5B,
   AWQ, C4, real lm-eval tasks, optimum-benchmark launchers) runs in a separate parallel session and is not covered here.
 - **Part B – Synthetic-data feasibility study (2026-10-02).** This is the original study, kept unchanged. Hugging Face
   was blocked, so its perplexities and accuracies come from random-weight stand-ins and are **not quality numbers**.
@@ -150,9 +150,137 @@ Cost (means): quantize time ×3.5 (302 → 1046 s), total wall per run ×3.0 (38
   was not investigated. Plausible candidates, all untested: (i) the eval windows are 2048 tokens, but
   calibration at 2048 shifts the Hessian toward long-range positions; (ii) longer windows cross more
   `"\n\n"`-joined article boundaries; (iii) GPTQ's damping (`damp_percent`) interacts with a Hessian built
-  from 4× more tokens. **Calibration window length is therefore a first-order protocol variable for W3**, larger
+  from 4× more tokens (diagnosed in A.6: (iii) ruled out, (i) supported). **Calibration window length is therefore a first-order protocol variable for W3**, larger
   than the calibration seed, and should be reported (and, if possible, varied) in EXP1/EXP2.
 - Budget note: at L = 2048 a W3 135M run costs ≈ 19 min instead of ≈ 6.5 min on this VM.
+
+## A.6 Diagnosis of the window-length effect (A.5)
+
+Goal: decide whether A.5's effect (W3 perplexity +5.15 with 128×2048 instead of 128×512 calibration windows) is real,
+and which of A.5's three candidate causes explains it: **(i)** position composition of the Hessian,
+**(ii)** article boundaries inside long windows, **(iii)** damping interacting with a Hessian built from 4× more tokens.
+
+Setup, the same for all new runs: the same `calib.py` and the same 40×2048 WikiText-2 test windows (fingerprint
+`7da3b34bdebd1923` in every run). Token ids come from a `.npy` cache (`calib.py`, `cache_tok/`) filled by the main
+venv. It reproduces Step 1's calibration and eval fingerprints exactly, and it gives the wanda venv (tokenizers 0.21.4)
+byte-identical windows: the wanda-venv dense perplexity is 14.48779, identical to the main venv. GPTQ settings are as
+in Step 1: g128, float32 quantize, bf16 TorchLinear eval. Wanda: 50 % unstructured, fp32, the existing patch and
+driver, plus `wanda_diag_driver.py`, which only sets `model.seqlen`.
+Runner `chain_diag.sh`; results `results/real_diag.jsonl` (every line has the `lscpu` model and flags and the
+venv's package versions; four Wanda lines had versions backfilled afterwards and are marked as such), summary
+`results/real_diag_summary.json` (`summarize_diag.py`), audits `results/real_diag_audit*.json` (`audit_gptq_logs.py`),
+probes `results/real_diag_probe_positions*.json` (`probe_positions.py`). All runs used `Intel(R) Xeon(R) Processor @
+2.10GHz`, 4 vCPU, one job at a time. There was one failure: the first Wanda dense attempt (`FileNotFoundError`,
+because the driver `chdir`s and the output path was relative). It was rerun with absolute paths, and the failed
+record is kept in the JSONL.
+
+### All conditions
+
+| Condition (calibration = windows × tokens) | n | Mean ppl | SD | Min–max | Quantize/prune (s, mean) | Wall per run (s, mean) | Peak RSS (GB, max) |
+|---|---|---|---|---|---|---|---|
+| SmolLM2-135M dense fp32 | 1 | 14.488 | – | – | – | 160 | 3.10 |
+| SmolLM2-135M GPTQ W3, 128 × 512 (A.2) | 5 | 37.961 | 0.723 | 37.17–38.91 | 301 | 387 | 2.89 |
+| SmolLM2-135M GPTQ W3, **512 × 512** (step 2) | 3 | **37.943** | 0.550 | 37.34–38.42 | 1115 | 1192 | 3.72 |
+| SmolLM2-135M GPTQ W3, 128 × 2048 (A.5) | 5 | 43.109 | 1.138 | 41.28–44.17 | 1046 | 1150 | 4.36 |
+| SmolLM2-135M GPTQ W4, 128 × 512 (A.2) | 5 | 17.743 | 0.021 | 17.71–17.76 | 314 | 414 | 2.91 |
+| SmolLM2-135M GPTQ W4, 128 × 2048 (step 3) | 2 | 18.897 | 0.112 | 18.82–18.98 | 1037 | 1130 | 3.86 |
+| SmolLM2-135M Wanda 50 %, 128 × 512 (step 4) | 2 | 31.460 | 0.056 | 31.42–31.50 | 125 | 228 | 2.07 |
+| SmolLM2-135M Wanda 50 %, 128 × 2048 (step 4) | 2 | 31.615 | 0.030 | 31.59–31.64 | 566 | 669 | 2.48 |
+| Qwen2.5-0.5B dense fp32 | 1 | 12.228 | – | – | – | 514 | 5.58 |
+| Qwen2.5-0.5B GPTQ W3, 128 × 512 (step 5) | 1 | 20.186 | – | – | 894 | 1102 | 5.35 |
+| Qwen2.5-0.5B GPTQ W3, 128 × 2048 (step 5) | 1 | 20.658 | – | – | 2881 | 3090 | 7.94 |
+
+Contrasts (2048 minus 512, Welch t-test where n ≥ 2 per arm):
+
+| Contrast | Δ ppl | Relative | p |
+|---|---|---|---|
+| SmolLM2 GPTQ W3, 128×2048 vs 128×512 | +5.149 | +13.6 % | 7×10⁻⁵ |
+| SmolLM2 GPTQ W3, 512×512 vs 128×512 (same windows, 4× tokens) | −0.017 | −0.05 % | 0.97 |
+| SmolLM2 GPTQ W3, 512×512 vs 128×2048 (same tokens, short windows) | −5.166 | −12.0 % | 1.4×10⁻⁴ |
+| SmolLM2 GPTQ W4, 128×2048 vs 128×512 | +1.154 | +6.5 % | 0.04 (n = 2 vs 5) |
+| SmolLM2 Wanda 50 %, 128×2048 vs 128×512 | +0.154 | +0.5 % | 0.11 (n = 2 vs 2) |
+| Qwen2.5-0.5B GPTQ W3, 128×2048 vs 128×512 | +0.472 | +2.3 % | – (n = 1 vs 1) |
+
+### What each step shows, mapped to causes (i)–(iii)
+
+**Step 1 – log audit (no new runs; `audit_gptq_logs.py` on GPTQModel's per-module `gptq_log_*.log`).**
+- Total / padded / non-padded tokens: 65,536 / 0 / 65,536 (512) and 262,144 / 0 / 262,144 (2048), in every run.
+  No truncation; 128/128 windows kept at full length. GPTQModel's sort by length is a no-op (equal lengths). Nothing
+  was filtered.
+- Damping: `damp_percent = 0.05` (`damp_auto_increment = 0.01` configured) in all 210 modules of all runs, with no
+  damp-recovery or Hessian-floor warnings. The same warnings appear in both arms (GIL, disk throughput,
+  "Calibration dataset size should be more than 256").
+- Loss normalisation caveat: GPTQModel builds H = (2/N)·Σxxᵀ (a per-token mean) and logs Σ Losses / N, so the
+  **logged loss shrinks as 1/N** and cannot be compared across token counts as printed. The audit uses
+  loss × samples instead. Even then, each arm's loss is measured against its own Hessian, so it does not rank the
+  arms by quality.
+- Divergence: the 2048-token runs have **35 % lower** calibration loss (16.4k vs 25.1k), almost all of it in
+  `mlp.down_proj` of **layer 28** (ratio 0.37) and **layer 11** (0.23), then layers 24–29 `down_proj` (0.69–0.81).
+  The attention and gate/up projections differ by under 10 %. The 512×512 arm's per-module profile (total 25.3k;
+  layer 11 / 28 `down_proj` 2304 / 7452) matches 128×512 (2207 / 7651), not 128×2048 (500 / 2847).
+- Probe (dense model, no quantization; `probe_positions.py`): the `down_proj` input at **position 0** (the first
+  token of each window, the attention-sink token) has 187,000× (layer 11) and 2,300× (layer 28) the squared norm of
+  the median token. Its share of the Hessian trace: layer 11 99.7 % → 98.9 %, **layer 28 81 % → 53 %**,
+  layer 2 21 % → 10 %, layer 29 4.2 % → 1.1 % (512 → 2048). The modules where the arms diverge are exactly the
+  ones dominated by position 0.
+- → Rules out data-handling artifacts (truncation, padding, filtering) and **argues against (iii)**: damping is
+  fixed and relative to the mean diagonal of a token-count-normalised H. **Points to (i)**, in a sharper form:
+  the issue is the share of position-0 tokens (1/L of all tokens), which carry massive activations.
+
+**Step 2 – token count vs window length (512 × 512 = 262k tokens with short windows).** It matches 128×512
+(Δ −0.02, p = 0.97) and differs from 128×2048 (Δ −5.17, p = 1.4×10⁻⁴), with the same loss profile as 128×512.
+→ **Token count is not the cause; (iii) is ruled out.** The effect follows window length, which is consistent with
+(i) and with (ii). (ii) is not excluded by this step: boundary density per token is the same at any L, but longer
+windows give more tokens a preceding article in context.
+
+**Step 3 – does it happen at W4?** Yes: +1.15 ppl (+6.5 %), about 55× the W4 seed SD (0.021). The W4 audit shows
+the same signature: layer 11 / 28 `down_proj` loss × samples 634 → 164 and 1579 → 709.
+→ Not a W3-only artifact. It is smaller in absolute terms at W4, as expected when the overall error is smaller.
+Consistent with (i).
+
+**Step 4 – is it GPTQModel-specific? (Wanda 50 %).** +0.15 ppl (+0.5 %, p = 0.11, n = 2 per arm), the same
+direction but a ~28× smaller relative effect than GPTQ W3.
+→ The large effect is **specific to GPTQ's Hessian-based error compensation**, not a generic property of
+calibration on this model. Wanda's score |W|·‖X‖ uses only per-channel input norms, not the full XXᵀ structure
+that GPTQ's updates propagate errors through. This is consistent with (i), but it does not test it directly.
+Whether it is specific to the GPTQModel *implementation* rather than to GPTQ as a method was not tested.
+The H = (2/N)·Σxxᵀ normalisation is the same as in the original GPTQ code.
+
+**Step 5 – another model (Qwen2.5-0.5B, W3, one seed each).** +0.47 ppl (+2.3 %), the same direction but much
+smaller. One seed per arm cannot separate this from seed noise: SmolLM2's W3 seed CV is 1.9 %.
+Qwen has the same sink structure. Position 0 dominates `down_proj` inputs in layers 2, 3 and 21, and layer 21's
+share falls 83 % → 57 % at L = 2048. The audit shows the same signature: layer 21 `down_proj` loss × samples
+46 → 21. But in Qwen these sink-dominated modules carry **~1 %** of the total W3 loss (46 of 4766), versus
+**~39 %** in SmolLM2 (layer 11 + 28 `down_proj` ≈ 9.9k of 25.1k).
+→ Consistent with (i): the size of the effect tracks how much of GPTQ's error budget sits in sink-dominated modules.
+A weak replication (n = 1).
+
+### Conclusion
+
+- **The effect is real and reproducible for GPTQ on SmolLM2-135M** at W3 (+13.6 %) and W4 (+6.5 %). It is caused by
+  **window length, not token count** (step 2). **(iii) is ruled out.**
+- The evidence supports **(i), sharpened:** a window's first token carries massive "attention-sink"
+  activations in a few `down_proj` modules, so short windows put more Hessian weight on that position (1/L of the
+  tokens). On SmolLM2 these few modules hold a large share of the quantization error; long windows dilute the
+  sink token in H, and quality drops. On Qwen the same mechanism is present but carries little error, and the
+  effect is small. Wanda is barely affected.
+- This is a **mechanistic account consistent with all five steps, not a proven causal one**: no run manipulated the
+  position-0 weight directly. **(ii) is not ruled out** but has no positive evidence: no audit signal points to
+  boundary-related modules, and the divergent modules are exactly the position-0-dominated ones.
+- Practical consequence for the study: **calibration window length is a first-order, usually unreported protocol
+  variable for GPTQ on small models.** It is larger than the calibration seed (A.3), and it interacts with
+  model-specific activation outliers. Report L, and do not compare GPTQ results across different L.
+
+### Untested
+
+- A direct causal test of (i): 128×2048 windows with position-0 tokens up-weighted 4× in H (or 128×512 with
+  position 0 excluded from H), expected to move perplexity toward the other arm if (i) holds.
+- (ii) directly: windows constrained not to cross `"\n\n"` article boundaries, or documents padded so each window
+  starts at an article start.
+- Whether the effect depends on the eval windows being 2048 tokens (eval at 512 not run).
+- Seeds: Qwen n = 1 per arm, Wanda and W4 2048 n = 2; no 360M model; no 512×512 run at W4 or for Wanda.
+- Other GPTQ implementations (AutoGPTQ, the reference code) and other methods with Hessian compensation (e.g.
+  SparseGPT); AWQ (scale search) was not tested for this effect.
 
 # Part B – Synthetic-data feasibility study (2026-10-02, Hugging Face blocked)
 
