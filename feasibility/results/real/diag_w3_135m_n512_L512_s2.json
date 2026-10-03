@@ -1,0 +1,45 @@
+{
+  "args": {
+    "model": "HuggingFaceTB/SmolLM2-135M",
+    "method": "gptq",
+    "bits": 3,
+    "group_size": 128,
+    "n": 512,
+    "L": 512,
+    "seed": 2,
+    "source": "wikitext2",
+    "eval_source": "wikitext2",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": false,
+    "dense_only": false,
+    "threads": 4,
+    "out": "results/real/diag_w3_135m_n512_L512_s2.json",
+    "save_dir": "ckpt_real/diag_w3_135m_n512_L512_s2",
+    "backend": "torch",
+    "quant_backend": "auto",
+    "eval_only": null,
+    "dtype": "float32"
+  },
+  "phases": {
+    "data": {
+      "wall_s": 0.91,
+      "rss_gb": 0.566,
+      "peak_rss_gb": 0.584
+    },
+    "load_for_quant": {
+      "wall_s": 0.68,
+      "rss_gb": 0.65,
+      "peak_rss_gb": 0.65
+    }
+  },
+  "token_cache": {
+    "wikitext2_test_HuggingFaceTB--SmolLM2-135M.npy": "b0a4aec332f08008",
+    "wikitext2_test_Qwen--Qwen2.5-0.5B.npy": "c378dfa8e175c20c",
+    "wikitext2_train_HuggingFaceTB--SmolLM2-135M.npy": "e9e35f7c5a45f096",
+    "wikitext2_train_Qwen--Qwen2.5-0.5B.npy": "9372ef7056cf7fce"
+  },
+  "calib_fingerprint": "c90924a2cb31a62d",
+  "eval_fingerprint": "7da3b34bdebd1923",
+  "quant_config": "GPTQConfig(bits=3, dynamic=None, group_size=128, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.GPTQ: 'gptq'>, format=<FORMAT.GPTQ: 'gptq'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_4ajw_b5o', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, damp_percent=0.05, damp_auto_increment=0.01, act_group_aware=True, static_groups=False, mse=0.0, gptaq=None, foem=None, mock_quantization=False, hessian=HessianConfig(chunk_size=None, chunk_bytes=None, staging_dtype=torch.float32, dedup_shared_inputs=True))"
+}
