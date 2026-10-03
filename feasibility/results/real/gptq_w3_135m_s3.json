@@ -1,0 +1,69 @@
+{
+  "args": {
+    "model": "HuggingFaceTB/SmolLM2-135M",
+    "method": "gptq",
+    "bits": 3,
+    "group_size": 128,
+    "n": 128,
+    "L": 512,
+    "seed": 3,
+    "source": "wikitext2",
+    "eval_source": "wikitext2",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": false,
+    "dense_only": false,
+    "threads": 4,
+    "out": "results/real/gptq_w3_135m_s3.json",
+    "save_dir": "ckpt_real/gptq_w3_135m_s3",
+    "backend": "torch",
+    "quant_backend": "auto",
+    "eval_only": null,
+    "dtype": "float32"
+  },
+  "phases": {
+    "data": {
+      "wall_s": 14.08,
+      "rss_gb": 1.357,
+      "peak_rss_gb": 2.072
+    },
+    "load_for_quant": {
+      "wall_s": 0.64,
+      "rss_gb": 1.36,
+      "peak_rss_gb": 2.072
+    },
+    "quantize": {
+      "wall_s": 291.24,
+      "rss_gb": 1.679,
+      "peak_rss_gb": 2.072
+    },
+    "save": {
+      "wall_s": 0.7,
+      "rss_gb": 1.785,
+      "peak_rss_gb": 2.072
+    },
+    "load_quantized": {
+      "wall_s": 3.06,
+      "rss_gb": 1.873,
+      "peak_rss_gb": 2.162
+    }
+  },
+  "calib_fingerprint": "eaa59f1166ef0558",
+  "eval_fingerprint": "7da3b34bdebd1923",
+  "quant_config": "GPTQConfig(bits=3, dynamic=None, group_size=128, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.GPTQ: 'gptq'>, format=<FORMAT.GPTQ: 'gptq'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_jnjf47o2', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, damp_percent=0.05, damp_auto_increment=0.01, act_group_aware=True, static_groups=False, mse=0.0, gptaq=None, foem=None, mock_quantization=False, hessian=HessianConfig(chunk_size=None, chunk_bytes=None, staging_dtype=torch.float32, dedup_shared_inputs=True))",
+  "calib_check": {
+    "passed": 128,
+    "after_prepare": 128,
+    "same_multiset": true,
+    "lengths": [
+      512
+    ]
+  },
+  "reload_dtype": "bfloat16",
+  "quant_backend": "None",
+  "quant_qlinear_classes": [
+    "Linear",
+    "TorchLinear"
+  ],
+  "quant_dtype": "torch.bfloat16"
+}
