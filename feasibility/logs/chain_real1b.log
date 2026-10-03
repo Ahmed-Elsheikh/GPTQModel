@@ -1,1 +1,2 @@
 chain1b start Sat Oct  3 09:23:29 UTC 2026
+{"run_id": "gptq_w3_135m_L2048_s0", "wall_s": 1140.5, "peak_rss_gb": 4.328, "rc": 0}
