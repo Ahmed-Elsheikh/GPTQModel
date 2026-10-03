@@ -1,0 +1,39 @@
+{
+  "args": {
+    "model": "HuggingFaceTB/SmolLM2-135M",
+    "method": "gptq",
+    "bits": 4,
+    "group_size": 128,
+    "n": 128,
+    "L": 2048,
+    "seed": 1,
+    "source": "wikitext2",
+    "eval_source": "wikitext2",
+    "eval_n": 40,
+    "eval_L": 2048,
+    "eval_dense": false,
+    "dense_only": false,
+    "threads": 4,
+    "out": "results/real/diag_w4_135m_L2048_s1.json",
+    "save_dir": "ckpt_real/diag_w4_135m_L2048_s1",
+    "backend": "torch",
+    "quant_backend": "auto",
+    "eval_only": null,
+    "dtype": "float32"
+  },
+  "phases": {
+    "data": {
+      "wall_s": 1.15,
+      "rss_gb": 0.559,
+      "peak_rss_gb": 0.584
+    }
+  },
+  "token_cache": {
+    "wikitext2_test_HuggingFaceTB--SmolLM2-135M.npy": "b0a4aec332f08008",
+    "wikitext2_test_Qwen--Qwen2.5-0.5B.npy": "c378dfa8e175c20c",
+    "wikitext2_train_HuggingFaceTB--SmolLM2-135M.npy": "e9e35f7c5a45f096",
+    "wikitext2_train_Qwen--Qwen2.5-0.5B.npy": "9372ef7056cf7fce"
+  },
+  "calib_fingerprint": "0edfe174d4876132",
+  "eval_fingerprint": "7da3b34bdebd1923"
+}
