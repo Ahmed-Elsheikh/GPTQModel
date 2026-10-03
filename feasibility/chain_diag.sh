@@ -17,8 +17,9 @@ gptq() {  # id model n L bits seed
 }
 wanda() {  # id seqlen sparsity seed
   done_ok $1 && { echo "skip $1"; return; }
-  WANDA_SEQLEN=$2 $PY runlog.py $J $1 --json $R/$1.json -- env WANDA_SEQLEN=$2 $WPY wanda_diag_driver.py $R/$1.json --model $M \
-     --sparsity_ratio $3 --sparsity_type unstructured --prune_method wanda --nsamples 128 --seed $4 --save ckpt_real/$1
+  # absolute paths: wanda_real_driver.py chdirs into third_party/wanda
+  $PY runlog.py $J $1 --json $PWD/$R/$1.json -- env WANDA_SEQLEN=$2 $WPY wanda_diag_driver.py $PWD/$R/$1.json --model $M \
+     --sparsity_ratio $3 --sparsity_type unstructured --prune_method wanda --nsamples 128 --seed $4 --save $PWD/ckpt_real/$1
 }
 echo "diag start $(date -u)"
 for s in 0 1 2; do gptq diag_w3_135m_n512_L512_s$s $M 512 512 3 $s; done
