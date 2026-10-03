@@ -1,0 +1,781 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (2518423 > 131072). Running this sequence through the model will result in indexing errors
+[17.58s] data: {'wall_s': 14.8, 'rss_gb': 1.552, 'peak_rss_gb': 2.256}
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1003 08:57:47.877000 3895 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1003 08:57:47.912000 3895 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:  38%|███▊      | 111/290 [00:00<00:00, 1084.35it/s]Loading weights:  76%|███████▌  | 220/290 [00:00<00:00, 295.59it/s] Loading weights:  96%|█████████▌| 277/290 [00:00<00:00, 264.62it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 297.42it/s]
+[237.14s] eval_dense_fp32: {'wall_s': 219.56, 'rss_gb': 2.694, 'peak_rss_gb': 5.975}
+
+INFO  LogBar: headless/CI mode; progress animations disabled.                   
+WARN  Python GIL is enabled: Multi-gpu quant acceleration for MoE models is sub-optimal and multi-core accelerated cpu packing is also disabled. We recommend Python >= 3.13.3t with Pytorch > 2.8 for mult-gpu quantization and multi-cpu packing with env `PYTHON_GIL=0`.
+INFO  ENV: Auto setting PYTORCH_ALLOC_CONF='expandable_segments:True,max_split_size_mb:256,garbage_collection_threshold:0.7' for memory saving.
+INFO  ENV: Auto setting CUDA_DEVICE_ORDER=PCI_BUS_ID for correctness.           
+INFO  
+
+┌─────────────┐    ┌────────────────────────┐    ┌────────────┐    ┌─────────┐
+│ GPT-QModel  │ -> │ ▓▓▓▓▓▓▓▓▓▓▓▓ 16bit     │ -> │ ▒▒▒▒ 8bit  │ -> │ ░░ 4bit │
+└─────────────┘    └────────────────────────┘    └────────────┘    └─────────┘
+GPT-QModel   : 7.5.0
+Transformers : 5.18.0
+Torch        : 2.14.1+cpu
+INFO  QuantizeConfig: offload_to_disk_path auto set to temporary dir `/tmp/gptqmodel_9fyw3f_9`
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/revision/main "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B/tree/060db6499f32faf8b98477b0a26969ef7d8b9987?recursive=true&expand=false "HTTP/1.1 200 OK"
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]INFO:httpx:HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/060db6499f32faf8b98477b0a26969ef7d8b9987/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B/060db6499f32faf8b98477b0a26969ef7d8b9987/.gitattributes?%2FQwen%2FQwen2.5-0.5B%2Fresolve%2F060db6499f32faf8b98477b0a26969ef7d8b9987%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B/060db6499f32faf8b98477b0a26969ef7d8b9987/.gitattributes?%2FQwen%2FQwen2.5-0.5B%2Fresolve%2F060db6499f32faf8b98477b0a26969ef7d8b9987%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+Fetching 10 files:  80%|████████  | 8/10 [00:00<00:00, 43.38it/s]INFO:httpx:HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/060db6499f32faf8b98477b0a26969ef7d8b9987/README.md "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/060db6499f32faf8b98477b0a26969ef7d8b9987/LICENSE "HTTP/1.1 307 Temporary Redirect"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B/060db6499f32faf8b98477b0a26969ef7d8b9987/README.md?%2FQwen%2FQwen2.5-0.5B%2Fresolve%2F060db6499f32faf8b98477b0a26969ef7d8b9987%2FREADME.md=&etag=%222d22b523f8968e42fc6b805e656133fa83f771ab%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B/060db6499f32faf8b98477b0a26969ef7d8b9987/LICENSE?%2FQwen%2FQwen2.5-0.5B%2Fresolve%2F060db6499f32faf8b98477b0a26969ef7d8b9987%2FLICENSE=&etag=%226634c8cc3133b3848ec74b9f275acaaa1ea618ab%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B/060db6499f32faf8b98477b0a26969ef7d8b9987/README.md?%2FQwen%2FQwen2.5-0.5B%2Fresolve%2F060db6499f32faf8b98477b0a26969ef7d8b9987%2FREADME.md=&etag=%222d22b523f8968e42fc6b805e656133fa83f771ab%22 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-0.5B/060db6499f32faf8b98477b0a26969ef7d8b9987/LICENSE?%2FQwen%2FQwen2.5-0.5B%2Fresolve%2F060db6499f32faf8b98477b0a26969ef7d8b9987%2FLICENSE=&etag=%226634c8cc3133b3848ec74b9f275acaaa1ea618ab%22 "HTTP/1.1 200 OK"
+Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 16.65it/s]
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=151643 (token='<|endoftext|>').
+INFO  Estimated Quantization BPW (bits per weight): 4.2875 bpw, based on [bits: 4, group_size: 128]
+INFO  Loader: using checkpoint-backed lazy turtle source for `/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B/snapshots/060db6499f32faf8b98477b0a26969ef7d8b9987`
+INFO:tokenicer.tokenicer:Tokenicer: Auto fixed pad_token_id=151643 (token='<|endoftext|>').
+INFO  Model: Loaded `generation_config`: GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151643,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 151643,
+  "use_cache": true
+}
+
+INFO  Model: Auto-fixed `generation_config` mismatch between model and `generation_config.json`.
+INFO  Model: Updated `generation_config`: GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": 151643,
+  "max_new_tokens": 2048,
+  "pad_token_id": 151643
+}
+
+INFO  Kernel: loaded -> `[]`                                                    
+[239.26s] load_for_quant: {'wall_s': 1.87, 'rss_gb': 2.722, 'peak_rss_gb': 5.975}
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+calib_check {'passed': 128, 'after_prepare': 128, 'same_multiset': True, 'lengths': [512]}
+INFO  Packing Kernel: selected: `TorchLinear`                                   
+INFO  Packing Kernel: selected: `TorchLinear`                                   
+WARN  Calibration dataset size should be more than 256. Current: 128.           
+INFO  Calibration: Sort in descending order by length                           
+INFO  Calibration: Total padded tokens: 0                                       
+INFO  Calibration: Total non-padded tokens: 65536                               
+INFO  Calibration: Total tokens: 65536                                          
+WARN  Disk subsystem write throughput detected at 198.4 MB/s; quantization may be slowed by IO.
+INFO  ModuleLooper: capturing layer inputs from 128 calibration batches         
+INFO  Offloading base modules to disk...                                        
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | region     | count | last_s | avg_s | total_s | pct    | source  |      
+INFO  +------------+-------+--------+-------+---------+--------+---------+      
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 100.0% | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=0 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=2 status=verified
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 0 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 0 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=0 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=3 status=verified
+INFO  | ... | 0 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 0 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 4     | 12.756 | 4.617 | 18.466  | 48.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 896   | 0.066  | 0.009 | 8.399   | 22.3%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 7     | 2.003  | 0.744 | 5.205   | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 1     | 4.499  | 4.499 | 4.499   | 11.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 7     | 0.691  | 0.121 | 0.846   | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.8%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  Extension load requested for `pack_block_cpu`: pack_block_cpu             
+INFO  Extension load finished successfully: pack_block_cpu                      
+INFO  Format: Converting GPTQ v2 to v1                                          
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=1 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=5 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 1 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=1 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=6 status=verified
+INFO  | ... | 1 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 1 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 8     | 12.515 | 4.556 | 36.450  | 48.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 1792  | 0.054  | 0.009 | 16.665  | 22.1%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 14    | 1.839  | 0.732 | 10.247  | 13.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 2     | 5.002  | 4.751 | 9.501   | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 14    | 0.652  | 0.118 | 1.647   | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.4%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 7     | 0.059  | 0.034 | 0.239   | 0.3%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 7     | 0.021  | 0.016 | 0.113   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 7     | 0.032  | 0.008 | 0.055   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 7     | 0.005  | 0.005 | 0.036   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=2 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=8 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 2 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 2 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=2 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=9 status=verified
+INFO  | ... | 2 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 2 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 12    | 12.374 | 4.555 | 54.665  | 48.4%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 2688  | 0.062  | 0.009 | 24.880  | 22.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 21    | 1.781  | 0.729 | 15.316  | 13.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 3     | 5.082  | 4.861 | 14.583  | 12.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 21    | 0.547  | 0.111 | 2.335   | 2.1%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 14    | 0.026  | 0.029 | 0.402   | 0.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.3%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 14    | 0.020  | 0.015 | 0.209   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 14    | 0.000  | 0.005 | 0.071   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 14    | 0.002  | 0.004 | 0.055   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=3 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=11 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 3 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 3 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=3 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=12 status=verified
+INFO  | ... | 3 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 3 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 16    | 12.097 | 4.529 | 72.471  | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 3584  | 0.057  | 0.009 | 32.886  | 22.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 28    | 1.867  | 0.727 | 20.351  | 13.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 4     | 4.592  | 4.794 | 19.175  | 12.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 28    | 0.605  | 0.111 | 3.108   | 2.1%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 21    | 0.054  | 0.028 | 0.589   | 0.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.2%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 21    | 0.023  | 0.015 | 0.312   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 21    | 0.000  | 0.004 | 0.081   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 21    | 0.003  | 0.003 | 0.071   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=4 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=14 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 4 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 4 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=4 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=15 status=verified
+INFO  | ... | 4 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 1. | 4... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 1. | 4... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 4 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 20    | 12.349 | 4.575 | 91.497  | 48.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 4480  | 0.055  | 0.009 | 41.140  | 22.0%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 35    | 1.828  | 0.730 | 25.552  | 13.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 5     | 4.417  | 4.718 | 23.592  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 35    | 0.645  | 0.111 | 3.899   | 2.1%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 28    | 0.054  | 0.028 | 0.776   | 0.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 28    | 0.022  | 0.014 | 0.397   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.2%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 28    | 0.027  | 0.004 | 0.113   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 28    | 0.002  | 0.003 | 0.089   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=5 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=17 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 5 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 5 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=5 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=18 status=verified
+INFO  | ... | 5 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 5 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 24    | 11.961 | 4.557 | 109.365 | 48.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 5376  | 0.055  | 0.009 | 49.061  | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 42    | 1.932  | 0.735 | 30.881  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 6     | 4.584  | 4.696 | 28.176  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 42    | 0.737  | 0.114 | 4.802   | 2.1%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 35    | 0.025  | 0.028 | 0.969   | 0.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 35    | 0.022  | 0.014 | 0.485   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 35    | 0.000  | 0.004 | 0.142   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 35    | 0.002  | 0.003 | 0.114   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=6 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=20 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 6 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 6 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=6 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=21 status=verified
+INFO  | ... | 6 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 6 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 28    | 12.455 | 4.555 | 127.546 | 48.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 6272  | 0.052  | 0.009 | 57.284  | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 49    | 1.923  | 0.733 | 35.933  | 13.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 7     | 4.972  | 4.735 | 33.148  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 49    | 0.657  | 0.114 | 5.607   | 2.1%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 42    | 0.061  | 0.028 | 1.171   | 0.4%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 42    | 0.021  | 0.014 | 0.583   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 42    | 0.000  | 0.004 | 0.177   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 42    | 0.002  | 0.003 | 0.129   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=7 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=23 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 7 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 7 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=7 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=24 status=verified
+INFO  | ... | 7 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 7 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 32    | 12.579 | 4.564 | 146.057 | 48.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 7168  | 0.072  | 0.009 | 65.581  | 21.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 56    | 2.012  | 0.737 | 41.286  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 8     | 4.811  | 4.745 | 37.959  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 56    | 0.740  | 0.116 | 6.520   | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 49    | 0.058  | 0.028 | 1.378   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 49    | 0.028  | 0.014 | 0.682   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 49    | 0.027  | 0.005 | 0.246   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 49    | 0.002  | 0.003 | 0.151   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=8 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=26 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 8 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 8 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=8 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=27 status=verified
+INFO  | ... | 8 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 8 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 36    | 13.269 | 4.593 | 165.364 | 48.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 8064  | 0.055  | 0.009 | 74.359  | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 63    | 2.271  | 0.746 | 46.996  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 9     | 4.836  | 4.755 | 42.795  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 63    | 0.781  | 0.118 | 7.463   | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 56    | 0.025  | 0.027 | 1.534   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 56    | 0.022  | 0.014 | 0.770   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 56    | 0.000  | 0.005 | 0.255   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 56    | 0.002  | 0.003 | 0.165   | 0.0%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=9 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=29 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 9 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | ... | 9 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +-----+---+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=9 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=30 status=verified
+INFO  | ... | 9 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 89... | f32: ... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+---+-----+-------+----------+----+------+----+----+------+---+----+
+INFO  | ... | 9 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | ... | ... | n |    |
+INFO  +-----+---+-----+-------+--------+-----+------+-----+-----+-----+---+----+
+INFO  | Pre-quan... | 40    | 12.565 | 4.591 | 183.623 | 48.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 8960  | 0.052  | 0.009 | 82.667  | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 70    | 1.948  | 0.745 | 52.143  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 10    | 4.857  | 4.765 | 47.652  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 70    | 0.646  | 0.118 | 8.264   | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 63    | 0.055  | 0.028 | 1.749   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 63    | 0.021  | 0.014 | 0.855   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 63    | 0.026  | 0.005 | 0.298   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 63    | 0.005  | 0.003 | 0.209   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=10 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=32 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 10 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 10 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 10 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=10 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=33 status=verified
+INFO  | ... | 10 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 10 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 10 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 2. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 44    | 12.154 | 4.573 | 201.204 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 9856  | 0.077  | 0.009 | 90.600  | 21.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 77    | 2.208  | 0.746 | 57.448  | 13.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 11    | 4.855  | 4.773 | 52.507  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 77    | 0.795  | 0.120 | 9.222   | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 70    | 0.024  | 0.027 | 1.896   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 70    | 0.021  | 0.013 | 0.941   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 70    | 0.000  | 0.004 | 0.310   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 70    | 0.002  | 0.003 | 0.231   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=11 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=35 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 11 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 11 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 11 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=11 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=36 status=verified
+INFO  | ... | 11 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 11 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 11 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 48    | 12.715 | 4.578 | 219.750 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 10752 | 0.054  | 0.009 | 99.038  | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 84    | 1.817  | 0.747 | 62.751  | 13.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 12    | 4.656  | 4.764 | 57.163  | 12.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 84    | 0.649  | 0.119 | 10.021  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 77    | 0.068  | 0.028 | 2.135   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 77    | 0.034  | 0.014 | 1.058   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 77    | 0.023  | 0.004 | 0.344   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 77    | 0.003  | 0.004 | 0.300   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=12 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=38 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 12 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 12 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 12 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=12 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=39 status=verified
+INFO  | ... | 12 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 12 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 12 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 52    | 12.180 | 4.567 | 237.484 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 11648 | 0.076  | 0.009 | 107.125 | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 91    | 1.896  | 0.746 | 67.902  | 13.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 13    | 4.860  | 4.771 | 62.023  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 91    | 0.627  | 0.119 | 10.797  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 84    | 0.026  | 0.028 | 2.312   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 84    | 0.023  | 0.014 | 1.149   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 84    | 0.000  | 0.004 | 0.377   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 84    | 0.002  | 0.004 | 0.332   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=13 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=41 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 13 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 13 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 13 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=13 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=42 status=verified
+INFO  | ... | 13 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 13 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 13 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 56    | 12.064 | 4.558 | 255.240 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 12544 | 0.050  | 0.009 | 115.023 | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 98    | 1.799  | 0.742 | 72.751  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 14    | 4.698  | 4.766 | 66.721  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 98    | 0.606  | 0.118 | 11.544  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 91    | 0.027  | 0.027 | 2.501   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 91    | 0.023  | 0.014 | 1.240   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 91    | 0.000  | 0.004 | 0.407   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 91    | 0.002  | 0.004 | 0.348   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=14 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=44 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 14 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 14 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 14 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=14 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=45 status=verified
+INFO  | ... | 14 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 14 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 14 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 60    | 12.357 | 4.552 | 273.117 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 13440 | 0.075  | 0.009 | 123.099 | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 105   | 1.906  | 0.739 | 77.647  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 15    | 4.555  | 4.752 | 71.276  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 105   | 0.641  | 0.117 | 12.318  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 98    | 0.051  | 0.028 | 2.737   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 98    | 0.022  | 0.014 | 1.340   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 98    | 0.023  | 0.004 | 0.436   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 98    | 0.002  | 0.004 | 0.382   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=15 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=47 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 15 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 15 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 15 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=15 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=48 status=verified
+INFO  | ... | 15 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 15 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 1. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 15 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 64    | 12.845 | 4.555 | 291.493 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 14336 | 0.067  | 0.009 | 131.578 | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 112   | 1.851  | 0.738 | 82.679  | 13.8%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 16    | 4.942  | 4.764 | 76.218  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 112   | 0.685  | 0.117 | 13.155  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 105   | 0.025  | 0.028 | 2.890   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 105   | 0.022  | 0.014 | 1.424   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 105   | 0.000  | 0.004 | 0.446   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 105   | 0.002  | 0.004 | 0.402   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=16 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=50 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 16 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 16 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 16 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=16 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=51 status=verified
+INFO  | ... | 16 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 16 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 16 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 68    | 12.650 | 4.553 | 309.582 | 48.6%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 15232 | 0.051  | 0.009 | 139.856 | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 119   | 1.697  | 0.736 | 87.527  | 13.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 17    | 4.522  | 4.749 | 80.740  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 119   | 0.583  | 0.117 | 13.899  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 112   | 0.050  | 0.028 | 3.093   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 112   | 0.023  | 0.014 | 1.518   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 112   | 0.023  | 0.004 | 0.480   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 112   | 0.002  | 0.004 | 0.435   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.1%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=17 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=53 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 17 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 17 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 17 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=17 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=54 status=verified
+INFO  | ... | 17 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 17 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 17 | ... | 48... | f32... | [32m...[0m | [38;5;76m6...[0m | ... | 1. | ... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+-----+----+-----+---+----+
+INFO  | Pre-quan... | 72    | 11.821 | 4.538 | 326.764 | 48.5%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Forward ... | 16128 | 0.054  | 0.009 | 147.629 | 21.9%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Process ... | 126   | 1.779  | 0.733 | 92.365  | 13.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Post-qua... | 18    | 4.751  | 4.750 | 85.491  | 12.7%  | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Hessian ... | 126   | 0.660  | 0.117 | 14.699  | 2.2%   |              |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Submodul... | 119   | 0.056  | 0.028 | 3.297   | 0.5%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 119   | 0.024  | 0.014 | 1.625   | 0.2%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 119   | 0.029  | 0.004 | 0.523   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Finalize... | 119   | 0.002  | 0.004 | 0.457   | 0.1%   | model.lay... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  | Capture ... | 1     | 0.320  | 0.320 | 0.320   | 0.0%   | cache_inp... |
+INFO  +-------------+-------+--------+-------+---------+--------+--------------+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=18 subset=1/4 expected=2 adopted=2 leaders=1 cumulative=56 status=verified
+INFO  | p... | ... | ... | fe... | d... | l | s... | d | t | f... | ... | d... |
+INFO  +------+-----+-----+-------+------+---+------+---+---+------+-----+------+
+INFO  | ... | 1 | ... | 8... | f32:... | [32m...[0m | [38;5;76m6...[0m | ... | 0. | 0... | n |    |
+INFO  +-----+---+-----+------+---------+-----+------+-----+----+------+---+----+
+INFO  | gp | 18 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 18 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 0... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  | gp | 18 | ... | 896... | f32:... | [32m0.[0m | [38;5;76m6...[0m | 0. | 0. | 1... | n |    |
+INFO  +----+----+-----+--------+---------+----+------+----+----+------+---+----+
+INFO  HessianInputDedup: lifecycle=forward_capture_complete layer=18 subset=3/4 expected=1 adopted=1 leaders=1 cumulative=57 status=verified
+INFO  | ... | 18 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+
+INFO  | ... | 18 | ... | 89... | f32... | [32m...[0m | [38;5;76m6...[0m | 0. | 0. | 3... | n |    |
+INFO  +-----+----+-----+-------+--------+-----+------+----+----+------+---+----+

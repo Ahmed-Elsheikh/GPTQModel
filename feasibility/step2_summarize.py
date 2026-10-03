@@ -7,10 +7,10 @@ R = {r["run_id"]: r for p in sorted(glob.glob("results/real_step2_*.jsonl")) for
 S1 = {r["run_id"]: r for r in rows("results/real_step1.jsonl")}
 def res(i): return (R.get(i) or {}).get("result") or {}
 print("== Wanda 50% unstructured (tf 4.47.1, fp32) ==")
-d = res("s2_wanda_dense_135m").get("ppl")
+d = res("s2_wanda_dense_135m_t023").get("ppl")
 ps = []
 for s in range(5):
-    r = R.get(f"s2_wanda50_135m_s{s}")
+    r = R.get(f"s2_wanda50_135m_s{s}_t023")
     if not r: continue
     x = r.get("result", {})
     print(f"seed {s}: ppl {x.get('ppl')}  sparsity {x.get('sparsity')}  prune {x.get('phases',{}).get('prune')} s  wall {r['wall_s']} s  peak {r['peak_rss_gb']} GB  calib_fp {x.get('calib_fingerprint')} eval_fp {x.get('eval_fingerprint')} rc {r['rc']}")
