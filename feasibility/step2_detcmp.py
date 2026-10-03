@@ -14,8 +14,10 @@ for l in open("results/real_step2_det.jsonl"):
     r = json.loads(l); runs.append((r["run_id"], r["log"], f"{OUT}/ckpt/{r['run_id']}", "results/real_step2_det.jsonl", r["run_id"]))
 ref = {n: losses(lg) for n, lg, *_ in runs}
 base_s1, base_r1 = ref["step1 (Session B)"], ref["rebuild1"]
-def first_div(a, b):
-    return next(((x[0], x[1], x[2], y[2]) for x, y in zip(a, b) if x != y), None)
+def first_div(a, b):  # compare by (layer, module): GPTQModel logs concurrently quantized modules in completion order
+    if not a or not b: return None
+    db = {(l, m): v for l, m, v in b}
+    return next(((l, m, v, db.get((l, m))) for l, m, v in a if db.get((l, m)) != v), None)
 rows = []
 for name, log, ck, jl, rid in runs:
     rec = next(json.loads(l) for l in open(jl) if json.loads(l)["run_id"] == rid)
@@ -24,7 +26,8 @@ for name, log, ck, jl, rid in runs:
     det = x.get("det", {})
     row = dict(run=name, rc=rec["rc"], ppl=repr(x.get("ppl_quant")), ckpt_sha=ckhash(ck) if ck else None, n_losses=len(L),
                l0_o_proj_loss=op, first_div_vs_step1=first_div(L, base_s1), first_div_vs_rebuild1=first_div(L, base_r1),
-               n_diff_vs_rebuild1=sum(a != b for a, b in zip(L, base_r1)), setting=det.get("setting"),
+               n_diff_vs_rebuild1=(sum(v != dict(((l, m), w) for l, m, w in base_r1).get((l, m)) for l, m, v in L) if L else None),
+               log_order_eq_step1=[x[:2] for x in L] == [x[:2] for x in base_s1] if L else None, setting=det.get("setting"),
                attn=det.get("attn_impl_at_load"), threads=x.get("args", {}).get("threads"),
                quantize_s=x.get("phases", {}).get("quantize", {}).get("wall_s"), wall_s=rec["wall_s"])
     rows.append(row); print(json.dumps(row))
