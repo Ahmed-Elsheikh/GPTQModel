@@ -1,6 +1,106 @@
 # Feasibility study: SLM-compression reporting-practices project on a CPU-only cloud VM
 
-Date: 2026-10-02 (13:54–21:05 UTC). VM: Intel Xeon @ 2.80 GHz, 4 vCPU (1 thread/core, AVX-512 + VNNI,
+This report has two parts:
+
+- **Part A – Real-data results (2026-10-03).** Hugging Face is reachable now. Step 1 of the real-data rerun was run
+  on the real SmolLM2-135M weights and real WikiText-2: calibration-seed sensitivity of GPTQ. Step 2 (Qwen2.5-0.5B,
+  AWQ, C4, real lm-eval tasks, optimum-benchmark launchers) runs in a separate parallel session and is not covered here.
+- **Part B – Synthetic-data feasibility study (2026-10-02).** This is the original study, kept unchanged. Hugging Face
+  was blocked, so its perplexities and accuracies come from random-weight stand-ins and are **not quality numbers**.
+
+# Part A – Real-data results (2026-10-03)
+
+VM: Intel Xeon @ 2.10 GHz, 4 vCPU (1 thread/core, AVX-512 **with AVX512-BF16 and AMX-BF16**), 15.7 GiB RAM. This is
+**a different CPU generation from Part B's VM** (2.80 GHz, no BF16/AMX), so wall times are not directly comparable
+(see A.4). The prebuilt venvs are `/opt/venvs/{main,bench,wanda}`: torch 2.14.1+cpu, GPTQModel 7.5.0,
+transformers 5.18.0. The VM was dedicated: one job at a time, and the parallel Step 2 session runs on another VM.
+
+## A.1 Protocol (Step 1)
+
+| Item | Setting |
+|---|---|
+| Model | `HuggingFaceTB/SmolLM2-135M` (real weights) |
+| Calibration | 128 windows × 512 tokens from `Salesforce/wikitext` `wikitext-2-raw-v1` **train** (docs joined with `"\n\n"`, 2,568,237 tokens); window starts drawn with `random.Random(seed)` (`calib.py`, source `wikitext2`) |
+| Perplexity | first 40 non-overlapping 2048-token windows of the **test** split (304,986 tokens); the same set for every run (fingerprint `7da3b34bdebd1923` in all 11 runs) |
+| Quantization | GPTQModel 7.5.0 `GPTQConfig(bits∈{4,3}, group_size=128)`, quantized in **float32**, `batch_size=1`; all 128/128 windows kept by `prepare_dataset` (identical multiset, length 512) |
+| Quantized eval | reloaded with `backend=BACKEND.TORCH` (TorchLinear) in **bf16**; perplexity = exp(mean token NLL) over 40 × 2047 predicted tokens |
+| Dense eval | fp32 and bf16, the same windows |
+| Runner | `chain_real1.sh` → `runlog.py` (wall time and peak RSS of the child process) → `quant_eval.py`; one JSON line per run in `results/real_step1.jsonl`, full per-run JSON in `results/real/`, logs `logs/real_*.log`, summary `results/real_step1_summary.json` (`summarize_real.py`) |
+
+All 11 runs finished with exit code 0. No failures.
+
+## A.2 Per-run results
+
+| Run | Seed | Calib fingerprint | Perplexity | Quantize (s) | Eval (s) | Total wall (s) | Peak RSS (GB) |
+|---|---|---|---|---|---|---|---|
+| dense fp32 | – | – | **14.4878** | – | 95 | 160 (fp32 + bf16 evals) | 3.10 |
+| dense bf16 | – | – | 14.4989 | – | ~40 | (same run) | |
+| GPTQ W4 g128 | 0 | 07db06dabcb03c98 | 17.7448 | 348.4 | 99.4 | 478.8 | 2.91 |
+| GPTQ W4 g128 | 1 | ecd2326d62d1d923 | 17.7383 | 317.0 | 63.7 | 407.8 | 2.90 |
+| GPTQ W4 g128 | 2 | 21eb6029dad8e6e8 | 17.7104 | 292.4 | 67.3 | 386.4 | 2.88 |
+| GPTQ W4 g128 | 3 | eaa59f1166ef0558 | 17.7645 | 311.0 | 66.2 | 404.9 | 2.89 |
+| GPTQ W4 g128 | 4 | 67f586b314a842ea | 17.7568 | 301.8 | 64.8 | 393.3 | 2.88 |
+| GPTQ W3 g128 | 0 | 07db06dabcb03c98 | 37.4668 | 309.7 | 68.3 | 407.2 | 2.87 |
+| GPTQ W3 g128 | 1 | ecd2326d62d1d923 | 38.9052 | 304.8 | 59.5 | 391.9 | 2.86 |
+| GPTQ W3 g128 | 2 | 21eb6029dad8e6e8 | 37.7650 | 310.3 | 51.7 | 389.4 | 2.86 |
+| GPTQ W3 g128 | 3 | eaa59f1166ef0558 | 37.1693 | 291.2 | 49.8 | 367.2 | 2.85 |
+| GPTQ W3 g128 | 4 | 67f586b314a842ea | 38.4970 | 291.4 | 59.9 | 379.1 | 2.89 |
+
+The same seed gives the same calibration windows at W4 and W3 (matching fingerprints). Total wall time includes data
+loading and tokenization (~14–23 s), model load, save and reload (~8 s).
+
+## A.3 Seed sensitivity vs. in-study yardsticks
+
+| Setting (5 seeds) | Mean | SD | Min | Max | Range | CV |
+|---|---|---|---|---|---|---|
+| GPTQ W4 g128 | 17.7430 | **0.0209** | 17.7104 | 17.7645 | 0.054 | **0.12 %** |
+| GPTQ W3 g128 | 37.9607 | **0.7225** | 37.1693 | 38.9052 | 1.736 | **1.90 %** |
+
+95 % chi-square intervals for the SD with n = 5: W4 [0.012, 0.060], W3 [0.43, 2.08].
+
+| Yardstick | Size (ppl) | W4 seed SD as % of it | W3 seed SD as % of it |
+|---|---|---|---|
+| Dense (fp32 14.488) → W4 mean (17.743) | **3.255** | 0.64 % (range 1.7 %) | 22 % (range 53 %) |
+| W4 mean → W3 mean (37.961) | **20.218** | 0.10 % | 3.6 % (range 8.6 %) |
+| *for reference:* dense fp32 vs dense bf16 | 0.011 | – | – |
+
+**Verdict.**
+- **At W4 the calibration-seed effect is negligible.** Its SD (0.021 ppl, CV 0.12 %) is under 1 % of the
+  dense-to-W4 degradation and 0.1 % of the W4-to-W3 gap. Even the upper end of its 95 % interval (0.06) is under 2 % of
+  the degradation. A single-seed W4 perplexity is good to about ±0.03 ppl.
+- **At W3 the seed effect is small relative to the W4-to-W3 gap (3.6 %), but not negligible.** Its SD of 0.72 ppl
+  is about a quarter of the entire dense-to-W4 degradation, and the 5-seed range (1.74 ppl) is about half of it.
+  The seed SD grows 35× from W4 to W3, which is 16× in CV terms. Single-seed W3 numbers can therefore differ by more
+  than the effect of many protocol choices: two papers reporting W3 g128 on this model could differ by ~1.7 ppl from
+  calibration-seed choice alone.
+- Implication for EXP1/EXP2: keep 10 seeds for W3 (and for any setting near the "cliff"). At W4, 3–5 seeds are
+  enough to bound the effect. Five seeds are too few to estimate the SD precisely: the W3 interval spans 0.43–2.08.
+
+## A.4 Timing and memory on real data (this VM)
+
+| Unit | Real-data measurement | Part B (synthetic, other CPU) |
+|---|---|---|
+| GPTQ W4/W3 g128 quantize, 135M, fp32, 128×512 | 291–348 s (mean 308 s; W3 ≈ W4) | 528 s |
+| Perplexity 40×2048, quantized (TorchLinear bf16) | 50–99 s (mean 65 s) | 349 s |
+| Perplexity 40×2048, dense fp32 | 95 s | 176 s |
+| One quantize + eval run (wall, incl. data and IO) | 367–479 s (mean 401 s ≈ 6.7 min) | ~15 min |
+| Peak RSS | 2.85–3.10 GB | 2.4–2.7 GB |
+
+- Seed 0 W4 was the slowest run (348 s quantize, 99 s eval). It was the first quantization in the session, which
+  includes GPTQModel's JIT compile of `pack_block_cpu` and cold caches. Excluding it, quantize was 291–317 s.
+- The 5× faster bf16 eval and 1.7× faster quantize are consistent with this VM's AMX/AVX512-BF16 support, which
+  Part B's VM lacked. **The CPU budget in Part B §4 is CPU-dependent**: cloud VMs of the same "4 vCPU" size differed
+  by 2–5× per unit here, so a budget should be re-measured on the VM that will run it. The budget has not been
+  recomputed in this step; that was dropped from scope when Step 2 moved to a parallel session.
+- The quality numbers confirm that the Part B workarounds carry over to real weights: float32 quantization, bf16
+  TorchLinear eval and `BACKEND.TORCH` all run without error, and W4 g128 on SmolLM2-135M works despite K=576.
+
+# Part B – Synthetic-data feasibility study (2026-10-02, Hugging Face blocked)
+
+> Everything below is the original study. Its perplexities and accuracies come from **random-weight stand-ins on
+> synthetic tokens** and must not be read as quality numbers. Its timings come from a different VM (see A.4).
+
+Date: 2026-10-02 (13:54–21:05 UTC). VM (Part B): Intel Xeon @ 2.80 GHz, 4 vCPU (1 thread/core, AVX-512 + VNNI,
 **no AVX512-BF16 / AMX**), 15.7 GiB RAM, ~30 GB writable disk, no GPU. Python 3.11.15.
 All raw logs are in `feasibility/logs/`, machine-readable results in `feasibility/results/`, notes in `NOTES.md`.
 
@@ -12,13 +112,13 @@ All raw logs are in `feasibility/logs/`, machine-readable results in `feasibilit
 >    Wall-time and memory numbers are representative (compute depends on shapes, not weight values);
 >    perplexities and accuracies are **meaningless as quality numbers** (≈ vocab size / chance) and are only used to
 >    check determinism, plumbing, and whether a factor changes the output at all.
-> 2. Git push was refused (HTTP 403) during the study; it was pushed after the repo was connected (see §7).
+> 2. Git push was refused (HTTP 403) during the study; it was pushed after the repo was connected (see §B.7).
 >
 > Hosts to add to the allowlist: `huggingface.co`, `cdn-lfs.huggingface.co`, `cas-bridge.xethub.hf.co` (HF Xet
 > storage), `download.pytorch.org` (CPU-only torch wheel), `arxiv.org` (PDFs for Test 5). Optional:
 > `codeload.github.com` (tarballs; `git clone` already works), `openrouter.ai` (MetaScreener's only LLM provider).
 
-## 1. Summary
+## B.1 Summary (synthetic stand-ins)
 
 | Test | Status | Key numbers (4 vCPU, synthetic stand-ins) | Blockers / caveats |
 |---|---|---|---|
@@ -38,7 +138,7 @@ All raw logs are in `feasibility/logs/`, machine-readable results in `feasibilit
 | 4 Wanda | PASS-with-patch (old transformers) | 3-line patch; **only works with transformers ≤ 4.47.1** (4.48.3/4.57.6: `position_embeddings` None; 5.18: no `hf_device_map`); 32 samples: 92 s, 1.7 GB | needs its own venv; HF data loaders replaced in a driver |
 | 5 MetaScreener | PARTIAL (b SKIPPED) | installs (1m20s), server starts on CPU; OpenRouter-only; Claude via OpenAI-compat endpoint = 5-line patch (untested); form = Excel template, evidence = "exact quote" checked fuzzily (>0.80 token overlap) | no `SLMREP_ANTHROPIC_API_KEY` in env; `arxiv.org` blocked |
 
-## 2. Versions, commits, patches
+## B.2 Versions, commits, patches
 
 | Component | Version / commit | Where | How |
 |---|---|---|---|
@@ -68,7 +168,7 @@ explicit `backend=` arguments to GPTQModel, `hydra.job.env_set.OMP_NUM_THREADS=3
 fixed `tokenizer_config.json` in the synthetic 135M copy used under transformers 4.x (our synthetic tokenizer was
 saved by transformers 5 with class `TokenizersBackend`, unknown to 4.x; real SmolLM2 ships a GPT2 tokenizer).
 
-## 3. Measured times and peak memory
+## B.3 Measured times and peak memory
 
 Wall clock from `/usr/bin/time -v` (process tree) or in-script `time.time()`; peak RSS = max resident set size.
 `torch.set_num_threads(4)` unless noted.
@@ -128,7 +228,7 @@ Reload of a quantized checkpoint: 3–6 s.
 | 4.48.3 | same TypeError | – | – |
 | **4.47.1** | **works**, sparsity 0.5000 exact, ppl computed | **1:38** (92 s in driver) | 1.8 GB |
 
-## 4. Extrapolated CPU budget for the full design
+## B.4 Extrapolated CPU budget for the full design
 
 Generated by `feasibility/budget.py` from the measured unit costs (single job on the 4-vCPU VM; 360M lm-eval time
 is extrapolated with the measured 360M/135M forward-cost ratio from the ppl evals). Arc+hellaswag time scales
@@ -164,15 +264,15 @@ must be organised as a restartable job queue that writes each cell's JSON as soo
 several parallel sessions/VMs.
 
 **What I would cut / change, in order of payoff:**
-1. **AWQ is the cost driver** (≈ 13× fp32 GPTQ, 7× bf16 GPTQ on this CPU, and only works with g64 on SmolLM2 — see §6). Keep AWQ at 3 seeds
+1. **AWQ is the cost driver** (≈ 13× fp32 GPTQ, 7× bf16 GPTQ on this CPU, and only works with g64 on SmolLM2 — see §B.6). Keep AWQ at 3 seeds
    (or drop it from the CPU arm) and keep GPTQ W4 as the 10-seed workhorse.
 2. Quantize GPTQ in **float32**, not GPTQModel's auto-selected bf16: 1.9× faster on this CPU (no AVX512-BF16).
 3. **200 items per task** in the EXP1/EXP2 seed sweeps (lm-eval is ~60 % of a GPTQ cell); 500 only for anchor cells.
 4. GPTQ W3 at 3 seeds; EXP2 at 3 seeds per source, GPTQ W4 only.
 5. EXP3: run the 0-shot factorial on 135M plus 2 few-shot variants; on 360M only the factors that move 135M.
-6. EXP4 is cheap (≈ 2–3 h) — keep it whole, but fix the launcher/thread protocol first (§6.6).
+6. EXP4 is cheap (≈ 2–3 h) — keep it whole, but fix the launcher/thread protocol first (§B.6.6).
 
-## 5. Recommended setup script
+## B.5 Recommended setup script
 
 `feasibility/setup.sh` (bash, idempotent, always `exit 0`, prints WARN lines on failure). It creates `venv`
 (torch + gptqmodel 7.5.0 + lm-eval 0.4.13), `venv-ob` (transformers 4.57.6 + optimum-benchmark 0.6.0),
@@ -181,9 +281,9 @@ regenerates the synthetic stand-ins. **Timing caveat:** with torch from PyPI the
 cold cache (torch 3:55 + gptqmodel 1:36); the two-venv script will exceed the 5-minute target unless
 `download.pytorch.org` is allowlisted (CPU wheel ≈ 0.2 GB) or the session snapshot keeps the pip cache. Wanda's
 transformers-4.47.1 venv is *not* in the script (create it on demand: `pip install torch==2.14.1 transformers==4.47.1
-accelerate datasets`, ~2 min from cache). Verified here only on the already-provisioned VM (warm path: exit 0 in 41 s, both import checks OK, wanda patch applied); a cold run could not be tested because the 30 GB allowance was nearly used up (see §6.11).
+accelerate datasets`, ~2 min from cache). Verified here only on the already-provisioned VM (warm path: exit 0 in 41 s, both import checks OK, wanda patch applied); a cold run could not be tested because the 30 GB allowance was nearly used up (see §B.6.11).
 
-## 6. Surprises and contradictions to the design assumptions
+## B.6 Surprises and contradictions to the design assumptions
 
 1. **No Hugging Face access** — the design assumes HF Hub models/datasets; nothing quality-related can be measured
    until the hosts are allowlisted.
@@ -228,7 +328,7 @@ accelerate datasets`, ~2 min from cache). Verified here only on the already-prov
     1 GB of `experiments/`); `pip cache purge` recovered 3.2 GB. Plan for one torch install shared across venvs, or a
     CPU-only wheel.
 
-## 7. State of the branch
+## B.7 State of the branch
 
 The task asked for branch `feasibility`; the session's designated branch is `claude/feasibility-study-tut4ve`.
 During the study `git push` returned 403 (Claude GitHub App had no access). After the repository was connected
@@ -236,7 +336,7 @@ During the study `git push` returned 403 (Claude GitHub App had no access). Afte
 Large artifacts (synthetic model weights, quantized checkpoints, `third_party/` clones) are git-ignored and are
 regenerated by `feasibility/setup.sh` / `make_synth_models.py`.
 
-## Appendix: Test 5 answers (MetaScreener @532ee3c)
+## B.Appendix: Test 5 answers (MetaScreener @532ee3c)
 
 - **Providers / models / hosts:** all screening & extraction LLM calls go through `OpenRouterAdapter`
   (`httpx`, `POST https://openrouter.ai/api/v1/chat/completions`, key `OPENROUTER_API_KEY`). Models
