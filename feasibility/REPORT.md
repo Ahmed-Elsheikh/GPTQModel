@@ -3,7 +3,8 @@
 This report has two parts:
 
 - **Part A – Real-data results (2026-10-03).** Hugging Face is reachable now. Step 1 of the real-data rerun was run
-  on the real SmolLM2-135M weights and real WikiText-2: calibration-seed sensitivity of GPTQ. Step 2 (Qwen2.5-0.5B,
+  on the real SmolLM2-135M weights and real WikiText-2: calibration-seed sensitivity of GPTQ (A.1–A.4), plus
+  extra check A on calibration window length (A.5). Step 2 (Qwen2.5-0.5B,
   AWQ, C4, real lm-eval tasks, optimum-benchmark launchers) runs in a separate parallel session and is not covered here.
 - **Part B – Synthetic-data feasibility study (2026-10-02).** This is the original study, kept unchanged. Hugging Face
   was blocked, so its perplexities and accuracies come from random-weight stand-ins and are **not quality numbers**.
@@ -94,6 +95,64 @@ loading and tokenization (14–16 s; 19 s for the dense run) and model load, sav
   recomputed in this step; that was dropped from scope when Step 2 moved to a parallel session.
 - The quality numbers confirm that the Part B workarounds carry over to real weights: float32 quantization, bf16
   TorchLinear eval and `BACKEND.TORCH` all run without error, and W4 g128 on SmolLM2-135M works despite K=576.
+
+## A.5 Extra check A – calibration window length (512 vs 2048 tokens), GPTQ W3 g128
+
+Step 1's W3 runs were repeated with **only the calibration window length changed**: 128 windows of **2048** tokens
+instead of 512 (262,144 vs 65,536 calibration tokens). Everything else is identical: `calib.py` source `wikitext2`,
+seeds 0–4, float32 quantization, bf16 TorchLinear eval, and the same 40×2048 test windows (eval fingerprint
+`7da3b34bdebd1923` in all 10 runs). GPTQModel kept all 128 windows at full length (`prepare_dataset` check passed;
+log line "Total tokens: 262144, padded 0"). Runner `chain_real1b.sh`; results `results/real_step1b.jsonl`
+(each line now carries the `lscpu` model name and flags); summary `results/real_step1b_summary.json`
+(`summarize_real1b.py`). All 5 runs finished with exit code 0.
+
+Note on pairing: the same seed draws its window starts from the same RNG, but `randint`'s upper bound depends on L.
+The 2048-token windows are therefore **not** extensions of the 512-token windows for the same seed (fingerprints
+differ), and the two arms are independent samples, not paired ones.
+
+Hardware: both arms ran on `Intel(R) Xeon(R) Processor @ 2.10GHz` (4 vCPU, AVX512-BF16 + AMX-BF16). The 2048 arm ran
+in a restarted VM of the same model; the CPU is recorded per line in its JSONL. The 512 arm's lines predate per-line
+CPU recording, and its CPU was checked with `lscpu` during Step 1 (A.4).
+
+### Per-run results
+
+| L | Seed | Perplexity | Quantize (s) | Eval (s) | Total wall (s) | Peak RSS (GB) |
+|---|---|---|---|---|---|---|
+| 512 | 0 | 37.4668 | 309.7 | 68.3 | 407.2 | 2.87 |
+| 512 | 1 | 38.9052 | 304.8 | 59.5 | 391.9 | 2.86 |
+| 512 | 2 | 37.7650 | 310.3 | 51.7 | 389.4 | 2.86 |
+| 512 | 3 | 37.1693 | 291.2 | 49.8 | 367.2 | 2.85 |
+| 512 | 4 | 38.4970 | 291.4 | 59.9 | 379.1 | 2.89 |
+| 2048 | 0 | 41.2791 | 1025.7 | 67.3 | 1140.5 | 4.33 |
+| 2048 | 1 | 43.0958 | 1066.6 | 68.2 | 1165.3 | 4.36 |
+| 2048 | 2 | 43.9501 | 1066.9 | 74.1 | 1172.8 | 4.28 |
+| 2048 | 3 | 44.1673 | 1039.6 | 66.2 | 1135.9 | 4.18 |
+| 2048 | 4 | 43.0541 | 1033.7 | 70.8 | 1134.0 | 4.25 |
+
+### Summary (n = 5 per arm)
+
+| L | Mean | SD | 95 % CI for SD (χ², df 4) | CV | Min | Max | Range |
+|---|---|---|---|---|---|---|---|
+| 512 | 37.961 | 0.723 | [0.433, 2.076] | 1.90 % | 37.169 | 38.905 | 1.736 |
+| 2048 | **43.109** | 1.138 | [0.682, 3.270] | 2.64 % | 41.279 | 44.167 | 2.888 |
+
+Cost (means): quantize time ×3.5 (302 → 1046 s), total wall per run ×3.0 (387 → 1150 s ≈ 19 min), peak RSS
++1.4 GB (2.87 → 4.28 GB). Eval time stays similar (58 vs 69 s; the eval set is the same, so this is run-to-run noise).
+
+**Verdict.**
+- **The seed spread does not shrink with 4× more calibration tokens.** The SD rose from 0.72 to 1.14 (ratio 1.57)
+  and the CV from 1.9 % to 2.6 %. The difference is not significant (F = 2.48, two-sided p = 0.40), and the two 95 %
+  CIs overlap almost entirely. With n = 5, the data are consistent with "no change" and rule out a large reduction:
+  the 2048 arm's SD interval lower bound (0.68) is close to the 512 arm's point estimate.
+- **Unexpected, and larger than the seed effect: 2048-token windows make W3 worse.** Mean perplexity is +5.15
+  (37.96 → 43.11; Welch t-test p = 7×10⁻⁵), and every 2048-token run is worse than every 512-token run. This
+  difference is about 7× the 512-arm seed SD and about 1.6× the whole dense-to-W4 degradation (3.26). The cause
+  was not investigated. Plausible candidates, all untested: (i) the eval windows are 2048 tokens, but
+  calibration at 2048 shifts the Hessian toward long-range positions; (ii) longer windows cross more
+  `"\n\n"`-joined article boundaries; (iii) GPTQ's damping (`damp_percent`) interacts with a Hessian built
+  from 4× more tokens. **Calibration window length is therefore a first-order protocol variable for W3**, larger
+  than the calibration seed, and should be reported (and, if possible, varied) in EXP1/EXP2.
+- Budget note: at L = 2048 a W3 135M run costs ≈ 19 min instead of ≈ 6.5 min on this VM.
 
 # Part B – Synthetic-data feasibility study (2026-10-02, Hugging Face blocked)
 

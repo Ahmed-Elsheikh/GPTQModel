@@ -71,16 +71,16 @@
     "failed": []
   },
   "2048": {
-    "n": 2,
-    "mean": 42.1874342126751,
-    "sd": 1.2845858571147193,
-    "cv_pct": 3.0449490022049477,
+    "n": 5,
+    "mean": 43.1092839152632,
+    "sd": 1.137904175473265,
+    "cv_pct": 2.639580322674719,
     "min": 41.279094842092945,
-    "max": 43.09577358325725,
-    "range": 1.8166787411643028,
+    "max": 44.16734639941086,
+    "range": 2.888251557317915,
     "sd_ci95": [
-      0.5731169331124022,
-      40.99133939882967
+      0.6817561006851436,
+      3.269830954472331
     ],
     "runs": [
       {
@@ -104,13 +104,46 @@
         "calib_fp": "0edfe174d4876132",
         "eval_fp": "7da3b34bdebd1923",
         "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+      },
+      {
+        "seed": 2,
+        "ppl": 43.950109167809096,
+        "quantize_s": 1066.89,
+        "eval_s": 74.11,
+        "wall_s": 1172.8,
+        "peak_rss_gb": 4.277,
+        "calib_fp": "201f12d590e05a38",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+      },
+      {
+        "seed": 3,
+        "ppl": 44.16734639941086,
+        "quantize_s": 1039.6,
+        "eval_s": 66.15,
+        "wall_s": 1135.9,
+        "peak_rss_gb": 4.18,
+        "calib_fp": "a5d4c759da11173a",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+      },
+      {
+        "seed": 4,
+        "ppl": 43.05409558374583,
+        "quantize_s": 1033.7,
+        "eval_s": 70.75,
+        "wall_s": 1134.0,
+        "peak_rss_gb": 4.247,
+        "calib_fp": "4051a8dfd01518ca",
+        "eval_fp": "7da3b34bdebd1923",
+        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz"
       }
     ],
     "failed": []
   },
-  "sd_ratio_2048_over_512": 1.7779015661230675,
-  "f_test_p_two_sided": 0.30010163229406844,
-  "f_stat": 3.160933978822856,
-  "welch_t_mean_diff": 4.2267805016292215,
-  "welch_t_p": 0.10278137478495364
+  "sd_ratio_2048_over_512": 1.574890151924836,
+  "f_test_p_two_sided": 0.40047308054738784,
+  "f_stat": 2.4802789906298326,
+  "welch_t_mean_diff": 5.148630204217319,
+  "welch_t_p": 7.220076067057002e-05
 }
