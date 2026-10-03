@@ -31,9 +31,47 @@
       "wall_s": 0.79,
       "rss_gb": 1.36,
       "peak_rss_gb": 2.072
+    },
+    "quantize": {
+      "wall_s": 310.97,
+      "rss_gb": 1.691,
+      "peak_rss_gb": 2.072
+    },
+    "save": {
+      "wall_s": 0.75,
+      "rss_gb": 1.797,
+      "peak_rss_gb": 2.072
+    },
+    "load_quantized": {
+      "wall_s": 3.36,
+      "rss_gb": 1.883,
+      "peak_rss_gb": 2.185
+    },
+    "eval_quant": {
+      "wall_s": 66.24,
+      "rss_gb": 1.956,
+      "peak_rss_gb": 2.894
     }
   },
   "calib_fingerprint": "eaa59f1166ef0558",
   "eval_fingerprint": "7da3b34bdebd1923",
-  "quant_config": "GPTQConfig(bits=4, dynamic=None, group_size=128, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.GPTQ: 'gptq'>, format=<FORMAT.GPTQ: 'gptq'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_mwt6j0hx', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, damp_percent=0.05, damp_auto_increment=0.01, act_group_aware=True, static_groups=False, mse=0.0, gptaq=None, foem=None, mock_quantization=False, hessian=HessianConfig(chunk_size=None, chunk_bytes=None, staging_dtype=torch.float32, dedup_shared_inputs=True))"
+  "quant_config": "GPTQConfig(bits=4, dynamic=None, group_size=128, desc_act=False, sym=True, true_sequential=True, lm_head=False, method=<METHOD.GPTQ: 'gptq'>, format=<FORMAT.GPTQ: 'gptq'>, meta={}, device='cpu', telemetry=TelemetryConfig(device=False), pack_dtype=torch.int32, pack_impl='cpu', adapter=None, offload_to_disk=True, offload_to_disk_path='/tmp/gptqmodel_mwt6j0hx', rotation=None, fallback=Fallback(strategy=<FallbackStrategy.RTN: 'rtn'>, threshold='0.5%', smooth=None), compute_device_filter=None, calibration_data_device=None, auto_forward_data_parallel=True, dense_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, dense_vram_strategy_devices=None, moe_vram_strategy=<VramStrategy.EXCLUSIVE: 'exclusive'>, moe_vram_strategy_devices=None, gc_mode=<GcMode.INTERVAL: 'interval'>, wait_for_submodule_finalizers=False, moe=None, preprocessors=[], smoother=None, damp_percent=0.05, damp_auto_increment=0.01, act_group_aware=True, static_groups=False, mse=0.0, gptaq=None, foem=None, mock_quantization=False, hessian=HessianConfig(chunk_size=None, chunk_bytes=None, staging_dtype=torch.float32, dedup_shared_inputs=True))",
+  "calib_check": {
+    "passed": 128,
+    "after_prepare": 128,
+    "same_multiset": true,
+    "lengths": [
+      512
+    ]
+  },
+  "reload_dtype": "bfloat16",
+  "quant_backend": "None",
+  "quant_qlinear_classes": [
+    "Linear",
+    "TorchLinear"
+  ],
+  "quant_dtype": "torch.bfloat16",
+  "ppl_quant": 17.76449068089498,
+  "total_wall_s": 401.39,
+  "peak_rss_gb": 2.894
 }
