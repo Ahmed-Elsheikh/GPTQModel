@@ -47,7 +47,7 @@ All 11 runs finished with exit code 0. No failures.
 | GPTQ W3 g128 | 4 | 67f586b314a842ea | 38.4970 | 291.4 | 59.9 | 379.1 | 2.89 |
 
 The same seed gives the same calibration windows at W4 and W3 (matching fingerprints). Total wall time includes data
-loading and tokenization (~14–23 s), model load, save and reload (~8 s).
+loading and tokenization (14–16 s; 19 s for the dense run) and model load, save and reload (4–8 s).
 
 ## A.3 Seed sensitivity vs. in-study yardsticks
 
@@ -89,7 +89,7 @@ loading and tokenization (~14–23 s), model load, save and reload (~8 s).
 - Seed 0 W4 was the slowest run (348 s quantize, 99 s eval). It was the first quantization in the session, which
   includes GPTQModel's JIT compile of `pack_block_cpu` and cold caches. Excluding it, quantize was 291–317 s.
 - The 5× faster bf16 eval and 1.7× faster quantize are consistent with this VM's AMX/AVX512-BF16 support, which
-  Part B's VM lacked. **The CPU budget in Part B §4 is CPU-dependent**: cloud VMs of the same "4 vCPU" size differed
+  Part B's VM lacked. **The CPU budget in Part B §B.4 is CPU-dependent**: cloud VMs of the same "4 vCPU" size differed
   by 2–5× per unit here, so a budget should be re-measured on the VM that will run it. The budget has not been
   recomputed in this step; that was dropped from scope when Step 2 moved to a parallel session.
 - The quality numbers confirm that the Part B workarounds carry over to real weights: float32 quantization, bf16
