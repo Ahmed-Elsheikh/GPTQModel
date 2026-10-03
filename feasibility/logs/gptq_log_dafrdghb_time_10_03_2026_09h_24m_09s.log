@@ -1,0 +1,39 @@
+{
+    "process": "gptq",
+    "layer": 0,
+    "module": "self_attn.k_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "f32: 0.4MB",
+    "loss": "0.0000034357",
+    "samples": "262144",
+    "damp": "0.05000",
+    "time": "0.356",
+    "fwd_time": "1.267",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 0,
+    "module": "self_attn.q_proj",
+    "feat: in, out": "576, 576",
+    "dtype: size": "f32: 1.3MB",
+    "loss": "0.0000055049",
+    "samples": "262144",
+    "damp": "0.05000",
+    "time": "0.397",
+    "fwd_time": "1.267",
+    "(v)ram": "n/a"
+}
+{
+    "process": "gptq",
+    "layer": 0,
+    "module": "self_attn.v_proj",
+    "feat: in, out": "576, 192",
+    "dtype: size": "f32: 0.4MB",
+    "loss": "0.0000000380",
+    "samples": "262144",
+    "damp": "0.05000",
+    "time": "0.113",
+    "fwd_time": "1.267",
+    "(v)ram": "n/a"
+}
