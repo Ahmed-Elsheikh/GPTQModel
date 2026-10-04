@@ -77,6 +77,9 @@ loading and tokenization (14–16 s; 19 s for the dense run) and model load, sav
 - Implication for EXP1/EXP2: keep 10 seeds for W3 (and for any setting near the "cliff"). At W4, 3–5 seeds are
   enough to bound the effect. Five seeds are too few to estimate the SD precisely: the W3 interval spans 0.43–2.08.
 
+<!-- det-caveat -->
+**Determinism caveat (added later; see REPORT_step2.md §8 and REPORT_final_S2.md "Determinism (confirmed)").** The runs in this section used GPTQModel's default CPU path (SDPA attention, 4 threads), which is not run-to-run deterministic: the identical SmolLM2 W4 seed-0 command gave 17.744843 and 17.811016 in repeats, a gap of 0.066 ppl. The seed SDs above therefore include run-to-run noise (≥ 0.066 between repeats at W4, larger than the W4 five-seed range of 0.054), so the W4 seed SD cannot be read as pure calibration-seed sensitivity; it is an upper bound on both together. Run-to-run noise at W3 was not measured on the default path; the W3 seed SD (0.72) is about 11× the W4 repeat gap. The conclusion that the seed effect is negligible at W4 and small at W3 relative to the dense-to-W4 and W4-to-W3 gaps stands, because those gaps (3.26 and 20.2 ppl) are far larger than the noise.
+
 ## A.4 Timing and memory on real data (this VM)
 
 | Unit | Real-data measurement | Part B (synthetic, other CPU) |
@@ -153,6 +156,9 @@ Cost (means): quantize time ×3.5 (302 → 1046 s), total wall per run ×3.0 (38
   from 4× more tokens (diagnosed in A.6: (iii) ruled out, (i) supported). **Calibration window length is therefore a first-order protocol variable for W3**, larger
   than the calibration seed, and should be reported (and, if possible, varied) in EXP1/EXP2.
 - Budget note: at L = 2048 a W3 135M run costs ≈ 19 min instead of ≈ 6.5 min on this VM.
+
+<!-- det-caveat -->
+**Determinism caveat (added later; see REPORT_step2.md §8 and REPORT_final_S2.md "Determinism (confirmed)").** The runs in this section used GPTQModel's default CPU path (SDPA attention, 4 threads), which is not run-to-run deterministic: the identical SmolLM2 W4 seed-0 command gave 17.744843 and 17.811016 in repeats, a gap of 0.066 ppl. Both arms' seed SDs include this run-to-run noise. The window-length effect itself (+5.15 ppl at W3, every 2048-token run above every 512-token run) is about 78× the 0.066 repeat gap and stands.
 
 ## A.6 Diagnosis of the window-length effect (A.5)
 
@@ -281,6 +287,9 @@ A weak replication (n = 1).
 - Seeds: Qwen n = 1 per arm, Wanda and W4 2048 n = 2; no 360M model; no 512×512 run at W4 or for Wanda.
 - Other GPTQ implementations (AutoGPTQ, the reference code) and other methods with Hessian compensation (e.g.
   SparseGPT); AWQ (scale search) was not tested for this effect.
+
+<!-- det-caveat -->
+**Determinism caveat (added later; see REPORT_step2.md §8 and REPORT_final_S2.md "Determinism (confirmed)").** The runs in this section used GPTQModel's default CPU path (SDPA attention, 4 threads), which is not run-to-run deterministic: the identical SmolLM2 W4 seed-0 command gave 17.744843 and 17.811016 in repeats, a gap of 0.066 ppl. The SDs and the per-run values in this section include that noise. The diagnostic effects are far larger than it: W3 128×2048 vs 128×512 +5.15, 512×512 vs 128×2048 −5.17, W4 2048 vs 512 +1.15 ppl. They stand, and so does the conclusion that the effect follows window length, not token count. Wanda runs a separate code path, and its results were bit-identical across containers. The single-seed Qwen2.5-0.5B contrast (+0.47) is within the scale where this noise and seed variance matter; it is superseded by the 5 + 3-seed study with the confirmed deterministic configuration in REPORT_final_S2.md.
 
 # Part B – Synthetic-data feasibility study (2026-10-02, Hugging Face blocked)
 
