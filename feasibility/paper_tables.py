@@ -251,7 +251,12 @@ if len(s4) == 12:
     w("")
     sha = s4["w4_ctx2048_bos0"].get("ckpt_sha256", "")[:16]
     w(f"W4 checkpoint sha256 `{sha}`; at the reference protocol (context 2048, no BOS) the W4 value is {s4['w4_ctx2048_bos0']['wt_ppl']!r} "
-      f"(eager anchor modal value 17.66059890313337) and dense is {s4['dense_ctx2048_bos0']['wt_ppl']!r}.\n")
+      f"(eager anchor modal value 17.66059890313337) and dense is {s4['dense_ctx2048_bos0']['wt_ppl']!r}.")
+    w(f"**Evaluation is not bit-reproducible either:** this checkpoint has the same full SHA-256 as the 9 modal eager anchor runs and is scored")
+    w(f"on the same 40 × 2048 windows (81,880 targets), yet gives {s4['w4_ctx2048_bos0']['wt_ppl']:.5f} instead of 17.66060 "
+      f"(Δ {s4['w4_ctx2048_bos0']['wt_ppl'] - 17.66059890313337:+.4f}). The only differences are the process state and evaluation order (here the 512/1024")
+    w("contexts were evaluated first in the same process; the W4 ctx2048-BOS cell ran after a container restart). Not investigated further;")
+    w("the effect is 0.02 % and ~1/1000 of the context effect.\n")
     w("| factor effect (S4) | dense Δ | W4 Δ | W4 Δ / pooled SD | degradation (W4 − dense) changes by |")
     w("|---|---|---|---|---|")
     def eff(a, b, lab):
@@ -313,6 +318,12 @@ if s4o:
     w("")
     for k, v in S4R.items():
         if v: w(f"- {k}: {min(v):.2f}–{max(v):.2f}× over {len(v)} conditions.")
+    w("- The process launcher only inflates latency at 4 threads (= all 4 vCPUs, so its busy-waiting parent competes with")
+    w("  the benchmark threads); at 2 threads process ≈ inline. The thread-count effect therefore **reverses sign with the launcher**:")
+    w("  2 threads are 1.5–1.6× slower than 4 under inline but 3.6–4.5× faster under process.")
+    w("- The model-size ratio (2.0–2.6×) is the most stable quantity, but still varies by 27 % across launcher × threads.")
+    w("- Run in one container after a restart (the perplexity cells started before it). Inline runs exit non-zero after writing")
+    w("  their report (known optimum-benchmark 0.6.0 bug), so those reports are used.")
     w("")
 else:
     S4R = {}
@@ -406,7 +417,8 @@ fig, ax = plt.subplots(figsize=(7.2, 0.36 * len(F) + 0.9))
 labs = [l for l, *_ in F]; vals = [v for _, v, *_ in F]
 ax.barh(range(len(F)), vals, height=0.6, color=BLUE, edgecolor=SURF, linewidth=2)
 for i, v in enumerate(vals):
-    ax.text(v * 1.12, i, f"{v:.3g}", va="center", fontsize=7.5, color=INK2)
+    ax.text(v * 1.12, i, f"{v:.3g}", va="center", fontsize=7.5, color=INK2, zorder=4,
+            bbox=dict(boxstyle="square,pad=0.15", fc=SURF, ec="none"))
 ax.axvline(W4P, color=ORANGE, lw=1.5, ls="--")
 ax.text(W4P * 1.08, -0.75, "reference: pooled W4 seed SD", color=INK2, fontsize=7.5, va="bottom")
 ax.set_xscale("log"); ax.set_yticks(range(len(F))); ax.set_yticklabels(labs, fontsize=7.5, color=INK)

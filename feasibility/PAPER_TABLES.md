@@ -12,8 +12,9 @@ pooled SD = sqrt( Σ (nᵢ − 1)·sᵢ² / Σ (nᵢ − 1) ), the square root o
 variances sᵢ² of the arms involved. For two-arm comparisons (sections 2, 3) the arms are the two compared settings; for
 single-run factor effects (section 5) the arms are all three SmolLM2-135M GPTQ W4 WT-ppl seed sets of section 1.
 
-**Scope notes.** S4 (evaluation- and latency-protocol factor study) was not run; sections 5–6 use the real-weight
-evidence from Step 2 and the earlier studies and mark what is missing. REPORT.md has no section A.7: the Wanda
+**Scope notes.** S4 (evaluation- and latency-protocol factors) was run in trimmed form (context × BOS perplexity;
+launcher × threads × model latency); sections 5–6 combine it with the earlier real-weight evidence and mark what is
+still missing. REPORT.md has no section A.7: the Wanda
 sparsity sweep it referred to was moved to session S2 and its data is `results/final_S2_wanda.jsonl` (cited below).
 
 ## 1. Calibration-seed sensitivity (WT-ppl)
@@ -120,7 +121,7 @@ Figure: `figures/fig2_domain_heatmap.{png,pdf}`.
 - Seed-0 repeats that were bit-identical (same checkpoint SHA-256): S1 W3/W4 at 128 × 2048 (`results/final_S1_runs.jsonl`@`512ee7e`); S3 all four seed-0 cells (`results/final_S3_runs.jsonl`@`aee81f0`); Wanda 2:4, 60 %, 70 % (`results/final_S2_wanda.jsonl`@`a303812`).
 - Tokenizer version (tokenizers 0.21.4 vs 0.23.2, Wanda 50 % s0): 31.3864 vs 31.5001 (Δ -0.114); dense 14.487248 vs 14.487794 (`results/real_step2_wanda.jsonl`@`2c2731d`).
 
-## 5. Evaluation- and quantization-protocol factors (effect on WT-ppl; S4 not run)
+## 5. Evaluation- and quantization-protocol factors (effect on WT-ppl; includes trimmed S4)
 
 Pooled W4 seed SD (all three W4 WT-ppl seed sets, df-weighted) = **0.0961**.
 
@@ -139,13 +140,86 @@ Pooled W4 seed SD (all three W4 WT-ppl seed sets, df-weighted) = **0.0961**.
 | calibration source WT → C4 (W4, eager, means) | 1.6453 | 17.12 | in-domain advantage | `results/final_S3_runs.jsonl`@`aee81f0` |
 | quantization dense → W4 (SDPA, 512, mean) | 3.2552 | 33.87 | the effect being reported | `results/real_step1.jsonl`@`ee874fb` |
 
-S4 perplexity-protocol results not available (0/12 cells in `results/final_S4_ppl.jsonl`).
+**S4 (trimmed): perplexity protocol – context length × prepend-BOS** (`results/final_S4_ppl.jsonl`@`b438bad`). SmolLM2-135M, eager attention, 4 threads;
+dense fp32 and GPTQ W4 g128 seed 0 (128 × 512 WikiText calibration, bf16 `BACKEND.TORCH`). Every cell scores the same
+81,920 WikiText-2 test tokens (the 40 × 2048 Step 1 windows) cut into 512/1024/2048-token windows; without BOS the first token
+of each window is not predicted, with BOS (`<|endoftext|>`, id 0) prepended every token is.
+
+| model | context | BOS | windows | targets | WT-ppl | W4 − dense |
+|---|---|---|---|---|---|---|
+| dense fp32 | 512 | no | 160 | 81760 | 19.5240 | |
+| GPTQ W4 s0 | 512 | no | 160 | 81760 | 24.3172 | +4.7933 |
+| dense fp32 | 512 | yes | 160 | 81920 | 20.0989 | |
+| GPTQ W4 s0 | 512 | yes | 160 | 81920 | 25.0502 | +4.9514 |
+| dense fp32 | 1024 | no | 80 | 81840 | 16.4592 | |
+| GPTQ W4 s0 | 1024 | no | 80 | 81840 | 20.2199 | +3.7607 |
+| dense fp32 | 1024 | yes | 80 | 81920 | 16.7031 | |
+| GPTQ W4 s0 | 1024 | yes | 80 | 81920 | 20.5578 | +3.8546 |
+| dense fp32 | 2048 | no | 40 | 81880 | 14.4878 | |
+| GPTQ W4 s0 | 2048 | no | 40 | 81880 | 17.6644 | +3.1766 |
+| dense fp32 | 2048 | yes | 40 | 81920 | 14.6019 | |
+| GPTQ W4 s0 | 2048 | yes | 40 | 81920 | 17.8358 | +3.2339 |
+
+W4 checkpoint sha256 `9b3c5e64c541388e`; at the reference protocol (context 2048, no BOS) the W4 value is 17.66436174649991 (eager anchor modal value 17.66059890313337) and dense is 14.487794658067827.
+**Evaluation is not bit-reproducible either:** this checkpoint has the same full SHA-256 as the 9 modal eager anchor runs and is scored
+on the same 40 × 2048 windows (81,880 targets), yet gives 17.66436 instead of 17.66060 (Δ +0.0038). The only differences are the process state and evaluation order (here the 512/1024
+contexts were evaluated first in the same process; the W4 ctx2048-BOS cell ran after a container restart). Not investigated further;
+the effect is 0.02 % and ~1/1000 of the context effect.
+
+| factor effect (S4) | dense Δ | W4 Δ | W4 Δ / pooled SD | degradation (W4 − dense) changes by |
+|---|---|---|---|---|
+| context 2048 → 512 (no BOS) | +5.0362 | +6.6529 | +69.2 | +1.6167 |
+| context 2048 → 1024 (no BOS) | +1.9714 | +2.5556 | +26.6 | +0.5841 |
+| prepend BOS at 512 | +0.5749 | +0.7330 | +7.6 | +0.1581 |
+| prepend BOS at 2048 | +0.1141 | +0.1714 | +1.8 | +0.0573 |
+| 2048 no-BOS → 512 with BOS | +5.6111 | +7.3858 | +76.9 | +1.7748 |
+
+Across the 6 protocol cells the reported W4 degradation ranges 3.177–4.951 ppl (56 % relative spread) for one and the same checkpoint.
 
 Still missing: few-shot count, batch size, max_length and dtype effects on real lm-eval tasks.
 The only measurements of those are on synthetic stand-ins (REPORT.md B.1, Test 2c: per-sample log-lik changes ≤6e-5 nats
 for bs 1 vs 8, ≤1.49 nats for bf16 vs fp32) and are not quality numbers. Figure: `figures/fig3_factor_effects.{png,pdf}`.
 
 ## 6. Latency-protocol factors (optimum-benchmark 0.6.0)
+
+**S4 (trimmed): launcher × threads × model** (`results/final_S4_ob.jsonl`@`03ceb8f`). fp32, bs 1, seq 128, 32 new tokens, 5 iterations, warmup 10;
+threads set via `OMP_NUM_THREADS` and `backend.inter_op_num_threads` (which calls `torch.set_num_threads` in optimum-benchmark 0.6.0).
+
+| model | launcher | threads | prefill s | decode s | per-token s | decode tok/s | status |
+|---|---|---|---|---|---|---|---|
+| SmolLM2-135M | inline | 2 | 0.2117 | 1.3545 | 0.0479 | 22.9 | report written, exit≠0 (known inline bug) |
+| SmolLM2-135M | inline | 4 | 0.1377 | 0.9488 | 0.0329 | 32.7 | report written, exit≠0 (known inline bug) |
+| SmolLM2-135M | process | 2 | 0.1808 | 1.2829 | 0.0440 | 24.2 | ok |
+| SmolLM2-135M | process | 4 | 0.7348 | 5.8137 | 0.2017 | 5.3 | ok |
+| Qwen2.5-0.5B | inline | 2 | 0.5098 | 3.1134 | 0.1093 | 10.0 | report written, exit≠0 (known inline bug) |
+| Qwen2.5-0.5B | inline | 4 | 0.3179 | 1.9612 | 0.0693 | 15.8 | report written, exit≠0 (known inline bug) |
+| Qwen2.5-0.5B | process | 2 | 0.5326 | 3.2025 | 0.1121 | 9.7 | ok |
+| Qwen2.5-0.5B | process | 4 | 1.4502 | 11.9497 | 0.4056 | 2.6 | ok |
+
+| factor effect (per-token latency ratio) | condition | ratio |
+|---|---|---|
+| launcher process / inline | SmolLM2-135M, 2 threads | 0.92 |
+| launcher process / inline | SmolLM2-135M, 4 threads | 6.14 |
+| launcher process / inline | Qwen2.5-0.5B, 2 threads | 1.02 |
+| launcher process / inline | Qwen2.5-0.5B, 4 threads | 5.85 |
+| threads 2 / 4 | SmolLM2-135M, inline | 1.46 |
+| threads 2 / 4 | SmolLM2-135M, process | 0.22 |
+| threads 2 / 4 | Qwen2.5-0.5B, inline | 1.58 |
+| threads 2 / 4 | Qwen2.5-0.5B, process | 0.28 |
+| model Qwen2.5-0.5B / SmolLM2-135M | inline, 2 threads | 2.28 |
+| model Qwen2.5-0.5B / SmolLM2-135M | inline, 4 threads | 2.11 |
+| model Qwen2.5-0.5B / SmolLM2-135M | process, 2 threads | 2.55 |
+| model Qwen2.5-0.5B / SmolLM2-135M | process, 4 threads | 2.01 |
+
+- launcher process/inline: 0.92–6.14× over 4 conditions.
+- threads 2/4: 0.22–1.58× over 4 conditions.
+- model Qwen-0.5B/SmolLM2-135M: 2.01–2.55× over 4 conditions.
+- The process launcher only inflates latency at 4 threads (= all 4 vCPUs, so its busy-waiting parent competes with
+  the benchmark threads); at 2 threads process ≈ inline. The thread-count effect therefore **reverses sign with the launcher**:
+  2 threads are 1.5–1.6× slower than 4 under inline but 3.6–4.5× faster under process.
+- The model-size ratio (2.0–2.6×) is the most stable quantity, but still varies by 27 % across launcher × threads.
+- Run in one container after a restart (the perplexity cells started before it). Inline runs exit non-zero after writing
+  their report (known optimum-benchmark 0.6.0 bug), so those reports are used.
 
 **Earlier real-weight evidence (Step 2 §6)**
 
