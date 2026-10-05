@@ -7,6 +7,11 @@ torch 2.14.1+cpu, GPTQModel 7.5.0. WT-ppl = first 40 non-overlapping 2048-token 
 `7da3b34bdebd1923`); C4-ppl = 256 × 2048 C4-validation windows, GPTQ convention (fingerprint `cbe443ebebeeceeb`).
 GPTQ: fp32 quantize, bf16 `BACKEND.TORCH` eval. "SDPA" = default attention path; "eager" = `attn_implementation="eager"`.
 
+**Definition used in every table.** *Δ / pooled SD* divides a difference by the pooled seed SD, where
+pooled SD = sqrt( Σ (nᵢ − 1)·sᵢ² / Σ (nᵢ − 1) ), the square root of the degrees-of-freedom-weighted mean of the seed
+variances sᵢ² of the arms involved. For two-arm comparisons (sections 2, 3) the arms are the two compared settings; for
+single-run factor effects (section 5) the arms are all three SmolLM2-135M GPTQ W4 WT-ppl seed sets of section 1.
+
 **Scope notes.** S4 (evaluation- and latency-protocol factor study) was not run; sections 5–6 use the real-weight
 evidence from Step 2 and the earlier studies and mark what is missing. REPORT.md has no section A.7: the Wanda
 sparsity sweep it referred to was moved to session S2 and its data is `results/final_S2_wanda.jsonl` (cited below).
@@ -44,13 +49,38 @@ Figure: `figures/fig1_seed_strips.{png,pdf}`.
 | W3 seed vs seed (mean of 3 pairs) | 20.5 % | 7.5 % | `results/final_S1_lmeval_items.jsonl`@`c4a549e` |
 | dense vs W3 seed 0 | 32.7 % | 10.4 % | `results/final_S1_lmeval_items.jsonl`@`c4a549e` |
 
+**Downstream accuracy (S1, lm-eval 0.4.13, first 1000 items per task, 0-shot, bs 8)** – `results/final_S1_lmeval_items.jsonl`@`c4a549e`
+
+| model | arc_easy acc | hellaswag acc |
+|---|---|---|
+| dense fp32 | 0.628 | 0.366 |
+| GPTQ W4 g128 seed 0 | 0.573 | 0.357 |
+| GPTQ W4 g128 seed 1 | 0.574 | 0.353 |
+| GPTQ W4 g128 seed 2 | 0.585 | 0.356 |
+| GPTQ W3 g128 seed 0 | 0.403 | 0.322 |
+| GPTQ W3 g128 seed 1 | 0.405 | 0.317 |
+| GPTQ W3 g128 seed 2 | 0.418 | 0.319 |
+
+McNemar exact test (two-sided binomial on the discordant items; b = right→wrong, c = wrong→right going from the first to the second model):
+
+| comparison | task | b | c | Δ acc | McNemar p |
+|---|---|---|---|---|---|
+| dense vs W4 s0 | arc_easy | 99 | 44 | -0.055 | 4.9e-06 |
+| dense vs W4 s0 | hellaswag | 35 | 26 | -0.009 | 0.31 |
+| dense vs W3 s0 | arc_easy | 276 | 51 | -0.225 | 1.6e-38 |
+| dense vs W3 s0 | hellaswag | 74 | 30 | -0.044 | 1.9e-05 |
+| W4 s0 vs W4 s1 | arc_easy | 51 | 52 | +0.001 | 1 |
+| W4 s0 vs W4 s1 | hellaswag | 24 | 20 | -0.004 | 0.65 |
+| W3 s0 vs W3 s1 | arc_easy | 96 | 98 | +0.002 | 0.94 |
+| W3 s0 vs W3 s1 | hellaswag | 38 | 33 | -0.005 | 0.64 |
+
 ## 2. Calibration window length (128 × 512 vs 128 × 2048, WT-ppl)
 
 | model · method · path | 512: n, mean ± SD | 2048: n, mean ± SD | Δ (2048 − 512) | Δ / pooled SD | Welch p | sources |
 |---|---|---|---|---|---|---|
 | SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5) | 5, 37.961 ± 0.723 | 5, 43.109 ± 1.138 | +5.149 (+13.6 %) | 5.4 | 7.2e-05 | `results/real_step1.jsonl`@`ee874fb`, `results/real_step1b.jsonl`@`2280db3` |
-| SmolLM2-135M · GPTQ W3 · eager | 3, 38.581 ± 0.716 | 10, 42.851 ± 1.256 | +4.270 (+11.1 %) | 4.2 | 0.00025 | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
-| SmolLM2-135M · GPTQ W4 · eager | 3, 17.654 ± 0.105 | 5, 18.863 ± 0.131 | +1.208 (+6.8 %) | 10.2 | 2.2e-05 | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
+| SmolLM2-135M · GPTQ W3 · eager | 3, 38.581 ± 0.716 | 10, 42.851 ± 1.256 | +4.270 (+11.1 %) | 3.6 | 0.00025 | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
+| SmolLM2-135M · GPTQ W4 · eager | 3, 17.654 ± 0.105 | 5, 18.863 ± 0.131 | +1.208 (+6.8 %) | 9.8 | 2.2e-05 | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
 | Qwen2.5-0.5B · GPTQ W3 · eager | 3, 20.238 ± 0.165 | 5, 20.281 ± 0.304 | +0.044 (+0.2 %) | 0.2 | 0.8 | `results/final_S2_runs.jsonl`@`817ba80` |
 
 The eager-path 512 arms (S3) and 2048 arms (S1, S2) come from different sessions with the same configuration, CPU model and cached ids.
@@ -64,7 +94,7 @@ The eager-path 512 arms (S3) and 2048 arms (S1, S2) come from different sessions
 | wikitext2 | 17.654 ± 0.105 | 23.855 ± 0.146 | 20.755 |
 | c4 | 19.300 ± 0.071 | 23.546 ± 0.096 | 21.423 |
 
-- In-domain advantage on WikiText-2: **+1.645** ppl = 18.3 × pooled seed SD; on C4: **+0.308** = 2.5 ×; averaged over both sets C4-cal − WT-cal = +0.668.
+- In-domain advantage on WikiText-2: **+1.645** ppl = 18.3 pooled SD; on C4: **+0.308** = 2.5 pooled SD; averaged over both sets C4-cal − WT-cal = +0.668.
 
 **W3** (mean ± SD over 3 seeds; `results/final_S3_runs.jsonl`@`aee81f0`)
 
@@ -73,7 +103,7 @@ The eager-path 512 arms (S3) and 2048 arms (S1, S2) come from different sessions
 | wikitext2 | 38.581 ± 0.716 | 64.189 ± 1.242 | 51.385 |
 | c4 | 50.042 ± 0.337 | 54.857 ± 1.770 | 52.449 |
 
-- In-domain advantage on WikiText-2: **+11.461** ppl = 20.5 × pooled seed SD; on C4: **+9.332** = 6.1 ×; averaged over both sets C4-cal − WT-cal = +1.064.
+- In-domain advantage on WikiText-2: **+11.461** ppl = 20.5 pooled SD; on C4: **+9.332** = 6.1 pooled SD; averaged over both sets C4-cal − WT-cal = +1.064.
 
 Figure: `figures/fig2_domain_heatmap.{png,pdf}`.
 
@@ -92,26 +122,32 @@ Figure: `figures/fig2_domain_heatmap.{png,pdf}`.
 
 ## 5. Evaluation- and quantization-protocol factors (effect on WT-ppl; S4 not run)
 
-| factor (SmolLM2-135M) | |Δ WT-ppl| | × W4 seed SD (SDPA, 512) | note | source |
-|---|---|---|---|---|
-| calibration seed (W4, SDPA, 512): SD | 0.0209 | 1.0 | SD over 5 seeds | `results/real_step1.jsonl`@`ee874fb` |
-| calibration seed (W4, eager, 2048): SD | 0.1309 | 6.3 | SD over 5 seeds | `results/final_S1_runs.jsonl`@`512ee7e` |
-| run-to-run noise, default SDPA path | 0.0662 | 3.2 | two outcomes, same seed | `results/real_step2_det.jsonl`@`14910b4` |
-| run-to-run noise, eager path (max |Δ|) | 0.0281 | 1.3 | 11 runs | `results/final_S1_runs.jsonl`@`512ee7e` |
-| dense eval dtype fp32 → bf16 | 0.0111 | 0.5 | dense model | `results/real_step1.jsonl`@`ee874fb` |
-| tokenizers 0.21.4 vs 0.23.2 (Wanda 50 % s0) | 0.1137 | 5.5 | different token ids | `results/real_step2_wanda.jsonl`@`2c2731d` |
-| threads 1 vs 4 (W4 s0) | 0.0454 | 2.2 | vs SDPA outcome B | `results/real_step2_det.jsonl`@`14910b4` |
-| attention eager vs SDPA (W4, WT-cal s0) | 0.0842 | 4.0 | vs Step 1 value | `results/final_S3_runs.jsonl`@`aee81f0` |
-| attention eager vs SDPA (W4, C4-cal s0) | 0.3810 | 18.3 | C4-calibrated | `results/real_step2_c4.jsonl`@`53711f8` |
-| window length 512 → 2048 (W4, eager, means) | 1.2082 | 57.9 | S3 vs S1 means | `results/final_S1_runs.jsonl`@`512ee7e` |
-| calibration source WT → C4 (W4, eager, means) | 1.6453 | 78.9 | in-domain advantage | `results/final_S3_runs.jsonl`@`aee81f0` |
-| quantization dense → W4 (SDPA, 512, mean) | 3.2552 | 156.1 | the effect being reported | `results/real_step1.jsonl`@`ee874fb` |
+Pooled W4 seed SD (all three W4 WT-ppl seed sets, df-weighted) = **0.0961**.
 
-Missing for a full section 5 (S4 scope): few-shot count, batch size, max_length and dtype effects on real lm-eval tasks.
+| factor (SmolLM2-135M) | |Δ WT-ppl| | Δ / pooled SD | note | source |
+|---|---|---|---|---|
+| calibration seed (W4, SDPA, 512): SD | 0.0209 | 0.22 | SD over 5 seeds | `results/real_step1.jsonl`@`ee874fb` |
+| calibration seed (W4, eager, 2048): SD | 0.1309 | 1.36 | SD over 5 seeds | `results/final_S1_runs.jsonl`@`512ee7e` |
+| run-to-run noise, default SDPA path | 0.0662 | 0.69 | two outcomes, same seed | `results/real_step2_det.jsonl`@`14910b4` |
+| run-to-run noise, eager path (max |Δ|) | 0.0281 | 0.29 | 11 runs | `results/final_S1_runs.jsonl`@`512ee7e` |
+| dense eval dtype fp32 → bf16 | 0.0111 | 0.12 | dense model | `results/real_step1.jsonl`@`ee874fb` |
+| tokenizers 0.21.4 vs 0.23.2 (Wanda 50 % s0) | 0.1137 | 1.18 | different token ids | `results/real_step2_wanda.jsonl`@`2c2731d` |
+| threads 1 vs 4 (W4 s0) | 0.0454 | 0.47 | vs SDPA outcome B | `results/real_step2_det.jsonl`@`14910b4` |
+| attention eager vs SDPA (W4, WT-cal s0) | 0.0842 | 0.88 | vs Step 1 value | `results/final_S3_runs.jsonl`@`aee81f0` |
+| attention eager vs SDPA (W4, C4-cal s0) | 0.3810 | 3.96 | C4-calibrated | `results/real_step2_c4.jsonl`@`53711f8` |
+| window length 512 → 2048 (W4, eager, means) | 1.2082 | 12.57 | S3 vs S1 means | `results/final_S1_runs.jsonl`@`512ee7e` |
+| calibration source WT → C4 (W4, eager, means) | 1.6453 | 17.12 | in-domain advantage | `results/final_S3_runs.jsonl`@`aee81f0` |
+| quantization dense → W4 (SDPA, 512, mean) | 3.2552 | 33.87 | the effect being reported | `results/real_step1.jsonl`@`ee874fb` |
+
+S4 perplexity-protocol results not available (0/12 cells in `results/final_S4_ppl.jsonl`).
+
+Still missing: few-shot count, batch size, max_length and dtype effects on real lm-eval tasks.
 The only measurements of those are on synthetic stand-ins (REPORT.md B.1, Test 2c: per-sample log-lik changes ≤6e-5 nats
 for bs 1 vs 8, ≤1.49 nats for bf16 vs fp32) and are not quality numbers. Figure: `figures/fig3_factor_effects.{png,pdf}`.
 
 ## 6. Latency-protocol factors (optimum-benchmark 0.6.0)
+
+**Earlier real-weight evidence (Step 2 §6)**
 
 **Launcher (real SmolLM2-135M weights, fp32, OMP 4, 5 iterations, 32 new tokens)** – `results/real_step2_ob.jsonl`@`e87ce8c`
 

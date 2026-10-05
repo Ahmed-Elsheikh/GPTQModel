@@ -24,6 +24,9 @@ def summ(v):
     n = len(v); m = st.mean(v); sd = st.stdev(v); lo, hi = ci_sd(sd, n)
     return dict(n=n, mean=m, sd=sd, cv=100 * sd / m, min=min(v), max=max(v), range=max(v) - min(v), lo=lo, hi=hi, v=v)
 def f(x, d=3): return f"{x:.{d}f}"
+def pooled_sd(*zs):
+    """Pooled SD = sqrt of the df-weighted mean of the variances: sqrt(sum((n_i - 1) s_i^2) / sum(n_i - 1))."""
+    return (sum((z["n"] - 1) * z["sd"] ** 2 for z in zs) / sum(z["n"] - 1 for z in zs)) ** 0.5
 
 # ---------------- load ----------------
 P = dict(s1="results/real_step1.jsonl", s1b="results/real_step1b.jsonl", w50="results/real_step2_wanda.jsonl",
@@ -70,8 +73,13 @@ w("(PNG + PDF). All runs: SmolLM2-135M or Qwen2.5-0.5B, real weights, Intel Xeon
 w("torch 2.14.1+cpu, GPTQModel 7.5.0. WT-ppl = first 40 non-overlapping 2048-token WikiText-2 test windows (fingerprint")
 w("`7da3b34bdebd1923`); C4-ppl = 256 × 2048 C4-validation windows, GPTQ convention (fingerprint `cbe443ebebeeceeb`).")
 w("GPTQ: fp32 quantize, bf16 `BACKEND.TORCH` eval. \"SDPA\" = default attention path; \"eager\" = `attn_implementation=\"eager\"`.\n")
-w("**Scope notes.** S4 (evaluation- and latency-protocol factor study) was not run; sections 5–6 use the real-weight")
-w("evidence from Step 2 and the earlier studies and mark what is missing. REPORT.md has no section A.7: the Wanda")
+w("**Definition used in every table.** *Δ / pooled SD* divides a difference by the pooled seed SD, where")
+w("pooled SD = sqrt( Σ (nᵢ − 1)·sᵢ² / Σ (nᵢ − 1) ), the square root of the degrees-of-freedom-weighted mean of the seed")
+w("variances sᵢ² of the arms involved. For two-arm comparisons (sections 2, 3) the arms are the two compared settings; for")
+w("single-run factor effects (section 5) the arms are all three SmolLM2-135M GPTQ W4 WT-ppl seed sets of section 1.\n")
+w("**Scope notes.** S4 (evaluation- and latency-protocol factors) was run in trimmed form (context × BOS perplexity;")
+w("launcher × threads × model latency); sections 5–6 combine it with the earlier real-weight evidence and mark what is")
+w("still missing. REPORT.md has no section A.7: the Wanda")
 w("sparsity sweep it referred to was moved to session S2 and its data is `results/final_S2_wanda.jsonl` (cited below).\n")
 
 # ---------------- (1) seed sensitivity ----------------
@@ -105,6 +113,27 @@ for b in (4, 3):
     w(f"| dense vs W{b} seed 0 | {flip('dense', f'w{b}_s0', 'arc_easy'):.1f} % | {flip('dense', f'w{b}_s0', 'hellaswag'):.1f} % | {cite('results/final_S1_lmeval_items.jsonl')} |")
 w("")
 
+w("**Downstream accuracy (S1, lm-eval 0.4.13, first 1000 items per task, 0-shot, bs 8)** – " + cite("results/final_S1_lmeval_items.jsonl") + "\n")
+w("| model | arc_easy acc | hellaswag acc |")
+w("|---|---|---|")
+acc = lambda r, task: st.mean(items[r][task]["acc"])
+for r, lab in [("dense", "dense fp32")] + [(f"w{b}_s{x}", f"GPTQ W{b} g128 seed {x}") for b in (4, 3) for x in range(3)]:
+    w(f"| {lab} | {acc(r, 'arc_easy'):.3f} | {acc(r, 'hellaswag'):.3f} |")
+w("")
+def mcnemar(a, b, task):
+    A = dict(zip(items[a][task]["doc_id"], items[a][task]["acc"])); B = dict(zip(items[b][task]["doc_id"], items[b][task]["acc"]))
+    ids = sorted(set(A) & set(B)); b10 = sum(A[i] == 1 and B[i] == 0 for i in ids); b01 = sum(A[i] == 0 and B[i] == 1 for i in ids)
+    p = stats.binomtest(min(b10, b01), b10 + b01, 0.5).pvalue if b10 + b01 else 1.0
+    return b10, b01, (sum(B[i] for i in ids) - sum(A[i] for i in ids)) / len(ids), p
+w("McNemar exact test (two-sided binomial on the discordant items; b = right→wrong, c = wrong→right going from the first to the second model):\n")
+w("| comparison | task | b | c | Δ acc | McNemar p |")
+w("|---|---|---|---|---|---|")
+for a, b, lab in (("dense", "w4_s0", "dense vs W4 s0"), ("dense", "w3_s0", "dense vs W3 s0"), ("w4_s0", "w4_s1", "W4 s0 vs W4 s1"), ("w3_s0", "w3_s1", "W3 s0 vs W3 s1")):
+    for task in ("arc_easy", "hellaswag"):
+        b10, b01, da, p = mcnemar(a, b, task)
+        w(f"| {lab} | {task} | {b10} | {b01} | {da:+.3f} | {p:.2g} |")
+w("")
+
 # ---------------- (2) window length ----------------
 w("## 2. Calibration window length (128 × 512 vs 128 × 2048, WT-ppl)\n")
 w("| model · method · path | 512: n, mean ± SD | 2048: n, mean ± SD | Δ (2048 − 512) | Δ / pooled SD | Welch p | sources |")
@@ -115,7 +144,7 @@ WL = [("SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5)", "SmolLM2-135M ·
       ("Qwen2.5-0.5B · GPTQ W3 · eager", "Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager", "Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager")]
 for lab, a, b in WL:
     za, zb = S[a][0], S[b][0]
-    d = zb["mean"] - za["mean"]; pooled = ((za["sd"] ** 2 + zb["sd"] ** 2) / 2) ** 0.5
+    d = zb["mean"] - za["mean"]; pooled = pooled_sd(za, zb)
     p = stats.ttest_ind(za["v"], zb["v"], equal_var=False).pvalue
     srcs = ", ".join(sorted({cite(P[s]) for s in S[a][1] + S[b][1]}))
     w(f"| {lab} | {za['n']}, {f(za['mean'])} ± {f(za['sd'])} | {zb['n']}, {f(zb['mean'])} ± {f(zb['sd'])} | {d:+.3f} ({100 * d / za['mean']:+.1f} %) | {d / pooled:.1f} | {p:.2g} | {srcs} |")
@@ -136,13 +165,13 @@ for b in (4, 3):
         w(f"| {src} | {f(M[(src,'wt_ppl')]['mean'])} ± {f(M[(src,'wt_ppl')]['sd'])} | {f(M[(src,'c4_ppl')]['mean'])} ± {f(M[(src,'c4_ppl')]['sd'])} | "
           f"{f((M[(src,'wt_ppl')]['mean'] + M[(src,'c4_ppl')]['mean']) / 2)} |")
     H[b] = M
-    pooled = lambda ev: ((M[("wikitext2", ev)]["sd"] ** 2 + M[("c4", ev)]["sd"] ** 2) / 2) ** 0.5
+    pooled = lambda ev: pooled_sd(M[("wikitext2", ev)], M[("c4", ev)])
     adv_wt = M[("c4", "wt_ppl")]["mean"] - M[("wikitext2", "wt_ppl")]["mean"]
     adv_c4 = M[("wikitext2", "c4_ppl")]["mean"] - M[("c4", "c4_ppl")]["mean"]
     avg = (M[("c4", "wt_ppl")]["mean"] + M[("c4", "c4_ppl")]["mean"] - M[("wikitext2", "wt_ppl")]["mean"] - M[("wikitext2", "c4_ppl")]["mean"]) / 2
     w("")
-    w(f"- In-domain advantage on WikiText-2: **{adv_wt:+.3f}** ppl = {adv_wt / pooled('wt_ppl'):.1f} × pooled seed SD; "
-      f"on C4: **{adv_c4:+.3f}** = {adv_c4 / pooled('c4_ppl'):.1f} ×; averaged over both sets C4-cal − WT-cal = {avg:+.3f}.\n")
+    w(f"- In-domain advantage on WikiText-2: **{adv_wt:+.3f}** ppl = {adv_wt / pooled('wt_ppl'):.1f} pooled SD; "
+      f"on C4: **{adv_c4:+.3f}** = {adv_c4 / pooled('c4_ppl'):.1f} pooled SD; averaged over both sets C4-cal − WT-cal = {avg:+.3f}.\n")
 w("Figure: `figures/fig2_domain_heatmap.{png,pdf}`.\n")
 
 # ---------------- (4) determinism ----------------
@@ -177,8 +206,9 @@ w(f"- Tokenizer version (tokenizers 0.21.4 vs 0.23.2, Wanda 50 % s0): {tw:.4f} v
   f"{q('w50','s2_wanda_dense_135m'):.6f} vs {q('w50','s2_wanda_dense_135m_t023'):.6f} ({cite(P['w50'])}).\n")
 
 # ---------------- (5) evaluation-protocol factors ----------------
-w("## 5. Evaluation- and quantization-protocol factors (effect on WT-ppl; S4 not run)\n")
+w("## 5. Evaluation- and quantization-protocol factors (effect on WT-ppl; includes trimmed S4)\n")
 sdpa_w4 = S["SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA"][0]
+W4P = pooled_sd(*(S[k][0] for k in S if "GPTQ W4" in k and "C4-ppl" not in k))
 eag4 = S["SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager"][0]
 c4cal_sdpa = q("c4", "s2_gptq_w4_135m_c4_s0"); c4cal_eager = m1("F3", "w4_c4_s0")
 F = [
@@ -195,18 +225,98 @@ F = [
     ("calibration source WT → C4 (W4, eager, means)", H[4][("c4", "wt_ppl")]["mean"] - H[4][("wikitext2", "wt_ppl")]["mean"], "F3", "in-domain advantage"),
     ("quantization dense → W4 (SDPA, 512, mean)", sdpa_w4["mean"] - dense_wt, "s1", "the effect being reported"),
 ]
-w("| factor (SmolLM2-135M) | |Δ WT-ppl| | × W4 seed SD (SDPA, 512) | note | source |")
+w(f"Pooled W4 seed SD (all three W4 WT-ppl seed sets, df-weighted) = **{W4P:.4f}**.\n")
+w("| factor (SmolLM2-135M) | |Δ WT-ppl| | Δ / pooled SD | note | source |")
 w("|---|---|---|---|---|")
 for lab, v, s, note in F:
-    w(f"| {lab} | {v:.4f} | {v / sdpa_w4['sd']:.1f} | {note} | {cite(P[s])} |")
+    w(f"| {lab} | {v:.4f} | {v / W4P:.2f} | {note} | {cite(P[s])} |")
 w("")
-w("Missing for a full section 5 (S4 scope): few-shot count, batch size, max_length and dtype effects on real lm-eval tasks.")
+S4P, S4O = "results/final_S4_ppl.jsonl", "results/final_S4_ob.jsonl"
+s4 = {r["run_id"]: r for r in rows(S4P) if r.get("rc") == 0} if os.path.exists(S4P) else {}
+S4F = []  # (label, |delta|) for the factor figure
+if len(s4) == 12:
+    w(f"**S4 (trimmed): perplexity protocol – context length × prepend-BOS** ({cite(S4P)}). SmolLM2-135M, eager attention, 4 threads;")
+    w("dense fp32 and GPTQ W4 g128 seed 0 (128 × 512 WikiText calibration, bf16 `BACKEND.TORCH`). Every cell scores the same")
+    w("81,920 WikiText-2 test tokens (the 40 × 2048 Step 1 windows) cut into 512/1024/2048-token windows; without BOS the first token")
+    w("of each window is not predicted, with BOS (`<|endoftext|>`, id 0) prepended every token is.\n")
+    w("| model | context | BOS | windows | targets | WT-ppl | W4 − dense |")
+    w("|---|---|---|---|---|---|---|")
+    for L in (512, 1024, 2048):
+        for bo in (0, 1):
+            dn, q4 = s4[f"dense_ctx{L}_bos{bo}"], s4[f"w4_ctx{L}_bos{bo}"]
+            for r, lab in ((dn, "dense fp32"), (q4, "GPTQ W4 s0")):
+                w(f"| {lab} | {L} | {'yes' if bo else 'no'} | {r['n_windows']} | {r['n_targets']} | {r['wt_ppl']:.4f} | "
+                  f"{(q4['wt_ppl'] - dn['wt_ppl']):+.4f} |" if r is q4 else
+                  f"| {lab} | {L} | {'yes' if bo else 'no'} | {r['n_windows']} | {r['n_targets']} | {r['wt_ppl']:.4f} | |")
+    w("")
+    sha = s4["w4_ctx2048_bos0"].get("ckpt_sha256", "")[:16]
+    w(f"W4 checkpoint sha256 `{sha}`; at the reference protocol (context 2048, no BOS) the W4 value is {s4['w4_ctx2048_bos0']['wt_ppl']!r} "
+      f"(eager anchor modal value 17.66059890313337) and dense is {s4['dense_ctx2048_bos0']['wt_ppl']!r}.\n")
+    w("| factor effect (S4) | dense Δ | W4 Δ | W4 Δ / pooled SD | degradation (W4 − dense) changes by |")
+    w("|---|---|---|---|---|")
+    def eff(a, b, lab):
+        dd = s4[f"dense_{b}"]["wt_ppl"] - s4[f"dense_{a}"]["wt_ppl"]; dq = s4[f"w4_{b}"]["wt_ppl"] - s4[f"w4_{a}"]["wt_ppl"]
+        w(f"| {lab} | {dd:+.4f} | {dq:+.4f} | {dq / W4P:+.1f} | {dq - dd:+.4f} |"); return lab, abs(dq)
+    for a, b, lab in (("ctx2048_bos0", "ctx512_bos0", "context 2048 → 512 (no BOS)"), ("ctx2048_bos0", "ctx1024_bos0", "context 2048 → 1024 (no BOS)"),
+                      ("ctx512_bos0", "ctx512_bos1", "prepend BOS at 512"), ("ctx2048_bos0", "ctx2048_bos1", "prepend BOS at 2048"),
+                      ("ctx2048_bos0", "ctx512_bos1", "2048 no-BOS → 512 with BOS")):
+        S4F.append(eff(a, b, lab))
+    degr = [s4[f"w4_ctx{L}_bos{bo}"]["wt_ppl"] - s4[f"dense_ctx{L}_bos{bo}"]["wt_ppl"] for L in (512, 1024, 2048) for bo in (0, 1)]
+    w("")
+    w(f"Across the 6 protocol cells the reported W4 degradation ranges {min(degr):.3f}–{max(degr):.3f} ppl "
+      f"({100 * (max(degr) - min(degr)) / min(degr):.0f} % relative spread) for one and the same checkpoint.\n")
+else:
+    w(f"S4 perplexity-protocol results not available ({len(s4)}/12 cells in `{S4P}`).\n")
+w("Still missing: few-shot count, batch size, max_length and dtype effects on real lm-eval tasks.")
 w("The only measurements of those are on synthetic stand-ins (REPORT.md B.1, Test 2c: per-sample log-lik changes ≤6e-5 nats")
 w("for bs 1 vs 8, ≤1.49 nats for bf16 vs fp32) and are not quality numbers. Figure: `figures/fig3_factor_effects.{png,pdf}`.\n")
 
 # ---------------- (6) latency-protocol factors ----------------
 w("## 6. Latency-protocol factors (optimum-benchmark 0.6.0)\n")
 ob = R["ob"]
+s4o = [r for r in rows(S4O)] if os.path.exists(S4O) else []
+OBK = {}
+if s4o:
+    w(f"**S4 (trimmed): launcher × threads × model** ({cite(S4O)}). fp32, bs 1, seq 128, 32 new tokens, 5 iterations, warmup 10;")
+    w("threads set via `OMP_NUM_THREADS` and `backend.inter_op_num_threads` (which calls `torch.set_num_threads` in optimum-benchmark 0.6.0).\n")
+    w("| model | launcher | threads | prefill s | decode s | per-token s | decode tok/s | status |")
+    w("|---|---|---|---|---|---|---|---|")
+    for r in s4o:
+        m = r.get("metrics") or {}
+        key = (r.get("model", "?").split("/")[-1], r.get("launcher"), r.get("threads"))
+        if r.get("rc") == 0: OBK[key] = m
+        st_ = "ok" if r.get("exit_code", 0) == 0 else ("report written, exit≠0 (known inline bug)" if r.get("rc") == 0 else f"FAILED rc={r.get('rc')}")
+        w(f"| {key[0]} | {key[1]} | {key[2]} | {m.get('prefill_latency_mean_s', float('nan')):.4f} | {m.get('decode_latency_mean_s', float('nan')):.4f} | "
+          f"{m.get('per_token_latency_mean_s', float('nan')):.4f} | {m.get('decode_throughput', float('nan')):.1f} | {st_} |")
+    w("")
+    w("| factor effect (per-token latency ratio) | condition | ratio |")
+    w("|---|---|---|")
+    S4R = {"launcher process/inline": [], "threads 2/4": [], "model Qwen-0.5B/SmolLM2-135M": []}
+    for mdl in ("SmolLM2-135M", "Qwen2.5-0.5B"):
+        for t in (2, 4):
+            a, b = OBK.get((mdl, "process", t)), OBK.get((mdl, "inline", t))
+            if a and b:
+                v = a["per_token_latency_mean_s"] / b["per_token_latency_mean_s"]; S4R["launcher process/inline"].append(v)
+                w(f"| launcher process / inline | {mdl}, {t} threads | {v:.2f} |")
+    for mdl in ("SmolLM2-135M", "Qwen2.5-0.5B"):
+        for L in ("inline", "process"):
+            a, b = OBK.get((mdl, L, 2)), OBK.get((mdl, L, 4))
+            if a and b:
+                v = a["per_token_latency_mean_s"] / b["per_token_latency_mean_s"]; S4R["threads 2/4"].append(v)
+                w(f"| threads 2 / 4 | {mdl}, {L} | {v:.2f} |")
+    for L in ("inline", "process"):
+        for t in (2, 4):
+            a, b = OBK.get(("Qwen2.5-0.5B", L, t)), OBK.get(("SmolLM2-135M", L, t))
+            if a and b:
+                v = a["per_token_latency_mean_s"] / b["per_token_latency_mean_s"]; S4R["model Qwen-0.5B/SmolLM2-135M"].append(v)
+                w(f"| model Qwen2.5-0.5B / SmolLM2-135M | {L}, {t} threads | {v:.2f} |")
+    w("")
+    for k, v in S4R.items():
+        if v: w(f"- {k}: {min(v):.2f}–{max(v):.2f}× over {len(v)} conditions.")
+    w("")
+else:
+    S4R = {}
+w("**Earlier real-weight evidence (Step 2 §6)**\n")
 w(f"**Launcher (real SmolLM2-135M weights, fp32, OMP 4, 5 iterations, 32 new tokens)** – {cite(P['ob'])}\n")
 w("| protocol | metric | process (default) s | inline s | inflation × |")
 w("|---|---|---|---|---|")
@@ -290,14 +400,15 @@ fig.suptitle("Perplexity by calibration source × evaluation set (SmolLM2-135M, 
              fontsize=8.5, color=INK2, x=0.01, ha="left", y=1.02)
 save(fig, "fig2_domain_heatmap")
 
-# fig 3: factor effects, log x, reference line = W4 SDPA seed SD
+# fig 3: factor effects, log x, reference line = pooled W4 seed SD
+F = F + [(f"S4: {lab} (W4)", v, "S4", "") for lab, v in S4F if v > 0]
 fig, ax = plt.subplots(figsize=(7.2, 0.36 * len(F) + 0.9))
 labs = [l for l, *_ in F]; vals = [v for _, v, *_ in F]
 ax.barh(range(len(F)), vals, height=0.6, color=BLUE, edgecolor=SURF, linewidth=2)
 for i, v in enumerate(vals):
     ax.text(v * 1.12, i, f"{v:.3g}", va="center", fontsize=7.5, color=INK2)
-ax.axvline(sdpa_w4["sd"], color=ORANGE, lw=1.5, ls="--")
-ax.text(sdpa_w4["sd"] * 1.08, -0.75, "reference: W4 seed SD (SDPA, 512)", color=INK2, fontsize=7.5, va="bottom")
+ax.axvline(W4P, color=ORANGE, lw=1.5, ls="--")
+ax.text(W4P * 1.08, -0.75, "reference: pooled W4 seed SD", color=INK2, fontsize=7.5, va="bottom")
 ax.set_xscale("log"); ax.set_yticks(range(len(F))); ax.set_yticklabels(labs, fontsize=7.5, color=INK)
 ax.grid(axis="x", color=GRID, lw=0.6, which="both"); ax.set_axisbelow(True)
 ax.set_xlabel("|Δ WT-ppl| (log scale)"); ax.set_xlim(min(vals) / 3, max(vals) * 4); ax.set_ylim(len(F) - 0.5, -1.1)
@@ -305,17 +416,19 @@ ax.set_title("Size of protocol factors vs. the effect being reported (SmolLM2-13
 save(fig, "fig3_factor_effects")
 
 # fig 4: latency ratio ranges
-fig, ax = plt.subplots(figsize=(7.2, 2.8))
-entries = [(f"360M/135M · {k}", v, BLUE) for k, v in rat.items()] + [(f"process/inline · {k}", v, ORANGE) for k, v in infl.items()]
+fig, ax = plt.subplots(figsize=(7.2, 0.4 * (6 + len([v for v in S4R.values() if v])) + 0.6))
+entries = [(f"360M/135M · {k} (synthetic)", v, BLUE) for k, v in rat.items()] + [(f"process/inline · {k} (Step 2)", v, ORANGE) for k, v in infl.items()]
+entries += [(f"S4 · {k} · per token", v, AQUA if k.startswith("model") else (ORANGE if k.startswith("launcher") else INK2)) for k, v in S4R.items() if v]
 for i, (lab, v, c) in enumerate(entries):
     ax.plot([min(v), max(v)], [i, i], color=c, lw=2, solid_capstyle="round", zorder=2)
     ax.scatter(v, [i] * len(v), s=22, color=c, edgecolor=SURF, linewidth=1.2, zorder=3)
     ax.text(max(v) * 1.06, i, f"{min(v):.2f}–{max(v):.2f}× (n={len(v)})", va="center", fontsize=7.5, color=INK2)
 ax.axvline(1, color=INK2, lw=0.8)
 ax.set_xscale("log"); ax.set_yticks(range(len(entries))); ax.set_yticklabels([e[0] for e in entries], fontsize=7.5, color=INK)
-ax.invert_yaxis(); ax.grid(axis="x", color=GRID, lw=0.6, which="both"); ax.set_axisbelow(True); ax.set_xlim(0.8, 25)
+ax.invert_yaxis(); ax.grid(axis="x", color=GRID, lw=0.6, which="both"); ax.set_axisbelow(True)
+ax.set_xlim(min(0.8, min(min(e[1]) for e in entries) * 0.8), 25)
 ax.set_xlabel("latency ratio (log scale)")
-ax.set_title("Latency ratios across protocols: model-size ratio (blue, 8 protocols) vs launcher inflation (orange, 2 protocols)",
+ax.set_title("Latency ratios across protocols (blue: model size, orange: launcher, gray: threads, aqua: S4 model size)",
              fontsize=8.5, color=INK, loc="left")
 save(fig, "fig4_latency_ratios")
 print("ok")
