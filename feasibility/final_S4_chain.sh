@@ -26,7 +26,7 @@ PYEOF
 }
 echo "S4 chain start $(date -u)"
 for m in dense w4; do
-  n=$( [ -f $RP ] && grep -c "\"run_id\": \"${m}_ctx.*\"rc\": 0" $RP || echo 0 )
+  n=$(grep -c "\"run_id\": \"${m}_ctx.*\"rc\": 0" $RP 2>/dev/null); n=${n:-0}
   if [ "$n" -ge 6 ]; then echo "skip ppl $m"; continue; fi
   echo "start ppl $m $(date -u +%H:%M:%S)"
   (cd $FINAL_WORK && $PY $FEAS/final_S4_ppl.py $FEAS/$RP $m) > $LOGTMP/final_S4_ppl_$m.log 2>&1; rc=$?
