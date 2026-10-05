@@ -1,0 +1,110 @@
+[MAIN-PROCESS][[36m2026-10-05 13:07:10,234[0m][[34mprocess[0m][[32mINFO[0m] - Allocated process launcher[0m
+[MAIN-PROCESS][[36m2026-10-05 13:07:10,235[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Setting multiprocessing start method to spawn[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:15,014[0m][[34mpytorch[0m][[32mINFO[0m] - Allocating pytorch backend[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:15,015[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Seeding backend with 0[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:15,017[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Benchmarking a Transformers model[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,789[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Setting pytorch inter_op_num_threads(4))[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,792[0m][[34minference[0m][[32mINFO[0m] - Allocating inference scenario[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,792[0m][[34minference[0m][[32mINFO[0m] - 	+ Updating Text Generation kwargs with default values[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,792[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Text Generation targets list[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,793[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Latency tracker[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,793[0m][[34mlatency[0m][[32mINFO[0m] - 		+ Tracking latency using CPU performance counter[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,795[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Per-Token Latency tracker[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,795[0m][[34mlatency[0m][[32mINFO[0m] - 		+ Tracking latency using CPU performance counter[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,795[0m][[34minference[0m][[32mINFO[0m] - 	+ Initializing Memory tracker[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,795[0m][[34mmemory[0m][[32mINFO[0m] - 		+ Tracking RAM memory of process 1277[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,795[0m][[34minference[0m][[32mINFO[0m] - 	+ Generating inputs for task text-generation[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:16,796[0m][[34minference[0m][[32mINFO[0m] - 	+ Running model loading tracking[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:20,659[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Creating backend temporary directory[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:20,659[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Loading model with pretrained weights[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:20,659[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Loading Transformers model[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:23,127[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Enabling eval mode[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:23,129[0m][[34mpytorch[0m][[32mINFO[0m] - 	+ Cleaning up backend temporary directory[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:23,132[0m][[34minference[0m][[32mINFO[0m] - 	+ Preparing inputs for backend pytorch[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:07:23,132[0m][[34minference[0m][[32mINFO[0m] - 	+ Warming up backend for Text Generation[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:08:15,264[0m][[34minference[0m][[32mINFO[0m] - 	+ Running Per-Token Text Generation latency tracking[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:09:22,269[0m][[34minference[0m][[32mINFO[0m] - 	+ Running Text Generation memory tracking[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:09:46,767[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending report dictionary to main process[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:09:46,769[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Sending report dictionary directly (13216 bytes)[0m
+[ISOLATED-PROCESS][[36m2026-10-05 13:09:46,770[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Exiting isolated process[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,770[0m][[34mprocess[0m][[32mINFO[0m] - 	+ Received report dictionary from isolated process[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - + load_model:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 	+ memory:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 		+ max_ram: 3467.16 (MB)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 	+ latency:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 		+ count: 1[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 		+ total: 2.471325 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 		+ mean: 2.471325 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,774[0m][[34mreport[0m][[32mINFO[0m] - 		+ p50: 2.471325 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ p90: 2.471325 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ p95: 2.471325 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ p99: 2.471325 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev: 0.000000 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev_: 0.00 (%)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - + first_generate:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 	+ memory:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ max_ram: 2505.26 (MB)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 	+ latency:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ count: 1[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ total: 14.344402 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ mean: 14.344402 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,775[0m][[34mreport[0m][[32mINFO[0m] - 		+ p50: 14.344402 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p90: 14.344402 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p95: 14.344402 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p99: 14.344402 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev: 0.000000 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev_: 0.00 (%)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - + generate:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 	+ latency:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ count: 5[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ total: 66.999750 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ mean: 13.399950 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p50: 14.046424 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p90: 14.505971 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p95: 14.543821 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,776[0m][[34mreport[0m][[32mINFO[0m] - 		+ p99: 14.574100 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev: 1.164466 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev_: 8.69 (%)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 	+ throughput:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ throughput: 2.31 (samples/s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - + prefill:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 	+ memory:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ max_ram: 2505.29 (MB)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 	+ latency:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ count: 5[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ total: 7.251215 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ mean: 1.450243 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ p50: 1.490080 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,777[0m][[34mreport[0m][[32mINFO[0m] - 		+ p90: 1.940049 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ p95: 2.068006 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ p99: 2.170372 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev: 0.439665 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev_: 30.32 (%)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 	+ throughput:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ throughput: 0.69 (samples/s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - + decode:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 	+ memory:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ max_ram: 2505.29 (MB)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 	+ latency:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ count: 5[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ total: 59.748535 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ mean: 11.949707 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,778[0m][[34mreport[0m][[32mINFO[0m] - 		+ p50: 12.196459 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ p90: 13.360898 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ p95: 13.463592 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ p99: 13.545747 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev: 1.287707 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev_: 10.78 (%)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 	+ throughput:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ throughput: 2.59 (tokens/s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - + per_token:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 	+ latency:[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ count: 475[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ total: 192.660421 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ mean: 0.405601 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,779[0m][[34mreport[0m][[32mINFO[0m] - 		+ p50: 0.368873 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,780[0m][[34mreport[0m][[32mINFO[0m] - 		+ p90: 0.676924 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,780[0m][[34mreport[0m][[32mINFO[0m] - 		+ p95: 0.755885 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,780[0m][[34mreport[0m][[32mINFO[0m] - 		+ p99: 1.139545 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,780[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev: 0.228498 (s)[0m
+[MAIN-PROCESS][[36m2026-10-05 13:09:46,780[0m][[34mreport[0m][[32mINFO[0m] - 		+ stdev_: 56.34 (%)[0m
