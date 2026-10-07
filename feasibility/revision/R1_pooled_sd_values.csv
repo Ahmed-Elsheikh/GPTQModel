@@ -1,0 +1,21 @@
+table,quantity,delta,old_ratio,df_weighted_ratio,changed
+2 window length,SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5),+5.1486,5.402,5.402,no
+2 window length,SmolLM2-135M · GPTQ W3 · eager,+4.2698,4.177,3.630,yes
+2 window length,SmolLM2-135M · GPTQ W4 · eager,+1.2082,10.178,9.832,yes
+2 window length,Qwen2.5-0.5B · GPTQ W3 · eager,+0.0436,0.178,0.164,yes
+3 source × eval,W4 wt_ppl,+1.6453,18.317,18.317,no (equal n)
+3 source × eval,W4 c4_ppl,+0.3083,2.495,2.495,no (equal n)
+3 source × eval,W3 wt_ppl,+11.4608,20.492,20.492,no (equal n)
+3 source × eval,W3 c4_ppl,+9.3320,6.102,6.102,no (equal n)
+5 factors,"calibration seed (W4, SDPA, 512): SD",0.0209,1.00 (÷ SDPA SD 0.0209),0.22 (÷ pooled 0.0961),yes
+5 factors,"calibration seed (W4, eager, 2048): SD",0.1309,6.27 (÷ SDPA SD 0.0209),1.36 (÷ pooled 0.0961),yes
+5 factors,"run-to-run noise, default SDPA path",0.0662,3.17 (÷ SDPA SD 0.0209),0.69 (÷ pooled 0.0961),yes
+5 factors,"run-to-run noise, eager path (max |Δ|)",0.0281,1.35 (÷ SDPA SD 0.0209),0.29 (÷ pooled 0.0961),yes
+5 factors,dense eval dtype fp32 → bf16,0.0111,0.53 (÷ SDPA SD 0.0209),0.12 (÷ pooled 0.0961),yes
+5 factors,tokenizers 0.21.4 vs 0.23.2 (Wanda 50 % s0),0.1137,5.45 (÷ SDPA SD 0.0209),1.18 (÷ pooled 0.0961),yes
+5 factors,threads 1 vs 4 (W4 s0),0.0454,2.17 (÷ SDPA SD 0.0209),0.47 (÷ pooled 0.0961),yes
+5 factors,"attention eager vs SDPA (W4, WT-cal s0)",0.0842,4.04 (÷ SDPA SD 0.0209),0.88 (÷ pooled 0.0961),yes
+5 factors,"attention eager vs SDPA (W4, C4-cal s0)",0.3810,18.27 (÷ SDPA SD 0.0209),3.96 (÷ pooled 0.0961),yes
+5 factors,"window length 512 → 2048 (W4, eager, means)",1.2082,57.94 (÷ SDPA SD 0.0209),12.57 (÷ pooled 0.0961),yes
+5 factors,"calibration source WT → C4 (W4, eager, means)",1.6453,78.90 (÷ SDPA SD 0.0209),17.12 (÷ pooled 0.0961),yes
+5 factors,"quantization dense → W4 (SDPA, 512, mean)",3.2552,156.09 (÷ SDPA SD 0.0209),33.87 (÷ pooled 0.0961),yes

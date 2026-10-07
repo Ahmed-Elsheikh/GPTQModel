@@ -12,6 +12,14 @@ pooled SD = sqrt( Σ (nᵢ − 1)·sᵢ² / Σ (nᵢ − 1) ), the square root o
 variances sᵢ² of the arms involved. For two-arm comparisons (sections 2, 3) the arms are the two compared settings; for
 single-run factor effects (section 5) the arms are all three SmolLM2-135M GPTQ W4 WT-ppl seed sets of section 1.
 
+**Damage scale D.** D = ln(ppl_compressed / ppl_dense) against the dense model evaluated on the SAME evaluation set,
+token windows and protocol (attention path: SDPA results use the SDPA dense run, eager results the eager dense run).
+Because ppl = exp(mean NLL) over the same targets, D is the mean per-token NLL increase in nats.
+
+**Uncertainty.** Differences between seed sets carry Welch 95 % CIs (Welch–Satterthwaite df) and Holm-adjusted p-values
+within each table. The 95 % CI for an SD uses the χ² distribution of (n−1)s²/σ², which **assumes the per-seed values are
+normally distributed** (independent draws); with n = 3–10 it is sensitive to that assumption (e.g. Wanda 70 % is clearly not normal).
+
 **Scope notes.** S4 (evaluation- and latency-protocol factors) was run in trimmed form (context × BOS perplexity;
 launcher × threads × model latency); sections 5–6 combine it with the earlier real-weight evidence and mark what is
 still missing. REPORT.md has no section A.7: the Wanda
@@ -19,23 +27,23 @@ sparsity sweep it referred to was moved to session S2 and its data is `results/f
 
 ## 1. Calibration-seed sensitivity (WT-ppl)
 
-| model · method · calibration · path | n | mean | SD | CV % | min | max | 95 % CI for SD (χ²) | range | range / (mean − dense) | source |
-|---|---|---|---|---|---|---|---|---|---|---|
-| SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA | 5 | 17.743 | 0.0209 | 0.12 | 17.710 | 17.764 | [0.0125, 0.0599] | 0.054 | 1.7 % | `results/real_step1.jsonl`@`ee874fb` |
-| SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA | 5 | 37.961 | 0.7225 | 1.90 | 37.169 | 38.905 | [0.4329, 2.0762] | 1.736 | 7.4 % | `results/real_step1.jsonl`@`ee874fb` |
-| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA | 5 | 43.109 | 1.1379 | 2.64 | 41.279 | 44.167 | [0.6818, 3.2698] | 2.888 | 10.1 % | `results/real_step1b.jsonl`@`2280db3` |
-| SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager | 3 | 17.654 | 0.1052 | 0.60 | 17.546 | 17.756 | [0.0548, 0.6610] | 0.210 | 6.6 % | `results/final_S3_runs.jsonl`@`aee81f0` |
-| SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager | 3 | 38.581 | 0.7155 | 1.85 | 37.914 | 39.337 | [0.3725, 4.4968] | 1.423 | 5.9 % | `results/final_S3_runs.jsonl`@`aee81f0` |
-| SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager | 5 | 18.863 | 0.1309 | 0.69 | 18.650 | 19.006 | [0.0784, 0.3760] | 0.357 | 8.2 % | `results/final_S1_runs.jsonl`@`512ee7e` |
-| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager | 10 | 42.851 | 1.2561 | 2.93 | 40.299 | 44.358 | [0.8640, 2.2931] | 4.059 | 14.3 % | `results/final_S1_runs.jsonl`@`512ee7e` |
-| Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager | 3 | 20.238 | 0.1647 | 0.81 | 20.084 | 20.412 | [0.0858, 1.0354] | 0.328 | 4.1 % | `results/final_S2_runs.jsonl`@`817ba80` |
-| Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager | 5 | 20.281 | 0.3039 | 1.50 | 19.758 | 20.515 | [0.1821, 0.8733] | 0.756 | 9.4 % | `results/final_S2_runs.jsonl`@`817ba80` |
-| SmolLM2-135M · Wanda 50 % unstr. · 128×512 | 5 | 31.491 | 0.1227 | 0.39 | 31.344 | 31.672 | [0.0735, 0.3525] | 0.328 | 1.9 % | `results/real_step2_wanda.jsonl`@`2c2731d` |
-| SmolLM2-135M · Wanda 60 % unstr. · 128×512 | 3 | 90.118 | 0.3201 | 0.36 | 89.908 | 90.486 | [0.1667, 2.0120] | 0.578 | 0.8 % | `results/final_S2_wanda.jsonl`@`a303812` |
-| SmolLM2-135M · Wanda 2:4 · 128×512 | 3 | 109.100 | 1.5514 | 1.42 | 107.470 | 110.558 | [0.8077, 9.7500] | 3.088 | 3.3 % | `results/final_S2_wanda.jsonl`@`a303812` |
-| SmolLM2-135M · Wanda 70 % unstr. · 128×512 | 3 | 1135.798 | 329.2633 | 28.99 | 917.279 | 1514.504 | [171.4337, 2069.3326] | 597.225 | 53.3 % | `results/final_S2_wanda.jsonl`@`a303812` |
-| SmolLM2-135M · GPTQ W4 · 128×2048 · eager · C4-ppl | 3 | 25.070 | 0.1343 | 0.54 | 24.926 | 25.192 | [0.0699, 0.8440] | 0.266 | 4.2 % | `results/final_S1_runs.jsonl`@`512ee7e` |
-| SmolLM2-135M · GPTQ W3 · 128×2048 · eager · C4-ppl | 3 | 72.139 | 0.6104 | 0.85 | 71.780 | 72.844 | [0.3178, 3.8364] | 1.063 | 2.0 % | `results/final_S1_runs.jsonl`@`512ee7e` |
+| model · method · calibration · path | n | mean | SD | CV % | min | max | 95 % CI for SD (χ²) | range | range / (mean − dense) | D mean ± SD (nats) | source |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA | 5 | 17.743 | 0.0209 | 0.12 | 17.710 | 17.764 | [0.0125, 0.0599] | 0.054 | 1.7 % | 0.2027 ± 0.0012 | `results/real_step1.jsonl`@`ee874fb` |
+| SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA | 5 | 37.961 | 0.7225 | 1.90 | 37.169 | 38.905 | [0.4329, 2.0762] | 1.736 | 7.4 % | 0.9631 ± 0.0190 | `results/real_step1.jsonl`@`ee874fb` |
+| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA | 5 | 43.109 | 1.1379 | 2.64 | 41.279 | 44.167 | [0.6818, 3.2698] | 2.888 | 10.1 % | 1.0901 ± 0.0267 | `results/real_step1b.jsonl`@`2280db3` |
+| SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager | 3 | 17.654 | 0.1052 | 0.60 | 17.546 | 17.756 | [0.0548, 0.6610] | 0.210 | 6.6 % | 0.1977 ± 0.0060 | `results/final_S3_runs.jsonl`@`aee81f0` |
+| SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager | 3 | 38.581 | 0.7155 | 1.85 | 37.914 | 39.337 | [0.3725, 4.4968] | 1.423 | 5.9 % | 0.9793 ± 0.0185 | `results/final_S3_runs.jsonl`@`aee81f0` |
+| SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager | 5 | 18.863 | 0.1309 | 0.69 | 18.650 | 19.006 | [0.0784, 0.3760] | 0.357 | 8.2 % | 0.2639 ± 0.0070 | `results/final_S1_runs.jsonl`@`512ee7e` |
+| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager | 10 | 42.851 | 1.2561 | 2.93 | 40.299 | 44.358 | [0.8640, 2.2931] | 4.059 | 14.3 % | 1.0840 ± 0.0296 | `results/final_S1_runs.jsonl`@`512ee7e` |
+| Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager | 3 | 20.238 | 0.1647 | 0.81 | 20.084 | 20.412 | [0.0858, 1.0354] | 0.328 | 4.1 % | 0.5038 ± 0.0081 | `results/final_S2_runs.jsonl`@`817ba80` |
+| Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager | 5 | 20.281 | 0.3039 | 1.50 | 19.758 | 20.515 | [0.1821, 0.8733] | 0.756 | 9.4 % | 0.5058 ± 0.0151 | `results/final_S2_runs.jsonl`@`817ba80` |
+| SmolLM2-135M · Wanda 50 % unstr. · 128×512 | 5 | 31.491 | 0.1227 | 0.39 | 31.344 | 31.672 | [0.0735, 0.3525] | 0.328 | 1.9 % | 0.7764 ± 0.0039 | `results/real_step2_wanda.jsonl`@`2c2731d` |
+| SmolLM2-135M · Wanda 60 % unstr. · 128×512 | 3 | 90.118 | 0.3201 | 0.36 | 89.908 | 90.486 | [0.1667, 2.0120] | 0.578 | 0.8 % | 1.8278 ± 0.0035 | `results/final_S2_wanda.jsonl`@`a303812` |
+| SmolLM2-135M · Wanda 2:4 · 128×512 | 3 | 109.100 | 1.5514 | 1.42 | 107.470 | 110.558 | [0.8077, 9.7500] | 3.088 | 3.3 % | 2.0189 ± 0.0142 | `results/final_S2_wanda.jsonl`@`a303812` |
+| SmolLM2-135M · Wanda 70 % unstr. · 128×512 | 3 | 1135.798 | 329.2633 | 28.99 | 917.279 | 1514.504 | [171.4337, 2069.3326] | 597.225 | 53.3 % | 4.3358 ± 0.2734 | `results/final_S2_wanda.jsonl`@`a303812` |
+| SmolLM2-135M · GPTQ W4 · 128×2048 · eager · C4-ppl | 3 | 25.070 | 0.1343 | 0.54 | 24.926 | 25.192 | [0.0699, 0.8440] | 0.266 | 4.2 % | 0.2904 ± 0.0054 | `results/final_S1_runs.jsonl`@`512ee7e` |
+| SmolLM2-135M · GPTQ W3 · 128×2048 · eager · C4-ppl | 3 | 72.139 | 0.6104 | 0.85 | 71.780 | 72.844 | [0.3178, 3.8364] | 1.063 | 2.0 % | 1.3473 ± 0.0084 | `results/final_S1_runs.jsonl`@`512ee7e` |
 
 Dense references: SmolLM2-135M fp32 WT-ppl 14.4878 (`results/real_step1.jsonl`@`ee874fb`), C4-ppl 18.7520 (`results/final_S1_runs.jsonl`@`512ee7e`); Qwen2.5-0.5B fp32 WT-ppl 12.2285 (`results/final_S2_runs.jsonl`@`817ba80`).
 Wanda runs are deterministic (seed-0 repeats bit-identical, `results/final_S2_wanda.jsonl`@`a303812`), so their SDs are pure seed variance.
@@ -62,49 +70,58 @@ Figure: `figures/fig1_seed_strips.{png,pdf}`.
 | GPTQ W3 g128 seed 1 | 0.405 | 0.317 |
 | GPTQ W3 g128 seed 2 | 0.418 | 0.319 |
 
-McNemar exact test (two-sided binomial on the discordant items; b = right→wrong, c = wrong→right going from the first to the second model):
+McNemar test on the paired items (b = right→wrong, c = wrong→right going from the first to the second model; flip rate =
+(b + c) / 1000). **Test used: the exact two-sided binomial test on the b + c discordant items for every comparison**; the
+continuity-corrected χ² p is shown for reference only.
 
-| comparison | task | b | c | Δ acc | McNemar p |
-|---|---|---|---|---|---|
-| dense vs W4 s0 | arc_easy | 99 | 44 | -0.055 | 4.9e-06 |
-| dense vs W4 s0 | hellaswag | 35 | 26 | -0.009 | 0.31 |
-| dense vs W3 s0 | arc_easy | 276 | 51 | -0.225 | 1.6e-38 |
-| dense vs W3 s0 | hellaswag | 74 | 30 | -0.044 | 1.9e-05 |
-| W4 s0 vs W4 s1 | arc_easy | 51 | 52 | +0.001 | 1 |
-| W4 s0 vs W4 s1 | hellaswag | 24 | 20 | -0.004 | 0.65 |
-| W3 s0 vs W3 s1 | arc_easy | 96 | 98 | +0.002 | 0.94 |
-| W3 s0 vs W3 s1 | hellaswag | 38 | 33 | -0.005 | 0.64 |
+| comparison | task | b | c | flips b + c | flip rate | Δ acc | test | exact p | χ² (cc) p |
+|---|---|---|---|---|---|---|---|---|---|
+| dense vs W4 s0 | arc_easy | 99 | 44 | 143 | 14.3 % | -0.055 | exact binomial | 4.9e-06 | 6.3e-06 |
+| dense vs W4 s0 | hellaswag | 35 | 26 | 61 | 6.1 % | -0.009 | exact binomial | 0.31 | 0.31 |
+| dense vs W3 s0 | arc_easy | 276 | 51 | 327 | 32.7 % | -0.225 | exact binomial | 1.6e-38 | 3.1e-35 |
+| dense vs W3 s0 | hellaswag | 74 | 30 | 104 | 10.4 % | -0.044 | exact binomial | 1.9e-05 | 2.5e-05 |
+| W4 s0 vs W4 s1 | arc_easy | 51 | 52 | 103 | 10.3 % | +0.001 | exact binomial | 1 | 1 |
+| W4 s0 vs W4 s1 | hellaswag | 24 | 20 | 44 | 4.4 % | -0.004 | exact binomial | 0.65 | 0.65 |
+| W3 s0 vs W3 s1 | arc_easy | 96 | 98 | 194 | 19.4 % | +0.002 | exact binomial | 0.94 | 0.94 |
+| W3 s0 vs W3 s1 | hellaswag | 38 | 33 | 71 | 7.1 % | -0.005 | exact binomial | 0.64 | 0.63 |
+
+**Correction of an earlier summary.** "About 100 arc_easy items flip each way" was wrong for W4: between W4 seeds 0 and 1,
+103 items flip in total (51 right→wrong, 52 wrong→right), i.e. ~50 each way and a 10.3 % flip rate; the 10.5 % in the agreement
+table is the mean over the three seed pairs. ~100 each way holds for W3 (96 / 98, 19.4 %).
 
 ## 2. Calibration window length (128 × 512 vs 128 × 2048, WT-ppl)
 
-| model · method · path | 512: n, mean ± SD | 2048: n, mean ± SD | Δ (2048 − 512) | Δ / pooled SD | Welch p | sources |
-|---|---|---|---|---|---|---|
-| SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5) | 5, 37.961 ± 0.723 | 5, 43.109 ± 1.138 | +5.149 (+13.6 %) | 5.4 | 7.2e-05 | `results/real_step1.jsonl`@`ee874fb`, `results/real_step1b.jsonl`@`2280db3` |
-| SmolLM2-135M · GPTQ W3 · eager | 3, 38.581 ± 0.716 | 10, 42.851 ± 1.256 | +4.270 (+11.1 %) | 3.6 | 0.00025 | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
-| SmolLM2-135M · GPTQ W4 · eager | 3, 17.654 ± 0.105 | 5, 18.863 ± 0.131 | +1.208 (+6.8 %) | 9.8 | 2.2e-05 | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
-| Qwen2.5-0.5B · GPTQ W3 · eager | 3, 20.238 ± 0.165 | 5, 20.281 ± 0.304 | +0.044 (+0.2 %) | 0.2 | 0.8 | `results/final_S2_runs.jsonl`@`817ba80` |
+| model · method · path | 512: n, mean ± SD | 2048: n, mean ± SD | Δ ppl (2048 − 512) [95 % CI] | Δ / pooled SD | Welch p | Holm p | ΔD (nats) [95 % CI] | sources |
+|---|---|---|---|---|---|---|---|---|
+| SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5) | 5, 37.961 ± 0.723 | 5, 43.109 ± 1.138 | +5.149 [+3.714, +6.584] (+13.6 %) | 5.40 | 7.2e-05 | 0.00022 | +0.1271 [+0.0926, +0.1615] | `results/real_step1.jsonl`@`ee874fb`, `results/real_step1b.jsonl`@`2280db3` |
+| SmolLM2-135M · GPTQ W3 · eager | 3, 38.581 ± 0.716 | 10, 42.851 ± 1.256 | +4.270 [+2.880, +5.660] (+11.1 %) | 3.63 | 0.00025 | 0.00051 | +0.1047 [+0.0692, +0.1402] | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
+| SmolLM2-135M · GPTQ W4 · eager | 3, 17.654 ± 0.105 | 5, 18.863 ± 0.131 | +1.208 [+0.994, +1.423] (+6.8 %) | 9.83 | 2.2e-05 | 9e-05 | +0.0662 [+0.0542, +0.0781] | `results/final_S1_runs.jsonl`@`512ee7e`, `results/final_S3_runs.jsonl`@`aee81f0` |
+| Qwen2.5-0.5B · GPTQ W3 · eager | 3, 20.238 ± 0.165 | 5, 20.281 ± 0.304 | +0.044 [-0.362, +0.450] (+0.2 %) | 0.16 | 0.8 | 0.8 | +0.0021 [-0.0181, +0.0222] | `results/final_S2_runs.jsonl`@`817ba80` |
 
 The eager-path 512 arms (S3) and 2048 arms (S1, S2) come from different sessions with the same configuration, CPU model and cached ids.
 
 ## 3. Calibration source × evaluation set (S3: SmolLM2-135M, GPTQ g128, 128 × 512, eager, seeds 0–2)
 
-**W4** (mean ± SD over 3 seeds; `results/final_S3_runs.jsonl`@`aee81f0`)
+Mean ± SD over 3 seeds (`results/final_S3_runs.jsonl`@`aee81f0`); D against the eager dense model on the same evaluation set (WT 14.4878, C4 18.7520; `results/final_S1_runs.jsonl`@`512ee7e`). The two evaluation domains are reported separately.
 
-| calibration ↓ / eval → | WikiText-2 | C4 val | average |
-|---|---|---|---|
-| wikitext2 | 17.654 ± 0.105 | 23.855 ± 0.146 | 20.755 |
-| c4 | 19.300 ± 0.071 | 23.546 ± 0.096 | 21.423 |
+| bits | calibration | WikiText-2 ppl | WikiText-2 D | C4-val ppl | C4-val D |
+|---|---|---|---|---|---|
+| W4 | wikitext2 | 17.654 ± 0.105 | 0.1977 ± 0.0060 | 23.855 ± 0.146 | 0.2407 ± 0.0061 |
+| W4 | c4 | 19.300 ± 0.071 | 0.2868 ± 0.0037 | 23.546 ± 0.096 | 0.2277 ± 0.0041 |
+| W3 | wikitext2 | 38.581 ± 0.716 | 0.9793 ± 0.0185 | 64.189 ± 1.242 | 1.2304 ± 0.0195 |
+| W3 | c4 | 50.042 ± 0.337 | 1.2395 ± 0.0067 | 54.857 ± 1.770 | 1.0731 ± 0.0322 |
 
-- In-domain advantage on WikiText-2: **+1.645** ppl = 18.3 pooled SD; on C4: **+0.308** = 2.5 pooled SD; averaged over both sets C4-cal − WT-cal = +0.668.
+In-domain advantage = out-of-domain-calibrated minus in-domain-calibrated, on each evaluation set:
 
-**W3** (mean ± SD over 3 seeds; `results/final_S3_runs.jsonl`@`aee81f0`)
+| bits | eval set | in-domain advantage ppl [95 % CI] | Δ / pooled SD | Welch p | Holm p | advantage in D (nats) [95 % CI] |
+|---|---|---|---|---|---|---|
+| W4 | WikiText-2 | +1.645 [+1.430, +1.860] | 18.32 | 6.4e-05 | 0.00026 | +0.0891 [+0.0769, +0.1013] |
+| W4 | C4 val | +0.308 [+0.009, +0.607] | 2.50 | 0.046 | 0.046 | +0.0130 [+0.0005, +0.0255] |
+| W3 | WikiText-2 | +11.461 [+9.962, +12.960] | 20.49 | 0.0002 | 0.0006 | +0.2602 [+0.2198, +0.3006] |
+| W3 | C4 val | +9.332 [+5.701, +12.963] | 6.10 | 0.0026 | 0.0052 | +0.1573 [+0.0914, +0.2232] |
 
-| calibration ↓ / eval → | WikiText-2 | C4 val | average |
-|---|---|---|---|
-| wikitext2 | 38.581 ± 0.716 | 64.189 ± 1.242 | 51.385 |
-| c4 | 50.042 ± 0.337 | 54.857 ± 1.770 | 52.449 |
-
-- In-domain advantage on WikiText-2: **+11.461** ppl = 20.5 pooled SD; on C4: **+9.332** = 6.1 pooled SD; averaged over both sets C4-cal − WT-cal = +1.064.
+The WikiText-2/C4 average column of earlier versions is dropped: the two domains have different dense baselines and
+are reported separately.
 
 Figure: `figures/fig2_domain_heatmap.{png,pdf}`.
 
@@ -244,4 +261,142 @@ threads set via `OMP_NUM_THREADS` and `backend.inter_op_num_threads` (which call
 
 Missing for a full section 6 (S4 scope): the 360M/135M ratio sweep on real weights with the inline launcher, and Qwen2.5-0.5B.
 Figure: `figures/fig4_latency_ratios.{png,pdf}`.
+
+
+# Revision analyses (from existing records; generated by `revision/revision_sections.py`)
+
+## R1. Pooled SD: every Δ / pooled SD value, unweighted vs df-weighted
+
+Formula used everywhere now: pooled SD = sqrt(Σ(nᵢ−1)sᵢ² / Σ(nᵢ−1)). The first version of these tables (commit `5a6284f`)
+used the unweighted mean of the two variances, sqrt((s₁²+s₂²)/2), in section 2, and divided section-5 factors by the
+SDPA 128×512 W4 seed SD (0.0209) instead of a pooled SD. Values that change:
+
+| table | quantity | Δ | old ratio | df-weighted ratio | changed |
+|---|---|---|---|---|---|
+| 2 window length | SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5) | +5.1486 | 5.402 | 5.402 | no |
+| 2 window length | SmolLM2-135M · GPTQ W3 · eager | +4.2698 | 4.177 | 3.630 | yes |
+| 2 window length | SmolLM2-135M · GPTQ W4 · eager | +1.2082 | 10.178 | 9.832 | yes |
+| 2 window length | Qwen2.5-0.5B · GPTQ W3 · eager | +0.0436 | 0.178 | 0.164 | yes |
+| 3 source × eval | W4 wt_ppl | +1.6453 | 18.317 | 18.317 | no (equal n) |
+| 3 source × eval | W4 c4_ppl | +0.3083 | 2.495 | 2.495 | no (equal n) |
+| 3 source × eval | W3 wt_ppl | +11.4608 | 20.492 | 20.492 | no (equal n) |
+| 3 source × eval | W3 c4_ppl | +9.3320 | 6.102 | 6.102 | no (equal n) |
+| 5 factors | calibration seed (W4, SDPA, 512): SD | 0.0209 | 1.00 (÷ SDPA SD 0.0209) | 0.22 (÷ pooled 0.0961) | yes |
+| 5 factors | calibration seed (W4, eager, 2048): SD | 0.1309 | 6.27 (÷ SDPA SD 0.0209) | 1.36 (÷ pooled 0.0961) | yes |
+| 5 factors | run-to-run noise, default SDPA path | 0.0662 | 3.17 (÷ SDPA SD 0.0209) | 0.69 (÷ pooled 0.0961) | yes |
+| 5 factors | run-to-run noise, eager path (max |Δ|) | 0.0281 | 1.35 (÷ SDPA SD 0.0209) | 0.29 (÷ pooled 0.0961) | yes |
+| 5 factors | dense eval dtype fp32 → bf16 | 0.0111 | 0.53 (÷ SDPA SD 0.0209) | 0.12 (÷ pooled 0.0961) | yes |
+| 5 factors | tokenizers 0.21.4 vs 0.23.2 (Wanda 50 % s0) | 0.1137 | 5.45 (÷ SDPA SD 0.0209) | 1.18 (÷ pooled 0.0961) | yes |
+| 5 factors | threads 1 vs 4 (W4 s0) | 0.0454 | 2.17 (÷ SDPA SD 0.0209) | 0.47 (÷ pooled 0.0961) | yes |
+| 5 factors | attention eager vs SDPA (W4, WT-cal s0) | 0.0842 | 4.04 (÷ SDPA SD 0.0209) | 0.88 (÷ pooled 0.0961) | yes |
+| 5 factors | attention eager vs SDPA (W4, C4-cal s0) | 0.3810 | 18.27 (÷ SDPA SD 0.0209) | 3.96 (÷ pooled 0.0961) | yes |
+| 5 factors | window length 512 → 2048 (W4, eager, means) | 1.2082 | 57.94 (÷ SDPA SD 0.0209) | 12.57 (÷ pooled 0.0961) | yes |
+| 5 factors | calibration source WT → C4 (W4, eager, means) | 1.6453 | 78.90 (÷ SDPA SD 0.0209) | 17.12 (÷ pooled 0.0961) | yes |
+| 5 factors | quantization dense → W4 (SDPA, 512, mean) | 3.2552 | 156.09 (÷ SDPA SD 0.0209) | 33.87 (÷ pooled 0.0961) | yes |
+
+Exported: `revision/R1_pooled_sd_values.csv`. The S4 factor table (section 5) was created after the fix and always used the df-weighted pooled SD.
+
+## R2. Damage on the NLL scale, D = ln(ppl_compressed / ppl_dense)
+
+**S4 six-protocol grid** (SmolLM2-135M, eager; one W4 checkpoint, sha256 `9b3c5e64…`; `results/final_S4_ppl.jsonl`@`b438bad`):
+
+| cell | dense ppl | W4 ppl | Δ ppl (W4 − dense) | D (nats) |
+|---|---|---|---|---|
+| ctx512/noBOS | 19.5240 | 24.3172 | +4.7933 | 0.2195 |
+| ctx512/BOS | 20.0989 | 25.0502 | +4.9514 | 0.2202 |
+| ctx1024/noBOS | 16.4592 | 20.2199 | +3.7607 | 0.2058 |
+| ctx1024/BOS | 16.7031 | 20.5578 | +3.8546 | 0.2076 |
+| ctx2048/noBOS | 14.4878 | 17.6644 | +3.1766 | 0.1982 |
+| ctx2048/BOS | 14.6019 | 17.8358 | +3.2339 | 0.2001 |
+
+- **Headline on both scales.** Δ ppl ranges 3.18–4.95 (max/min 1.56, relative spread 56 %). D ranges 0.1982–0.2202 nats (max/min 1.11, relative spread 11 %).
+- Most of the ppl-scale spread is the dense baseline moving with context (dense ppl 14.49 → 20.10): on the NLL scale the
+  protocol changes the measured damage by 11 %, not 56 %.
+- Pairwise differences of all 15 cell pairs (Δppl and D): `revision/R2_s4_pairwise.csv`; grid: `revision/R2_s4_grid.csv`.
+
+Every perplexity value used in these tables with its dense reference and D: `revision/R2_all_ppl_D.csv` (94 rows). Dense references: SDPA WikiText-2 14.487794, eager WikiText-2 14.487795, eager C4 18.752033, Qwen eager WikiText-2 12.228462.
+
+## R5. Run-to-run vs calibration-seed variance per configuration
+
+Run-to-run variance = pooled within-group variance over all same-seed repeats of one command; seed variance = the SD²
+of that configuration's seed set (which itself contains one run-to-run draw per seed).
+
+| configuration | repeat groups | runs | run-to-run SD | seed SD (n) | run var / seed var | sources |
+|---|---|---|---|---|---|---|
+| GPTQ W4 · 128×512 · SDPA (default) | 1 | 4 | 0.0382 | 0.0209 (5) | 3.356 | real_step1 s0, real_step2_c4val rebuild, real_step2_det rep2/rep3 |
+| GPTQ W4 · 128×512 · eager | 1 | 11 | 0.0087 | 0.1052 (3) | 0.007 | S1/S3 anchors, final_S2_anchor r1–r5, real_step2_det eager1/2 |
+| GPTQ W4 · 128×2048 · eager | 1 | 2 | 0.0000 | 0.1309 (5) | 0.000 | final_S1 w4_s0 + w4_s0_rep |
+| GPTQ W3 · 128×2048 · eager | 1 | 2 | 0.0000 | 1.2561 (10) | 0.000 | final_S1 w3_s0 + w3_s0_rep |
+| GPTQ W3 · 128×512 · eager (S3, WT-cal) | 1 | 2 | 0.0000 | 0.7155 (3) | 0.000 | final_S3 w3_wikitext2_s0 + _rep |
+| Wanda 60 % / 2:4 / 70 % (seed 0) | 3 | 6 | 0.0000 | 0.32 / 1.55 / 329 (3) | 0 | final_S2_wanda s0 + s0_rep |
+
+- **SDPA default path: run-to-run noise exceeds the seed spread** (run SD 0.038 vs seed SD 0.021 → ratio > 1). The Step 1
+  W4 128×512 seed SD therefore cannot be read as a calibration-seed effect at all; it is within the noise.
+- Eager path: run-to-run variance is ≤ 0.7 % of the seed variance in every configuration with repeats (0 where repeats were
+  bit-identical); Wanda repeats are bit-identical. Seed SDs on the eager path and for Wanda are calibration-seed effects.
+
+## R6. Seeds per arm for 80 % power (α = 0.05, two-sided, two-sample)
+
+Normal approximation: n = ⌈2 (z₀.₉₇₅ + z₀.₈₀)² σ² / δ²⌉ = ⌈15.7 σ²/δ²⌉ with σ = the setting's observed seed SD (a point
+estimate from 3–10 seeds; with the upper χ² CI bound the numbers would be several times larger). Minimum shown is 2.
+
+| setting | σ (n) | δ = 0.1 | δ = 0.25 | δ = 0.5 | δ = 1 | δ = 2 |
+|---|---|---|---|---|---|---|
+| SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA | 0.0209 (5) | 2 | 2 | 2 | 2 | 2 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA | 0.7225 (5) | 820 | 132 | 33 | 9 | 3 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA | 1.1379 (5) | 2033 | 326 | 82 | 21 | 6 |
+| SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager | 0.1052 (3) | 18 | 3 | 2 | 2 | 2 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager | 0.7155 (3) | 804 | 129 | 33 | 9 | 3 |
+| SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager | 0.1309 (5) | 27 | 5 | 2 | 2 | 2 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager | 1.2561 (10) | 2477 | 397 | 100 | 25 | 7 |
+| Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager | 0.1647 (3) | 43 | 7 | 2 | 2 | 2 |
+| Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager | 0.3039 (5) | 145 | 24 | 6 | 2 | 2 |
+| SmolLM2-135M · Wanda 50 % unstr. · 128×512 | 0.1227 (5) | 24 | 4 | 2 | 2 | 2 |
+| SmolLM2-135M · Wanda 60 % unstr. · 128×512 | 0.3201 (3) | 161 | 26 | 7 | 2 | 2 |
+| SmolLM2-135M · Wanda 2:4 · 128×512 | 1.5514 (3) | 3779 | 605 | 152 | 38 | 10 |
+| SmolLM2-135M · Wanda 70 % unstr. · 128×512 | 329.2633 (3) | > 10⁴ | > 10⁴ | > 10⁴ | > 10⁴ | > 10⁴ |
+
+- SDPA W4 128×512: its observed seed SD (0.021) is *below* the run-to-run SD of that path (0.038, R5), so the row understates
+  the noise; with σ = 0.038 the counts are 3 / 2 / 2 / 2 / 2.
+- Wanda 70 %: the per-seed values (917, 976, 1515) are far from normal, so the normal approximation (and the χ² SD CI) does
+  not apply; the row only says that no feasible number of seeds resolves differences at this scale.
+
+Exported: `revision/R6_seeds_needed.csv`.
+
+## R7. Determinism: quantization vs evaluation nondeterminism
+
+**What was hashed.** `ckpt_sha256` = SHA-256 over the raw bytes of every `*.safetensors` file in the saved GPTQModel checkpoint
+directory, files sorted by name and fed into one hash in that order (`final_S1_run.py` l.104–106, `final_S3_run.py` l.108–110,
+`final_S4_ppl.py` l.62–64, `step2_detcmp.py` l.7–9, `final_S2_run.py` l.44–47). For these models the directory holds a single
+`model.safetensors` (packed int32 qweight, scales, zeros, g_idx, plus unquantized embeddings/norms/lm_head). Not hashed:
+`config.json`, `quantize_config.json`, `generation_config.json`, tokenizer files and `quant_log.csv`. Equal hashes therefore
+mean bit-identical quantized weights; a different perplexity with an equal hash can only come from evaluation.
+
+| run | WT-ppl | checkpoint sha256 (16) | same weights as modal? | classification |
+|---|---|---|---|---|
+| S1 anchor_a | 17.632549 | `e2b8938da584dd6d` | no | **quantization** nondeterminism |
+| S3 anchor_a (the 17.664706 run) | 17.664706 | `bfb81cf2743058d0` | no | **quantization** nondeterminism |
+| S1/S3 anchor_b, S2 r1–r5, step 2 eager1/2 (modal) | 17.660599 | `9b3c5e64c541388e` | yes | — (reference) |
+| S4 W4 ctx2048 no-BOS | 17.664362 | `9b3c5e64c541388e` | yes | **evaluation** nondeterminism |
+
+The 17.664706 eager run (S3 anchor_a) has a different checkpoint hash (`bfb81cf2…`) from the modal `9b3c5e64…`: its weights
+differ, so it is **quantization** nondeterminism. The S4 value 17.664362 has the modal hash, so it is **evaluation**
+nondeterminism (same weights, same 81,880 targets). On the default SDPA path both outcomes also had different hashes
+(`72b61b9e…` vs `3c9ab62e…`): quantization nondeterminism. Default-path Step 1 (Session B) recorded no hash.
+
+## R8. Mechanism data: first-token share of the Hessian (REPORT.md A.6)
+
+Computed by `probe_positions.py` on the **dense fp32** model (transformers' default SDPA attention) over the first 8 seed-0
+WikiText-2 calibration windows at L = 512 and at L = 2048. For each layer, a forward pre-hook takes the `mlp.down_proj`
+input x_t (one vector per token position t) and accumulates ‖x_t‖₂² per position over the 8 windows. GPTQ's Hessian is
+H = (2/N) Σ_t x_t x_tᵀ, and trace(x xᵀ) = ‖x‖², so **share_pos0 = Σ_windows ‖x_0‖² / Σ_windows Σ_t ‖x_t‖² = the position-0
+share of trace(H)** (equivalently of the sum of H's diagonal). It is not a Frobenius-norm or eigenvalue share.
+`share_pos0_3` is the same for positions 0–3; `pos0_over_median` = ‖x_0‖² / median_t>0 ‖x_t‖² (summed over windows).
+
+- SmolLM2-135M: 30 layers × L ∈ {512, 2048} → `revision/R8_hessian_pos0_share_smollm2.csv` (source `results/real_diag_probe_positions_smol_all.json`@`f8a292f`); largest position-0 shares at L=512: layer 11 99.7 % → 98.9 %, layer 28 81.3 % → 53.5 %, layer 2 20.6 % → 10.3 %.
+- Qwen2.5-0.5B: 24 layers × L ∈ {512, 2048} → `revision/R8_hessian_pos0_share_qwen25.csv` (source `results/real_diag_probe_positions_qwen05.json`@`f8a292f`); largest position-0 shares at L=512: layer 2 98.8 % → 95.3 %, layer 3 97.2 % → 89.7 %, layer 21 83.3 % → 56.6 %.
+
+## R9. GPTQ vs round-to-nearest (RTN)
+
+RTN results incomplete (0/16 cells in `revision/rtn_runs.jsonl`).
 

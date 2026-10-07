@@ -1,0 +1,95 @@
+setting,seed,eval_set_protocol,ppl,dense_ppl,D_nats,results_file
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA,0,WikiText-2 40×2048,17.744843,14.487794,0.202788,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA,1,WikiText-2 40×2048,17.738263,14.487794,0.202418,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA,2,WikiText-2 40×2048,17.710422,14.487794,0.200847,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA,3,WikiText-2 40×2048,17.764491,14.487794,0.203895,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA,4,WikiText-2 40×2048,17.756804,14.487794,0.203462,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA,0,WikiText-2 40×2048,37.466792,14.487794,0.950148,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA,1,WikiText-2 40×2048,38.905153,14.487794,0.987820,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA,2,WikiText-2 40×2048,37.764983,14.487794,0.958076,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA,3,WikiText-2 40×2048,37.169309,14.487794,0.942177,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA,4,WikiText-2 40×2048,38.497032,14.487794,0.977275,results/real_step1.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA,0,WikiText-2 40×2048,41.279095,14.487794,1.047050,results/real_step1b.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA,1,WikiText-2 40×2048,43.095774,14.487794,1.090118,results/real_step1b.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA,2,WikiText-2 40×2048,43.950109,14.487794,1.109749,results/real_step1b.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA,3,WikiText-2 40×2048,44.167346,14.487794,1.114679,results/real_step1b.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA,4,WikiText-2 40×2048,43.054096,14.487794,1.089151,results/real_step1b.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager,0,WikiText-2 40×2048,17.660599,14.487795,0.198030,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager,1,WikiText-2 40×2048,17.756437,14.487795,0.203442,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager,2,WikiText-2 40×2048,17.546342,14.487795,0.191539,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager,0,WikiText-2 40×2048,37.914189,14.487795,0.962019,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager,1,WikiText-2 40×2048,38.491149,14.487795,0.977122,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager,2,WikiText-2 40×2048,39.336766,14.487795,0.998853,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager,0,WikiText-2 40×2048,18.649760,14.487795,0.252527,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager,1,WikiText-2 40×2048,18.862304,14.487795,0.263859,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager,2,WikiText-2 40×2048,18.904189,14.487795,0.266077,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager,3,WikiText-2 40×2048,19.006338,14.487795,0.271466,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager,4,WikiText-2 40×2048,18.890842,14.487795,0.265371,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,0,WikiText-2 40×2048,43.958738,14.487795,1.109945,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,1,WikiText-2 40×2048,42.498800,14.487795,1.076169,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,2,WikiText-2 40×2048,43.998597,14.487795,1.110851,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,3,WikiText-2 40×2048,42.555207,14.487795,1.077496,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,4,WikiText-2 40×2048,44.358171,14.487795,1.118990,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,5,WikiText-2 40×2048,42.462082,14.487795,1.075305,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,6,WikiText-2 40×2048,43.733412,14.487795,1.104806,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,7,WikiText-2 40×2048,40.298961,14.487795,1.023019,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,8,WikiText-2 40×2048,41.556848,14.487795,1.053756,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager,9,WikiText-2 40×2048,43.084317,14.487795,1.089853,results/final_S1_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager,0,WikiText-2 40×2048,20.218043,12.228462,0.502809,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager,1,WikiText-2 40×2048,20.083870,12.228462,0.496151,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager,2,WikiText-2 40×2048,20.411582,12.228462,0.512336,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager,0,WikiText-2 40×2048,19.758440,12.228462,0.479815,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager,1,WikiText-2 40×2048,20.439198,12.228462,0.513688,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager,2,WikiText-2 40×2048,20.410100,12.228462,0.512264,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager,3,WikiText-2 40×2048,20.284615,12.228462,0.506097,results/final_S2_runs.jsonl
+Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager,4,WikiText-2 40×2048,20.514736,12.228462,0.517377,results/final_S2_runs.jsonl
+SmolLM2-135M · Wanda 50 % unstr. · 128×512,0,WikiText-2 40×2048,31.500058,14.487794,0.776683,results/real_step2_wanda.jsonl
+SmolLM2-135M · Wanda 50 % unstr. · 128×512,1,WikiText-2 40×2048,31.420247,14.487794,0.774146,results/real_step2_wanda.jsonl
+SmolLM2-135M · Wanda 50 % unstr. · 128×512,2,WikiText-2 40×2048,31.671853,14.487794,0.782122,results/real_step2_wanda.jsonl
+SmolLM2-135M · Wanda 50 % unstr. · 128×512,3,WikiText-2 40×2048,31.343588,14.487794,0.771703,results/real_step2_wanda.jsonl
+SmolLM2-135M · Wanda 50 % unstr. · 128×512,4,WikiText-2 40×2048,31.516805,14.487794,0.777214,results/real_step2_wanda.jsonl
+SmolLM2-135M · Wanda 60 % unstr. · 128×512,0,WikiText-2 40×2048,90.486378,14.487794,1.831893,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 60 % unstr. · 128×512,1,WikiText-2 40×2048,89.908342,14.487794,1.825484,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 60 % unstr. · 128×512,2,WikiText-2 40×2048,89.958881,14.487794,1.826046,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 2:4 · 128×512,0,WikiText-2 40×2048,107.469649,14.487794,2.003902,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 2:4 · 128×512,1,WikiText-2 40×2048,110.558148,14.487794,2.032235,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 2:4 · 128×512,2,WikiText-2 40×2048,109.271329,14.487794,2.020528,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 70 % unstr. · 128×512,0,WikiText-2 40×2048,975.611196,14.487794,4.209758,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 70 % unstr. · 128×512,1,WikiText-2 40×2048,1514.504057,14.487794,4.649537,results/final_S2_wanda.jsonl
+SmolLM2-135M · Wanda 70 % unstr. · 128×512,2,WikiText-2 40×2048,917.278969,14.487794,4.148105,results/final_S2_wanda.jsonl
+SmolLM2-135M · GPTQ W4 · 128×2048 · eager,0,C4-val 256×2048,24.925849,18.752033,0.284603,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×2048 · eager,1,C4-val 256×2048,25.191651,18.752033,0.295210,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×2048 · eager,2,C4-val 256×2048,25.092250,18.752033,0.291257,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-calibrated · eager,0,WikiText-2 40×2048,17.660599,14.487795,0.198030,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-calibrated · eager,0,C4-val 256×2048,23.898265,18.752033,0.242504,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-calibrated · eager,1,WikiText-2 40×2048,17.756437,14.487795,0.203442,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-calibrated · eager,1,C4-val 256×2048,23.974057,18.752033,0.245670,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-calibrated · eager,2,WikiText-2 40×2048,17.546342,14.487795,0.191539,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-calibrated · eager,2,C4-val 256×2048,23.691461,18.752033,0.233812,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · c4-calibrated · eager,0,WikiText-2 40×2048,19.306090,14.487795,0.287114,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · c4-calibrated · eager,0,C4-val 256×2048,23.508786,18.752033,0.226072,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · c4-calibrated · eager,1,WikiText-2 40×2048,19.225564,14.487795,0.282934,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · c4-calibrated · eager,1,C4-val 256×2048,23.475198,18.752033,0.224642,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · c4-calibrated · eager,2,WikiText-2 40×2048,19.367587,14.487795,0.290294,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 · 128×512 · c4-calibrated · eager,2,C4-val 256×2048,23.654923,18.752033,0.232269,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×2048 · eager,0,C4-val 256×2048,72.843606,18.752033,1.357013,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×2048 · eager,1,C4-val 256×2048,71.792599,18.752033,1.342479,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×2048 · eager,2,C4-val 256×2048,71.780127,18.752033,1.342305,results/final_S1_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-calibrated · eager,0,WikiText-2 40×2048,37.914189,14.487795,0.962019,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-calibrated · eager,0,C4-val 256×2048,62.772554,18.752033,1.208216,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-calibrated · eager,1,WikiText-2 40×2048,38.491149,14.487795,0.977122,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-calibrated · eager,1,C4-val 256×2048,65.092776,18.752033,1.244511,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-calibrated · eager,2,WikiText-2 40×2048,39.336766,14.487795,0.998853,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-calibrated · eager,2,C4-val 256×2048,64.702033,18.752033,1.238490,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · c4-calibrated · eager,0,WikiText-2 40×2048,50.386381,14.487795,1.246414,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · c4-calibrated · eager,0,C4-val 256×2048,54.734700,18.752033,1.071196,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · c4-calibrated · eager,1,WikiText-2 40×2048,50.025415,14.487795,1.239225,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · c4-calibrated · eager,1,C4-val 256×2048,56.685557,18.752033,1.106217,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · c4-calibrated · eager,2,WikiText-2 40×2048,49.712716,14.487795,1.232954,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W3 · 128×512 · c4-calibrated · eager,2,C4-val 256×2048,53.151112,18.752033,1.041837,results/final_S3_runs.jsonl
+SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager (S4),0,"S4 ctx 512, BOS 0",24.317232,19.523965,0.219543,results/final_S4_ppl.jsonl
+SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager (S4),0,"S4 ctx 512, BOS 1",25.050206,20.098851,0.220219,results/final_S4_ppl.jsonl
+SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager (S4),0,"S4 ctx 1024, BOS 0",20.219916,16.459213,0.205783,results/final_S4_ppl.jsonl
+SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager (S4),0,"S4 ctx 1024, BOS 1",20.557752,16.703122,0.207642,results/final_S4_ppl.jsonl
+SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager (S4),0,"S4 ctx 2048, BOS 0",17.664362,14.487795,0.198243,results/final_S4_ppl.jsonl
+SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager (S4),0,"S4 ctx 2048, BOS 1",17.835811,14.601932,0.200054,results/final_S4_ppl.jsonl

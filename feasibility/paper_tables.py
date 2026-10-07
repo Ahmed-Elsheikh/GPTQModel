@@ -1,7 +1,7 @@
 """Build feasibility/PAPER_TABLES.md and feasibility/figures/*.{png,pdf} from the results files on this branch.
 Every number is computed here from a results file; each table row cites `file@commit` (last commit touching the file).
 usage: /opt/venvs/main/bin/python paper_tables.py"""
-import json, os, statistics as st, subprocess
+import json, math, os, statistics as st, subprocess
 import numpy as np
 from scipy import stats
 import matplotlib
@@ -24,6 +24,18 @@ def summ(v):
     n = len(v); m = st.mean(v); sd = st.stdev(v); lo, hi = ci_sd(sd, n)
     return dict(n=n, mean=m, sd=sd, cv=100 * sd / m, min=min(v), max=max(v), range=max(v) - min(v), lo=lo, hi=hi, v=v)
 def f(x, d=3): return f"{x:.{d}f}"
+def welch(a, b):
+    """Welch difference mean(b) - mean(a), 95 % CI (Welch-Satterthwaite df) and two-sided p."""
+    va, vb = a["sd"] ** 2 / a["n"], b["sd"] ** 2 / b["n"]; se = (va + vb) ** 0.5
+    df = (va + vb) ** 2 / (va ** 2 / (a["n"] - 1) + vb ** 2 / (b["n"] - 1))
+    d = b["mean"] - a["mean"]; tc = stats.t.ppf(0.975, df)
+    return d, d - tc * se, d + tc * se, 2 * stats.t.sf(abs(d) / se, df), df
+def holm(ps):
+    """Holm step-down adjusted p-values (same order as input)."""
+    o = sorted(range(len(ps)), key=lambda i: ps[i]); adj = [0.0] * len(ps); run = 0.0
+    for k, i in enumerate(o):
+        run = max(run, min(1.0, (len(ps) - k) * ps[i])); adj[i] = run
+    return adj
 def pooled_sd(*zs):
     """Pooled SD = sqrt of the df-weighted mean of the variances: sqrt(sum((n_i - 1) s_i^2) / sum(n_i - 1))."""
     return (sum((z["n"] - 1) * z["sd"] ** 2 for z in zs) / sum(z["n"] - 1 for z in zs)) ** 0.5
@@ -42,6 +54,7 @@ dense_wt = R["s1"]["dense_135m"]["result"]["ppl_dense_fp32"]
 dense_wt_bf16 = R["s1"]["dense_135m"]["result"]["ppl_dense_bf16"]
 dense_c4 = m1("F1", "dense", "c4_ppl")
 qwen_dense = R["F2"]["final_S2_qwen_dense"]["result"]["ppl_dense_fp32"]
+dense_wt_eager = R["F1"]["dense"]["metrics"]["wt_ppl"]  # same windows, eager attention (D for eager rows uses this)
 
 S = {}  # name -> (summary, source key, config text, dense reference)
 def add(name, vals, src, cfg, dense):
@@ -49,10 +62,10 @@ def add(name, vals, src, cfg, dense):
 add("SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA", [q("s1", f"gptq_w4_135m_s{s}") for s in range(5)], ["s1"], "Step 1, default SDPA path", dense_wt)
 add("SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA", [q("s1", f"gptq_w3_135m_s{s}") for s in range(5)], ["s1"], "Step 1, default SDPA path", dense_wt)
 add("SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA", [q("s1b", f"gptq_w3_135m_L2048_s{s}") for s in range(5)], ["s1b"], "A.5, default SDPA path", dense_wt)
-add("SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager", [m1("F3", f"w4_wikitext2_s{s}") for s in range(3)], ["F3"], "S3, eager", dense_wt)
-add("SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager", [m1("F3", f"w3_wikitext2_s{s}") for s in range(3)], ["F3"], "S3, eager", dense_wt)
-add("SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager", [m1("F1", f"w4_s{s}") for s in range(5)], ["F1"], "S1, eager", dense_wt)
-add("SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager", [m1("F1", f"w3_s{s}") for s in range(10)], ["F1"], "S1, eager", dense_wt)
+add("SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager", [m1("F3", f"w4_wikitext2_s{s}") for s in range(3)], ["F3"], "S3, eager", dense_wt_eager)
+add("SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager", [m1("F3", f"w3_wikitext2_s{s}") for s in range(3)], ["F3"], "S3, eager", dense_wt_eager)
+add("SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager", [m1("F1", f"w4_s{s}") for s in range(5)], ["F1"], "S1, eager", dense_wt_eager)
+add("SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager", [m1("F1", f"w3_s{s}") for s in range(10)], ["F1"], "S1, eager", dense_wt_eager)
 add("Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager", [q("F2", f"final_S2_qwen_w3_L512_s{s}") for s in range(3)], ["F2"], "S2, eager", qwen_dense)
 add("Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager", [q("F2", f"final_S2_qwen_w3_L2048_s{s}") for s in range(5)], ["F2"], "S2, eager", qwen_dense)
 add("SmolLM2-135M · Wanda 50 % unstr. · 128×512", [q("w50", f"s2_wanda50_135m_s{s}_t023") for s in range(5)], ["w50"], "Step 2 §1 (deterministic)", dense_wt)
@@ -77,6 +90,12 @@ w("**Definition used in every table.** *Δ / pooled SD* divides a difference by 
 w("pooled SD = sqrt( Σ (nᵢ − 1)·sᵢ² / Σ (nᵢ − 1) ), the square root of the degrees-of-freedom-weighted mean of the seed")
 w("variances sᵢ² of the arms involved. For two-arm comparisons (sections 2, 3) the arms are the two compared settings; for")
 w("single-run factor effects (section 5) the arms are all three SmolLM2-135M GPTQ W4 WT-ppl seed sets of section 1.\n")
+w("**Damage scale D.** D = ln(ppl_compressed / ppl_dense) against the dense model evaluated on the SAME evaluation set,")
+w("token windows and protocol (attention path: SDPA results use the SDPA dense run, eager results the eager dense run).")
+w("Because ppl = exp(mean NLL) over the same targets, D is the mean per-token NLL increase in nats.\n")
+w("**Uncertainty.** Differences between seed sets carry Welch 95 % CIs (Welch–Satterthwaite df) and Holm-adjusted p-values")
+w("within each table. The 95 % CI for an SD uses the χ² distribution of (n−1)s²/σ², which **assumes the per-seed values are")
+w("normally distributed** (independent draws); with n = 3–10 it is sensitive to that assumption (e.g. Wanda 70 % is clearly not normal).\n")
 w("**Scope notes.** S4 (evaluation- and latency-protocol factors) was run in trimmed form (context × BOS perplexity;")
 w("launcher × threads × model latency); sections 5–6 combine it with the earlier real-weight evidence and mark what is")
 w("still missing. REPORT.md has no section A.7: the Wanda")
@@ -84,14 +103,16 @@ w("sparsity sweep it referred to was moved to session S2 and its data is `result
 
 # ---------------- (1) seed sensitivity ----------------
 w("## 1. Calibration-seed sensitivity (WT-ppl)\n")
-w("| model · method · calibration · path | n | mean | SD | CV % | min | max | 95 % CI for SD (χ²) | range | range / (mean − dense) | source |")
-w("|---|---|---|---|---|---|---|---|---|---|---|")
+w("| model · method · calibration · path | n | mean | SD | CV % | min | max | 95 % CI for SD (χ²) | range | range / (mean − dense) | D mean ± SD (nats) | source |")
+w("|---|---|---|---|---|---|---|---|---|---|---|---|")
 for name, (z, src, cfg, dense) in S.items():
+    zD = summ([math.log(v / dense) for v in z["v"]])
     w(f"| {name} | {z['n']} | {f(z['mean'])} | {f(z['sd'], 4)} | {f(z['cv'], 2)} | {f(z['min'])} | {f(z['max'])} | "
-      f"[{f(z['lo'], 4)}, {f(z['hi'], 4)}] | {f(z['range'])} | {100 * z['range'] / (z['mean'] - dense):.1f} % | {', '.join(cite(P[s]) for s in src)} |")
+      f"[{f(z['lo'], 4)}, {f(z['hi'], 4)}] | {f(z['range'])} | {100 * z['range'] / (z['mean'] - dense):.1f} % | {zD['mean']:.4f} ± {zD['sd']:.4f} | {', '.join(cite(P[s]) for s in src)} |")
 for name, (z, src, dense) in C4seed.items():
+    zD = summ([math.log(v / dense) for v in z["v"]])
     w(f"| {name} | {z['n']} | {f(z['mean'])} | {f(z['sd'], 4)} | {f(z['cv'], 2)} | {f(z['min'])} | {f(z['max'])} | "
-      f"[{f(z['lo'], 4)}, {f(z['hi'], 4)}] | {f(z['range'])} | {100 * z['range'] / (z['mean'] - dense):.1f} % | {', '.join(cite(P[s]) for s in src)} |")
+      f"[{f(z['lo'], 4)}, {f(z['hi'], 4)}] | {f(z['range'])} | {100 * z['range'] / (z['mean'] - dense):.1f} % | {zD['mean']:.4f} ± {zD['sd']:.4f} | {', '.join(cite(P[s]) for s in src)} |")
 w("")
 w(f"Dense references: SmolLM2-135M fp32 WT-ppl {f(dense_wt, 4)} ({cite(P['s1'])}), C4-ppl {f(dense_c4, 4)} ({cite(P['F1'])}); "
   f"Qwen2.5-0.5B fp32 WT-ppl {f(qwen_dense, 4)} ({cite(P['F2'])}).")
@@ -125,53 +146,83 @@ def mcnemar(a, b, task):
     ids = sorted(set(A) & set(B)); b10 = sum(A[i] == 1 and B[i] == 0 for i in ids); b01 = sum(A[i] == 0 and B[i] == 1 for i in ids)
     p = stats.binomtest(min(b10, b01), b10 + b01, 0.5).pvalue if b10 + b01 else 1.0
     return b10, b01, (sum(B[i] for i in ids) - sum(A[i] for i in ids)) / len(ids), p
-w("McNemar exact test (two-sided binomial on the discordant items; b = right→wrong, c = wrong→right going from the first to the second model):\n")
-w("| comparison | task | b | c | Δ acc | McNemar p |")
-w("|---|---|---|---|---|---|")
+w("McNemar test on the paired items (b = right→wrong, c = wrong→right going from the first to the second model; flip rate =")
+w("(b + c) / 1000). **Test used: the exact two-sided binomial test on the b + c discordant items for every comparison**; the")
+w("continuity-corrected χ² p is shown for reference only.\n")
+w("| comparison | task | b | c | flips b + c | flip rate | Δ acc | test | exact p | χ² (cc) p |")
+w("|---|---|---|---|---|---|---|---|---|---|")
 for a, b, lab in (("dense", "w4_s0", "dense vs W4 s0"), ("dense", "w3_s0", "dense vs W3 s0"), ("w4_s0", "w4_s1", "W4 s0 vs W4 s1"), ("w3_s0", "w3_s1", "W3 s0 vs W3 s1")):
     for task in ("arc_easy", "hellaswag"):
         b10, b01, da, p = mcnemar(a, b, task)
-        w(f"| {lab} | {task} | {b10} | {b01} | {da:+.3f} | {p:.2g} |")
+        pchi = stats.chi2.sf((abs(b10 - b01) - 1) ** 2 / (b10 + b01), 1) if b10 + b01 else 1.0
+        w(f"| {lab} | {task} | {b10} | {b01} | {b10 + b01} | {(b10 + b01) / 10:.1f} % | {da:+.3f} | exact binomial | {p:.2g} | {pchi:.2g} |")
 w("")
+w("**Correction of an earlier summary.** \"About 100 arc_easy items flip each way\" was wrong for W4: between W4 seeds 0 and 1,")
+w("103 items flip in total (51 right→wrong, 52 wrong→right), i.e. ~50 each way and a 10.3 % flip rate; the 10.5 % in the agreement")
+w("table is the mean over the three seed pairs. ~100 each way holds for W3 (96 / 98, 19.4 %).\n")
 
 # ---------------- (2) window length ----------------
 w("## 2. Calibration window length (128 × 512 vs 128 × 2048, WT-ppl)\n")
-w("| model · method · path | 512: n, mean ± SD | 2048: n, mean ± SD | Δ (2048 − 512) | Δ / pooled SD | Welch p | sources |")
-w("|---|---|---|---|---|---|---|")
+w("| model · method · path | 512: n, mean ± SD | 2048: n, mean ± SD | Δ ppl (2048 − 512) [95 % CI] | Δ / pooled SD | Welch p | Holm p | ΔD (nats) [95 % CI] | sources |")
+w("|---|---|---|---|---|---|---|---|---|")
 WL = [("SmolLM2-135M · GPTQ W3 · SDPA (F15 = REPORT.md A.5)", "SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA", "SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA"),
       ("SmolLM2-135M · GPTQ W3 · eager", "SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager", "SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager"),
       ("SmolLM2-135M · GPTQ W4 · eager", "SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager", "SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager"),
       ("Qwen2.5-0.5B · GPTQ W3 · eager", "Qwen2.5-0.5B · GPTQ W3 g128 · 128×512 · eager", "Qwen2.5-0.5B · GPTQ W3 g128 · 128×2048 · eager")]
+WLrows = []
 for lab, a, b in WL:
     za, zb = S[a][0], S[b][0]
-    d = zb["mean"] - za["mean"]; pooled = pooled_sd(za, zb)
-    p = stats.ttest_ind(za["v"], zb["v"], equal_var=False).pvalue
+    d, lo, hi, p, _ = welch(za, zb); pooled = pooled_sd(za, zb)
+    dref = S[a][3]
+    Da, Db = summ([math.log(v / dref) for v in za["v"]]), summ([math.log(v / dref) for v in zb["v"]])
+    dD, dlo, dhi, _, _ = welch(Da, Db)
+    WLrows.append((lab, za, zb, d, lo, hi, p, pooled, dD, dlo, dhi, a, b))
+WLholm = holm([r[6] for r in WLrows])
+for (lab, za, zb, d, lo, hi, p, pooled, dD, dlo, dhi, a, b), ph in zip(WLrows, WLholm):
     srcs = ", ".join(sorted({cite(P[s]) for s in S[a][1] + S[b][1]}))
-    w(f"| {lab} | {za['n']}, {f(za['mean'])} ± {f(za['sd'])} | {zb['n']}, {f(zb['mean'])} ± {f(zb['sd'])} | {d:+.3f} ({100 * d / za['mean']:+.1f} %) | {d / pooled:.1f} | {p:.2g} | {srcs} |")
+    w(f"| {lab} | {za['n']}, {f(za['mean'])} ± {f(za['sd'])} | {zb['n']}, {f(zb['mean'])} ± {f(zb['sd'])} | {d:+.3f} [{lo:+.3f}, {hi:+.3f}] ({100 * d / za['mean']:+.1f} %) | "
+      f"{d / pooled:.2f} | {p:.2g} | {ph:.2g} | {dD:+.4f} [{dlo:+.4f}, {dhi:+.4f}] | {srcs} |")
 w("")
 w("The eager-path 512 arms (S3) and 2048 arms (S1, S2) come from different sessions with the same configuration, CPU model and cached ids.\n")
 
 # ---------------- (3) source x eval ----------------
 w("## 3. Calibration source × evaluation set (S3: SmolLM2-135M, GPTQ g128, 128 × 512, eager, seeds 0–2)\n")
 H = {}
+DENSE_EAGER = {"wt_ppl": m1("F1", "dense"), "c4_ppl": m1("F1", "dense", "c4_ppl")}
 for b in (4, 3):
-    w(f"**W{b}** (mean ± SD over 3 seeds; {cite(P['F3'])})\n")
-    w("| calibration ↓ / eval → | WikiText-2 | C4 val | average |")
-    w("|---|---|---|---|")
     M = {}
     for src in ("wikitext2", "c4"):
         for ev in ("wt_ppl", "c4_ppl"):
             M[(src, ev)] = summ([m1("F3", f"w{b}_{src}_s{s}", ev) for s in range(3)])
-        w(f"| {src} | {f(M[(src,'wt_ppl')]['mean'])} ± {f(M[(src,'wt_ppl')]['sd'])} | {f(M[(src,'c4_ppl')]['mean'])} ± {f(M[(src,'c4_ppl')]['sd'])} | "
-          f"{f((M[(src,'wt_ppl')]['mean'] + M[(src,'c4_ppl')]['mean']) / 2)} |")
     H[b] = M
-    pooled = lambda ev: pooled_sd(M[("wikitext2", ev)], M[("c4", ev)])
-    adv_wt = M[("c4", "wt_ppl")]["mean"] - M[("wikitext2", "wt_ppl")]["mean"]
-    adv_c4 = M[("wikitext2", "c4_ppl")]["mean"] - M[("c4", "c4_ppl")]["mean"]
-    avg = (M[("c4", "wt_ppl")]["mean"] + M[("c4", "c4_ppl")]["mean"] - M[("wikitext2", "wt_ppl")]["mean"] - M[("wikitext2", "c4_ppl")]["mean"]) / 2
-    w("")
-    w(f"- In-domain advantage on WikiText-2: **{adv_wt:+.3f}** ppl = {adv_wt / pooled('wt_ppl'):.1f} pooled SD; "
-      f"on C4: **{adv_c4:+.3f}** = {adv_c4 / pooled('c4_ppl'):.1f} pooled SD; averaged over both sets C4-cal − WT-cal = {avg:+.3f}.\n")
+w(f"Mean ± SD over 3 seeds ({cite(P['F3'])}); D against the eager dense model on the same evaluation set "
+  f"(WT {DENSE_EAGER['wt_ppl']:.4f}, C4 {DENSE_EAGER['c4_ppl']:.4f}; {cite(P['F1'])}). The two evaluation domains are reported separately.\n")
+w("| bits | calibration | WikiText-2 ppl | WikiText-2 D | C4-val ppl | C4-val D |")
+w("|---|---|---|---|---|---|")
+DOM = {}
+for b in (4, 3):
+    for src in ("wikitext2", "c4"):
+        cells = []
+        for ev in ("wt_ppl", "c4_ppl"):
+            z = H[b][(src, ev)]; zD = summ([math.log(v / DENSE_EAGER[ev]) for v in z["v"]]); DOM[(b, src, ev)] = (z, zD)
+            cells += [f"{f(z['mean'])} ± {f(z['sd'])}", f"{zD['mean']:.4f} ± {zD['sd']:.4f}"]
+        w(f"| W{b} | {src} | " + " | ".join(cells) + " |")
+w("")
+w("In-domain advantage = out-of-domain-calibrated minus in-domain-calibrated, on each evaluation set:\n")
+w("| bits | eval set | in-domain advantage ppl [95 % CI] | Δ / pooled SD | Welch p | Holm p | advantage in D (nats) [95 % CI] |")
+w("|---|---|---|---|---|---|---|")
+rowsD = []
+for b in (4, 3):
+    for ev, own, other in (("wt_ppl", "wikitext2", "c4"), ("c4_ppl", "c4", "wikitext2")):
+        za, zb = DOM[(b, own, ev)][0], DOM[(b, other, ev)][0]
+        Da, Db = DOM[(b, own, ev)][1], DOM[(b, other, ev)][1]
+        d, lo, hi, p, _ = welch(za, zb); dD, dlo, dhi, _, _ = welch(Da, Db)
+        rowsD.append((b, ev, d, lo, hi, d / pooled_sd(za, zb), p, dD, dlo, dhi))
+for (b, ev, d, lo, hi, dz, p, dD, dlo, dhi), ph in zip(rowsD, holm([r[6] for r in rowsD])):
+    w(f"| W{b} | {'WikiText-2' if ev == 'wt_ppl' else 'C4 val'} | {d:+.3f} [{lo:+.3f}, {hi:+.3f}] | {dz:.2f} | {p:.2g} | {ph:.2g} | {dD:+.4f} [{dlo:+.4f}, {dhi:+.4f}] |")
+w("")
+w("The WikiText-2/C4 average column of earlier versions is dropped: the two domains have different dense baselines and")
+w("are reported separately.\n")
 w("Figure: `figures/fig2_domain_heatmap.{png,pdf}`.\n")
 
 # ---------------- (4) determinism ----------------
@@ -350,6 +401,10 @@ for k, lab in (("ratio_prefill_p50", "prefill p50"), ("ratio_per_token_p50", "pe
 w("")
 w("Missing for a full section 6 (S4 scope): the 360M/135M ratio sweep on real weights with the inline launcher, and Qwen2.5-0.5B.")
 w("Figure: `figures/fig4_latency_ratios.{png,pdf}`.\n")
+import sys as _sys
+_sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "revision"))
+from revision_sections import build as _build_revision
+out += [""] + _build_revision(globals())
 open("PAPER_TABLES.md", "w").write("\n".join(out) + "\n")
 
 # ---------------- figures ----------------
