@@ -1,0 +1,13 @@
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /opt/venvs/main/lib/python3.11/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1007 13:20:54.589000 1777 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1007 13:20:54.624000 1777 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/272 [00:00<?, ?it/s]Loading weights:  39%|███▊      | 105/272 [00:00<00:00, 1047.00it/s]Loading weights:  97%|█████████▋| 264/272 [00:00<00:00, 1361.86it/s]Loading weights: 100%|██████████| 272/272 [00:00<00:00, 1339.84it/s]
+rtn_w3_wt 287.5402206491511 81880 275.8
+rtn_w3_c4 253.2830895773969 524032 1698.3
+rtn_w3_ctx512_bos0 365.51460230601134 81760 47.7
+rtn_w3_ctx512_bos1 357.08352392851265 81920 55.9
+rtn_w3_ctx1024_bos0 316.1335470962593 81840 96.0
+rtn_w3_ctx1024_bos1 301.81316794866626 81920 114.2
+rtn_w3_ctx2048_bos0 287.5402206491511 81880 260.0
+rtn_w3_ctx2048_bos1 275.51165166198666 81920 253.8
