@@ -398,5 +398,48 @@ share of trace(H)** (equivalently of the sum of H's diagonal). It is not a Frobe
 
 ## R9. GPTQ vs round-to-nearest (RTN)
 
-RTN results incomplete (0/16 cells in `revision/rtn_runs.jsonl`).
+RTN = GPTQ's symmetric min-max quantizer applied per row and 128-column group without calibration or error compensation
+(`revision/rtn_eval.py`), all decoder-layer Linear modules, weights cast to bf16, eager attention; deterministic (weights hash
+recorded per run). Results: `revision/rtn_runs.jsonl`@`b7c8647`.
+
+| RTN | WT-ppl | D | C4-ppl | D | ctx512/noBOS | ctx512/BOS | ctx1024/noBOS | ctx1024/BOS | ctx2048/noBOS | ctx2048/BOS |
+|---|---|---|---|---|---|---|---|---|---|---|
+| W4 g128 | 22.225 | 0.4279 | 27.468 | 0.3817 | 31.110 | 31.050 | 25.586 | 25.541 | 22.225 | 22.251 |
+| W3 g128 | 287.540 | 2.9881 | 253.283 | 2.6032 | 365.515 | 357.084 | 316.134 | 301.813 | 287.540 | 275.512 |
+
+GPTQ − RTN (negative = GPTQ better), per setting; ln-ratio = ln(ppl_GPTQ / ppl_RTN) = D_GPTQ − D_RTN on the same eval set:
+
+| GPTQ setting · eval | seeds | mean Δ ppl | min | max | mean ln-ratio | seeds disagreeing in sign with the mean |
+|---|---|---|---|---|---|---|
+| SmolLM2-135M · GPTQ W4 g128 · 128×512 · SDPA · WT | 5 | -4.482 | -4.515 | -4.461 | -0.2252 | 0/5 |
+| SmolLM2-135M · GPTQ W4 g128 · 128×512 · eager · WT | 3 | -4.571 | -4.679 | -4.469 | -0.2302 | 0/3 |
+| SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager · WT | 5 | -3.362 | -3.575 | -3.219 | -0.1641 | 0/5 |
+| SmolLM2-135M · GPTQ W4 · 128×2048 · eager · C4 | 3 | -2.398 | -2.543 | -2.277 | -0.0914 | 0/3 |
+| SmolLM2-135M · GPTQ W4 · 128×512 · wikitext2-cal · eager · C4 | 3 | -3.614 | -3.777 | -3.494 | -0.1411 | 0/3 |
+| SmolLM2-135M · GPTQ W4 · 128×512 · c4-cal · eager · WT | 3 | -2.925 | -3.000 | -2.858 | -0.1411 | 0/3 |
+| SmolLM2-135M · GPTQ W4 · 128×512 · c4-cal · eager · C4 | 3 | -3.922 | -3.993 | -3.813 | -0.1541 | 0/3 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×512 · SDPA · WT | 5 | -249.580 | -250.371 | -248.635 | -2.0250 | 0/5 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · SDPA · WT | 5 | -244.431 | -246.261 | -243.373 | -1.8979 | 0/5 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×512 · eager · WT | 3 | -248.960 | -249.626 | -248.203 | -2.0087 | 0/3 |
+| SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager · WT | 10 | -244.690 | -247.241 | -243.182 | -1.9040 | 0/10 |
+| SmolLM2-135M · GPTQ W3 · 128×2048 · eager · C4 | 3 | -181.144 | -181.503 | -180.439 | -1.2559 | 0/3 |
+| SmolLM2-135M · GPTQ W3 · 128×512 · wikitext2-cal · eager · C4 | 3 | -189.094 | -190.511 | -188.190 | -1.3728 | 0/3 |
+| SmolLM2-135M · GPTQ W3 · 128×512 · c4-cal · eager · WT | 3 | -237.499 | -237.828 | -237.154 | -1.7485 | 0/3 |
+| SmolLM2-135M · GPTQ W3 · 128×512 · c4-cal · eager · C4 | 3 | -198.426 | -200.132 | -196.598 | -1.5301 | 0/3 |
+| SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager · S4 ctx512/noBOS | 1 | -6.793 | -6.793 | -6.793 | -0.2464 | 0/1 |
+| SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager · S4 ctx512/BOS | 1 | -6.000 | -6.000 | -6.000 | -0.2147 | 0/1 |
+| SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager · S4 ctx1024/noBOS | 1 | -5.366 | -5.366 | -5.366 | -0.2354 | 0/1 |
+| SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager · S4 ctx1024/BOS | 1 | -4.983 | -4.983 | -4.983 | -0.2170 | 0/1 |
+| SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager · S4 ctx2048/noBOS | 1 | -4.561 | -4.561 | -4.561 | -0.2297 | 0/1 |
+| SmolLM2-135M · GPTQ W4 s0 · 128×512 · eager · S4 ctx2048/BOS | 1 | -4.416 | -4.416 | -4.416 | -0.2212 | 0/1 |
+
+- GPTQ is better than RTN on average in 21/21 settings; no setting has a positive mean (GPTQ worse).
+- Settings where individual seeds straddle zero (advantage changes sign between seeds): 0.
+- Single-seed comparisons that disagree in sign with their multi-seed mean: **0 of 60** seed-level comparisons (over the 15 multi-seed settings).
+- Magnitude: a single seed's GPTQ − RTN deviates from its setting's mean by at most 6 % of the mean; the seed choice never
+  changes the conclusion. What changes the size of GPTQ's advantage is the protocol: on the NLL scale it ranges
+  0.091–0.246 nats at W4 (C4 eval and 2048-token calibration smallest, 512-token context largest) and 1.26–2.02 nats at W3.
+- Caveat: RTN is evaluated with eager attention; the SDPA GPTQ rows compare across attention paths (≤0.15 ppl, section 4).
+
+Per-seed comparisons: `revision/R9_gptq_minus_rtn.csv`.
 

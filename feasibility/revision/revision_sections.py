@@ -217,6 +217,7 @@ def build(g):
         compare(f"SmolLM2-135M · GPTQ W{b} · 128×2048 · eager · C4", [m1("F1", f"w{b}_s{x}", "c4_ppl") for x in range(3)], rc, dense_c4, "F1")
         for srcc in ("wikitext2", "c4"):
             for ev, rv, lab in (("wt_ppl", rw, "WT"), ("c4_ppl", rc, "C4")):
+                if srcc == "wikitext2" and ev == "wt_ppl": continue  # identical data to the section-1 "128×512 · eager · WT" row
                 compare(f"SmolLM2-135M · GPTQ W{b} · 128×512 · {srcc}-cal · eager · {lab}", [m1("F3", f"w{b}_{srcc}_s{x}", ev) for x in range(3)], rv, None, "F3")
     for L in (512, 1024, 2048):
         for bo in (0, 1):
@@ -236,6 +237,12 @@ def build(g):
       + (": " + "; ".join(r[0] for r in flips) if flips else "") + ".")
     w(f"- Single-seed comparisons that disagree in sign with their multi-seed mean: **{ndis} of {nseed}** seed-level comparisons "
       f"(over the {sum(1 for r in summ_rows if r[1] > 1)} multi-seed settings).")
+    multi = [r for r in summ_rows if r[1] > 1]
+    dev = max(max(abs(r[3] - r[2]), abs(r[4] - r[2])) / abs(r[2]) for r in multi)
+    w(f"- Magnitude: a single seed's GPTQ − RTN deviates from its setting's mean by at most {100 * dev:.0f} % of the mean; the seed choice never")
+    w("  changes the conclusion. What changes the size of GPTQ's advantage is the protocol: on the NLL scale it ranges")
+    w(f"  {min(-r[5] for r in summ_rows if 'W4' in r[0]):.3f}–{max(-r[5] for r in summ_rows if 'W4' in r[0]):.3f} nats at W4 (C4 eval and 2048-token calibration smallest,"
+      f" 512-token context largest) and {min(-r[5] for r in summ_rows if 'W3' in r[0]):.2f}–{max(-r[5] for r in summ_rows if 'W3' in r[0]):.2f} nats at W3.")
     w("- Caveat: RTN is evaluated with eager attention; the SDPA GPTQ rows compare across attention paths (≤0.15 ppl, section 4).")
     w(f"\nPer-seed comparisons: {_csv('R9_gptq_minus_rtn.csv', ['setting', 'seed', 'gptq_ppl', 'rtn_ppl', 'delta_ppl', 'ln_ratio'], cmp_rows)}.\n")
     return out
