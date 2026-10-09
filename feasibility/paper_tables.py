@@ -498,4 +498,137 @@ ax.set_xlabel("latency ratio (log scale)")
 ax.set_title("Latency ratios across protocols (blue: model size, orange: launcher, gray: threads, aqua: S4 model size)",
              fontsize=8.5, color=INK, loc="left")
 save(fig, "fig4_latency_ratios")
+
+# ======================= paper figures referenced by the draft: fig_ppl_protocol, fig_synthesis, fig_framework =======================
+_rtn_p = os.path.join("revision", "rtn_runs.jsonl")
+RTN = {json.loads(l)["run_id"]: json.loads(l) for l in open(_rtn_p)} if os.path.exists(_rtn_p) else {}
+CELLS = [(L, b) for L in (512, 1024, 2048) for b in (0, 1)]
+
+# ---- fig_ppl_protocol: S4 grid, (a) Δppl vs dense, (b) D = ln(ppl/dense); GPTQ W4 s0 vs RTN W4, BOS = hollow marker
+if len(s4) == 12:
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.9), gridspec_kw={"wspace": 0.32})
+    xs = {512: 0, 1024: 1, 2048: 2}
+    for ax, scale in zip(axes, ("dppl", "D")):
+        for meth, color, get in (("GPTQ W4 (seed 0)", BLUE, lambda L, b: s4[f"w4_ctx{L}_bos{b}"]["wt_ppl"]),
+                                 ("RTN W4", ORANGE, (lambda L, b: RTN[f"rtn_w4_ctx{L}_bos{b}"]["ppl"]) if len(RTN) >= 16 else None)):
+            if get is None: continue
+            for b, mk_fill in ((0, True), (1, False)):
+                ys = []
+                for L in (512, 1024, 2048):
+                    dn = s4[f"dense_ctx{L}_bos{b}"]["wt_ppl"]; v = get(L, b)
+                    ys.append(v - dn if scale == "dppl" else math.log(v / dn))
+                xo = [xs[L] + (-0.08 if b == 0 else 0.08) for L in (512, 1024, 2048)]
+                ax.plot(xo, ys, color=color, lw=1.5, alpha=0.8, zorder=2)
+                ax.scatter(xo, ys, s=34, color=color if mk_fill else SURF, edgecolor=color, linewidth=1.6, zorder=3,
+                           label=f"{meth}, {'no BOS' if b == 0 else 'BOS'}")
+                if b == 1:
+                    ax.text(xo[-1] + 0.14, ys[-1], meth.split(" (")[0], color=INK2, fontsize=7.5, va="center")
+        ax.set_xticks([0, 1, 2]); ax.set_xticklabels(["512", "1024", "2048"]); ax.set_xlabel("evaluation context (tokens)")
+        ax.grid(axis="y", color=GRID, lw=0.6); ax.set_axisbelow(True); ax.set_xlim(-0.4, 3.0)
+        ax.set_ylabel("Δ perplexity vs dense" if scale == "dppl" else "D = ln(ppl / ppl_dense)  [nats]")
+        ax.set_title("(a) perplexity scale" if scale == "dppl" else "(b) NLL scale", fontsize=9, color=INK, loc="left")
+        ax.set_ylim(bottom=0)
+    hh, ll = axes[0].get_legend_handles_labels()
+    fig.legend(hh, ll, fontsize=7, frameon=False, loc="upper center", ncol=4, bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle("Damage of one W4 checkpoint under six perplexity protocols (SmolLM2-135M, same 81,920 WikiText-2 tokens)",
+                 fontsize=8.5, color=INK2, x=0.01, ha="left", y=1.03)
+    save(fig, "fig_ppl_protocol")
+
+# ---- fig_synthesis: every measured effect on the NLL scale (|ΔD|, nats), grouped by source, with noise/seed reference lines
+def lnr(a, b): return abs(math.log(a / b))
+SY = []  # (group, label, value, lo, hi)
+eag = groups["eager, 4 threads"]
+SY += [("noise", "run-to-run, default SDPA path (same seed)", lnr(q("c4val", "s2_gptq_w4_135m_wt_s0_rebuild"), q("s1", "gptq_w4_135m_s0")), None, None),
+       ("noise", "run-to-run, eager path (max of 11 runs)", max(lnr(v, 17.66059890313337) for _, v, _ in eag), None, None)]
+if len(s4) == 12:
+    SY.append(("noise", "evaluation only (same checkpoint hash)", lnr(s4["w4_ctx2048_bos0"]["wt_ppl"], 17.66059890313337), None, None))
+for k, lab in (("SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager", "seed SD, GPTQ W4 (2048, eager)"),
+               ("SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager", "seed SD, GPTQ W3 (2048, eager)"),
+               ("SmolLM2-135M · Wanda 50 % unstr. · 128×512", "seed SD, Wanda 50 %")):
+    z, _, _, dref = S[k]; SY.append(("seed", lab, st.stdev([math.log(v / dref) for v in z["v"]]), None, None))
+for lab, za, zb, *_r in WLrows:
+    dref = S[_r[-2]][3]
+    Da, Db = summ([math.log(v / dref) for v in za["v"]]), summ([math.log(v / dref) for v in zb["v"]])
+    d, lo, hi, _, _ = welch(Da, Db)
+    SY.append(("calibration", "window 512→2048: " + lab.replace("SmolLM2-135M · ", "").replace(" (F15 = REPORT.md A.5)", ""), abs(d), abs(lo) if lo > 0 else 0.0, abs(hi)))
+for b in (4, 3):
+    for ev, own, other in (("wt_ppl", "wikitext2", "c4"), ("c4_ppl", "c4", "wikitext2")):
+        d, lo, hi, _, _ = welch(DOM[(b, own, ev)][1], DOM[(b, other, ev)][1])
+        SY.append(("calibration", f"calibration source, W{b}, {'WikiText-2' if ev == 'wt_ppl' else 'C4'} eval", d, max(lo, 0.0), hi))
+SY += [("implementation", "attention eager vs SDPA (W4, C4-cal, s0)", lnr(m1("F3", "w4_c4_s0"), q("c4", "s2_gptq_w4_135m_c4_s0")), None, None),
+       ("implementation", "attention eager vs SDPA (W4, WT-cal, s0)", lnr(m1("F3", "w4_wikitext2_s0"), q("s1", "gptq_w4_135m_s0")), None, None),
+       ("implementation", "threads 1 vs 4 (W4, s0)", lnr(q("det", "s2_det_thr1a"), q("det", "s2_det_det1")), None, None),
+       ("implementation", "tokenizers 0.21 vs 0.23 (Wanda 50 %, s0)", lnr(q("w50", "s2_wanda50_135m_s0"), q("w50", "s2_wanda50_135m_s0_t023")), None, None),
+       ("evaluation", "dense eval dtype fp32 → bf16", lnr(dense_wt_bf16, dense_wt), None, None)]
+if len(s4) == 12:
+    D = lambda L, b: math.log(s4[f"w4_ctx{L}_bos{b}"]["wt_ppl"] / s4[f"dense_ctx{L}_bos{b}"]["wt_ppl"])
+    SY += [("evaluation", "eval context 2048 → 512 (W4 damage D)", abs(D(512, 0) - D(2048, 0)), None, None),
+           ("evaluation", "prepend BOS at 512 (W4 damage D)", abs(D(512, 1) - D(512, 0)), None, None),
+           ("evaluation", "prepend BOS at 2048 (W4 damage D)", abs(D(2048, 1) - D(2048, 0)), None, None)]
+zW4 = S["SmolLM2-135M · GPTQ W4 g128 · 128×2048 · eager"][0]; zW3 = S["SmolLM2-135M · GPTQ W3 g128 · 128×2048 · eager"][0]
+SY += [("method", "compression dense → GPTQ W4 (2048, eager)", math.log(zW4["mean"] / dense_wt_eager), None, None),
+       ("method", "compression dense → GPTQ W3 (2048, eager)", math.log(zW3["mean"] / dense_wt_eager), None, None)]
+if len(RTN) >= 16:
+    SY += [("method", "GPTQ vs RTN, W4 (2048, eager, WT)", abs(math.log(zW4["mean"] / RTN["rtn_w4_wt"]["ppl"])), None, None),
+           ("method", "GPTQ vs RTN, W3 (2048, eager, WT)", abs(math.log(zW3["mean"] / RTN["rtn_w3_wt"]["ppl"])), None, None)]
+GCOL = {"noise": INK2, "seed": INK2, "calibration": BLUE, "implementation": ORANGE, "evaluation": ORANGE, "method": AQUA}
+GLAB = {"noise": "numerical noise", "seed": "calibration seed (SD)", "calibration": "calibration choice", "implementation": "implementation",
+        "evaluation": "evaluation protocol", "method": "compression method / level"}
+fig, ax = plt.subplots(figsize=(7.2, 0.27 * len(SY) + 1.2))
+y = 0; yt, ylab = [], []; prev = None
+for gname, lab, v, lo, hi in SY:
+    if prev is not None and gname != prev: y += 0.6
+    c = GCOL[gname]
+    ax.scatter([max(v, 1e-6)], [y], s=30, color=c if gname not in ("noise", "seed") else SURF, edgecolor=c, linewidth=1.5, zorder=3)
+    if lo is not None:
+        XMIN = 1.5e-4
+        ax.plot([max(lo, XMIN), hi], [y, y], color=c, lw=1.6, zorder=2, solid_capstyle="round")
+        if lo < XMIN:  # CI includes 0 on the log axis: arrow to the left edge
+            ax.annotate("", xy=(XMIN, y), xytext=(XMIN * 1.8, y), arrowprops=dict(arrowstyle="-|>", color=c, lw=1.2))
+    ax.text(max(v, 1e-6) * 1.25 if lo is None else hi * 1.15, y, f"{v:.3g}", va="center", fontsize=6.8, color=INK2,
+            bbox=dict(boxstyle="square,pad=0.1", fc=SURF, ec="none"), zorder=4)
+    yt.append(y); ylab.append(lab); prev = gname; y += 1
+    if gname != SY[min(SY.index((gname, lab, v, lo, hi)) + 1, len(SY) - 1)][0] or lab == SY[-1][1]:
+        pass
+seed_ref = st.stdev([math.log(v / dense_wt_eager) for v in zW4["v"]])
+ax.axvline(seed_ref, color=INK2, lw=1, ls="--"); ax.text(seed_ref * 1.05, -0.9, "W4 seed SD", fontsize=7, color=INK2)
+ax.set_xscale("log"); ax.set_yticks(yt); ax.set_yticklabels(ylab, fontsize=7.2, color=INK); ax.set_ylim(y - 0.4, -1.3); ax.set_xlim(1.5e-4, 4)
+ax.grid(axis="x", color=GRID, lw=0.6, which="both"); ax.set_axisbelow(True)
+ax.set_xlabel("|effect| on the NLL scale, |Δ ln ppl|  [nats]  (log scale; bars = Welch 95 % CI; ◂ = CI includes 0)")
+from matplotlib.lines import Line2D
+handles = [Line2D([], [], marker="o", ls="", color=GCOL[k], markerfacecolor=SURF if k in ("noise", "seed") else GCOL[k], label=GLAB[k])
+           for k in ("noise", "calibration", "implementation", "method")]
+handles[0].set_label("noise / seed SD (hollow)"); handles[2].set_label("implementation / evaluation protocol")
+ax.legend(handles=handles, fontsize=7, frameon=False, loc="upper center", ncol=4, bbox_to_anchor=(0.4, -0.06))
+ax.set_title("Synthesis: size of every measured factor on one scale (SmolLM2-135M unless noted)", fontsize=9, color=INK, loc="left")
+save(fig, "fig_synthesis")
+open(os.path.join("revision", "fig_synthesis_values.csv"), "w").write(
+    "group,effect,abs_delta_nats,ci_lo,ci_hi\n" + "".join(f"{g_},{l_!r},{v_:.6f},{'' if a_ is None else f'{a_:.6f}'},{'' if b_ is None else f'{b_:.6f}'}\n" for g_, l_, v_, a_, b_ in SY))
+
+# ---- fig_framework: the study's protocol pipeline, each stage annotated with the largest measured effect (nats)
+def mx(groups_):
+    v = [x for g_, _, x, *_ in SY if g_ in groups_]; return max(v) if v else float("nan")
+fig, ax = plt.subplots(figsize=(7.2, 3.2)); ax.set_xlim(0, 100); ax.set_ylim(0, 44); ax.axis("off")
+stages = [
+    (0.5, "Calibration", ["source", "window length", "count, seed"], f"≤ {mx(['calibration']):.2f} nats\nseed SD {seed_ref:.3f}", BLUE),
+    (25.5, "Quantization", ["method, bits, group", "attention kernel", "threads"], f"impl. ≤ {mx(['implementation']):.3f}\nnoise ≤ {mx(['noise']):.3f} nats", ORANGE),
+    (50.5, "Evaluation", ["eval set", "context, BOS", "dtype, tokenizer"], f"≤ {mx(['evaluation']):.3f} nats", ORANGE),
+    (75.5, "Reporting", ["D = ln(ppl / dense)", "seeds, CIs, Holm", "hashes, config"], "comparable\neffects", AQUA),
+]
+for x, title, items_, eff, c in stages:
+    ax.add_patch(matplotlib.patches.FancyBboxPatch((x, 13), 21.5, 27, boxstyle="round,pad=0.3,rounding_size=1.5", fc=SURF, ec=c, lw=1.6))
+    ax.text(x + 10.75, 37, title, ha="center", va="center", fontsize=9, weight="bold", color=INK)
+    for k_, it in enumerate(items_):
+        ax.text(x + 1.5, 31.5 - 4.4 * k_, "• " + it, ha="left", va="center", fontsize=7, color=INK2)
+    ax.text(x + 10.75, 16.6, eff, ha="center", va="center", fontsize=7, color=c, weight="bold")
+for x in (22.4, 47.4, 72.4):
+    ax.annotate("", xy=(x + 2.8, 26.5), xytext=(x, 26.5), arrowprops=dict(arrowstyle="-|>", color=INK2, lw=1.2))
+ax.add_patch(matplotlib.patches.FancyBboxPatch((0.5, 1), 96.5, 7.5, boxstyle="round,pad=0.3,rounding_size=1.5", fc=SURF, ec=INK2, lw=1.2, ls="--"))
+lat = S4R.get("launcher process/inline") or []
+ax.text(48.75, 4.75, "Latency: launcher (process vs inline), threads, model size" +
+        (f" — launcher up to {max(lat):.1f}× (per token)" if lat else ""), ha="center", va="center", fontsize=7, color=INK2)
+ax.annotate("", xy=(36.25, 9.2), xytext=(36.25, 12.5), arrowprops=dict(arrowstyle="-|>", color=INK2, lw=1))
+ax.text(0.5, 43, "Protocol choices per stage and the largest effect measured here (SmolLM2-135M)",
+        fontsize=8.5, color=INK2, va="top")
+save(fig, "fig_framework")
 print("ok")

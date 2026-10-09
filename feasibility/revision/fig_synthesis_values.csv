@@ -1,0 +1,27 @@
+group,effect,abs_delta_nats,ci_lo,ci_hi
+noise,'run-to-run, default SDPA path (same seed)',0.003722,,
+noise,'run-to-run, eager path (max of 11 runs)',0.001590,,
+noise,'evaluation only (same checkpoint hash)',0.000213,,
+seed,'seed SD, GPTQ W4 (2048, eager)',0.006955,,
+seed,'seed SD, GPTQ W3 (2048, eager)',0.029624,,
+seed,'seed SD, Wanda 50 %',0.003893,,
+calibration,'window 512→2048: GPTQ W3 · SDPA',0.127050,0.092649,0.161451
+calibration,'window 512→2048: GPTQ W3 · eager',0.104688,0.069172,0.140203
+calibration,'window 512→2048: GPTQ W4 · eager',0.066190,0.054232,0.078148
+calibration,'window 512→2048: Qwen2.5-0.5B · GPTQ W3 · eager',0.002083,0.000000,0.022221
+calibration,'calibration source, W4, WikiText-2 eval',0.089111,0.076938,0.101284
+calibration,'calibration source, W4, C4 eval',0.013001,0.000454,0.025548
+calibration,'calibration source, W3, WikiText-2 eval',0.260200,0.219768,0.300632
+calibration,'calibration source, W3, C4 eval',0.157323,0.091438,0.223207
+implementation,'attention eager vs SDPA (W4, C4-cal, s0)',0.019931,,
+implementation,'attention eager vs SDPA (W4, WT-cal, s0)',0.004759,,
+implementation,'threads 1 vs 4 (W4, s0)',0.002553,,
+implementation,'tokenizers 0.21 vs 0.23 (Wanda 50 %, s0)',0.003615,,
+evaluation,'dense eval dtype fp32 → bf16',0.000768,,
+evaluation,'eval context 2048 → 512 (W4 damage D)',0.021300,,
+evaluation,'prepend BOS at 512 (W4 damage D)',0.000677,,
+evaluation,'prepend BOS at 2048 (W4 damage D)',0.001812,,
+method,'compression dense → GPTQ W4 (2048, eager)',0.263879,,
+method,'compression dense → GPTQ W3 (2048, eager)',1.084411,,
+method,'GPTQ vs RTN, W4 (2048, eager, WT)',0.164037,,
+method,'GPTQ vs RTN, W3 (2048, eager, WT)',1.903645,,
