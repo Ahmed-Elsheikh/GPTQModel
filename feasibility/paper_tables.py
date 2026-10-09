@@ -631,4 +631,42 @@ ax.annotate("", xy=(36.25, 9.2), xytext=(36.25, 12.5), arrowprops=dict(arrowstyl
 ax.text(0.5, 43, "Protocol choices per stage and the largest effect measured here (SmolLM2-135M)",
         fontsize=8.5, color=INK2, va="top")
 save(fig, "fig_framework")
+
+# ---- fig_window_mechanism: (a) window-length effect on the NLL scale with Welch CIs; (b,c) position-0 share of the
+#      down_proj Hessian trace per layer at L=512 vs 2048 (probe_positions.py; REPORT.md A.6; revision/R8_*.csv)
+import csv as _csv
+def _r8(path):
+    rows_ = list(_csv.DictReader(open(path)))
+    by = {}
+    for r_ in rows_: by.setdefault(int(r_["window_L"]), {})[int(r_["layer"])] = float(r_["share_pos0_pct"])
+    return by
+_smol, _qwen = _r8("revision/R8_hessian_pos0_share_smollm2.csv"), _r8("revision/R8_hessian_pos0_share_qwen25.csv")
+fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.9), gridspec_kw={"width_ratios": [1.15, 1.25, 1.05], "wspace": 0.42})
+ax = axes[0]
+labs_ = []
+for i, (lab, za, zb, *_r) in enumerate(WLrows):
+    dref = S[_r[-2]][3]
+    d, lo, hi, _, _ = welch(summ([math.log(v / dref) for v in za["v"]]), summ([math.log(v / dref) for v in zb["v"]]))
+    c = INK2  # one neutral colour: orange/blue encode the window length in panels (b, c)
+    ax.plot([lo, hi], [i, i], color=c, lw=1.8, solid_capstyle="round"); ax.scatter([d], [i], s=30, color=c, zorder=3, edgecolor=SURF, linewidth=1.2)
+    labs_.append(lab.replace("SmolLM2-135M · ", "SmolLM2 ").replace("Qwen2.5-0.5B · ", "Qwen-0.5B ").replace("GPTQ ", "").replace(" (F15 = REPORT.md A.5)", ""))
+ax.axvline(0, color=INK2, lw=0.8); ax.set_yticks(range(len(labs_))); ax.set_yticklabels(labs_, fontsize=7, color=INK); ax.invert_yaxis()
+ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
+ax.set_xlabel("ΔD, 2048 − 512 window [nats]\n(Welch 95 % CI)", fontsize=7.5)
+ax.set_title("(a) window-length effect", fontsize=8.5, color=INK, loc="left")
+for ax, by, mdl, hl in ((axes[1], _smol, "SmolLM2-135M", (11, 28)), (axes[2], _qwen, "Qwen2.5-0.5B", (2, 3, 21))):
+    layers_ = sorted(by[512])
+    for L, c, lab in ((512, BLUE, "L = 512"), (2048, ORANGE, "L = 2048")):
+        ax.plot(layers_, [by[L][k] for k in layers_], color=c, lw=1.4, marker="o", ms=3.2, mec=SURF, mew=0.8, label=lab)
+    for k in hl:
+        dx = {2: -7, 3: 7}.get(k, 0) if "Qwen" in mdl else 0
+        ax.annotate(f"L{k}", (k, by[512][k]), xytext=(dx, 5), textcoords="offset points", ha="center", fontsize=6.8, color=INK2)
+    ax.set_ylim(0, 108); ax.set_xlabel("layer", fontsize=7.5); ax.grid(axis="y", color=GRID, lw=0.6); ax.set_axisbelow(True)
+    ax.set_title(f"({'b' if 'Smol' in mdl else 'c'}) {mdl}", fontsize=8.5, color=INK, loc="left")
+axes[1].set_ylabel("position-0 share of\ndown_proj Hessian trace [%]", fontsize=7)
+axes[1].legend(fontsize=7, frameon=False, loc="upper right")
+fig.text(0.01, -0.2, "Longer windows dilute the first-token (attention-sink) share of GPTQ's Hessian in sink-dominated down_proj layers. "
+         "\nThese layers hold ~39 % of SmolLM2's W3 GPTQ loss but ~1 % of Qwen's (REPORT.md A.6), matching the large vs absent effect in (a).",
+         fontsize=6.8, color=INK2)
+save(fig, "fig_window_mechanism")
 print("ok")
